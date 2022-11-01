@@ -1,8 +1,8 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
-        <title>Categories - 分類 - test</title>
+        <title>Categories - 分類 - Joshua&#39;s Blog</title>
         <link>https://z416352.github.io/categories/</link>
-        <description>Categories - 分類 - test</description>
+        <description>Categories - 分類 - Joshua&#39;s Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-TW</language><managingEditor>ch416352@gmail.com (Joshua)</managingEditor>
             <webMaster>ch416352@gmail.com (Joshua)</webMaster><atom:link href="https://z416352.github.io/categories/" rel="self" type="application/rss+xml" /></channel>
 </rss>
