@@ -2,6 +2,10 @@
     xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
     xmlns:xhtml="http://www.w3.org/1999/xhtml"
     ><url>
-            <loc>https://z416352.github.io/categories/</loc></url><url>
-            <loc>https://z416352.github.io/</loc></url><url>
-            <loc>https://z416352.github.io/tags/</loc></url></urlset>
+            <loc>https://z416352.github.io/categories/</loc><lastmod>2022-11-07T11:56:53&#43;08:00</lastmod></url><url>
+            <loc>https://z416352.github.io/tags/hugo/</loc><lastmod>2022-11-07T11:56:53&#43;08:00</lastmod></url><url>
+            <loc>https://z416352.github.io/categories/hugo/</loc><lastmod>2022-11-07T11:56:53&#43;08:00</lastmod></url><url>
+            <loc>https://z416352.github.io/</loc><lastmod>2022-11-07T11:56:53&#43;08:00</lastmod></url><url>
+            <loc>https://z416352.github.io/posts/</loc><lastmod>2022-11-07T11:56:53&#43;08:00</lastmod></url><url>
+            <loc>https://z416352.github.io/tags/</loc><lastmod>2022-11-07T11:56:53&#43;08:00</lastmod></url><url>
+            <loc>https://z416352.github.io/posts/2022-11-07-hugo_image_size/</loc><lastmod>2022-11-07T11:56:53&#43;08:00</lastmod></url></urlset>
