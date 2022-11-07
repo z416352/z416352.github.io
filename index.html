@@ -80,12 +80,14 @@
         alt="/images/avatar.jpg"
         title="/images/avatar.jpg" /></a></div><div class="home-subtitle">記錄自己平時學到的新東西，讓自己與其他人少走一些彎路</div><div class="links"><a href="https://github.com/https://github.com/z416352" title="GitHub" target="_blank" rel="noopener noreffer me"><i class="fab fa-github fa-fw" aria-hidden="true"></i></a><a href="mailto:ch416352@gmail.com" title="Email" rel="me"><i class="far fa-envelope fa-fw" aria-hidden="true"></i></a></div></div>
 <article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
-        <a href="/posts/2022-11-07-hugo_image_size/">如何在 Hugo 中調整圖片的大小</a>
-    </h1><div class="post-meta"><span class="post-author"><a href="/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Joshua</a></span>&nbsp;<span class="post-publish">發佈於 <time datetime="2022-11-07">2022-11-07</time></span>&nbsp;<span class="post-category">收錄於 <a href="/categories/hugo/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Hugo</a></span></div><div class="content">1. 如何修改 有時候在上傳圖片的時候時常遇到上傳的圖片要嘛太大、要嘛太小情況。一開始我都是將圖片先調整成適當大小在貼上，但實在是耗時又麻煩，過程中還需要一直反覆調整大小，有時候真的會用到很不爽XD
+        <a href="/posts/2022-11-07-hugo_something_good_md/">如何在 Hugo 中調整圖片的大小與一些好用的語法</a>
+    </h1><div class="post-meta"><span class="post-author"><a href="/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Joshua</a></span>&nbsp;<span class="post-publish">發佈於 <time datetime="2022-11-07">2022-11-07</time></span>&nbsp;<span class="post-category">收錄於 <a href="/categories/hugo%E7%B3%BB%E5%88%97/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Hugo系列</a></span></div><div class="content">1. 如何修改圖片大小 有時候在上傳圖片的時候時常遇到上傳的圖片要嘛太大、要嘛太小情況。一開始我都是將圖片先調整成適當大小在貼上，但實在是耗時又麻煩，過程中還需要一直反覆調整大小，有時候真的會用到很不爽啊
 因此紀錄一下目前如何修改圖片的大小，這邊的圖片位置可以放網址或是本地的圖片位置都可以，但注意的是本地圖片必須放在 /static 資料夾內
 1 &lt;img src=&#34;圖片位置&#34; width=&#34;400&#34; alt=&#34;圖片名稱&#34;&gt; 如果需要將圖片置中，可以改成這樣
-1 &lt;center&gt;&lt;img src=&#34;圖片位置&#34; width=&#34;400&#34; alt=&#34;圖片名稱&#34;&gt;&lt;/center&gt; 下圖分別為 width=&quot;300&quot;、width=&quot;400&quot;</div><div class="post-footer">
-        <a href="/posts/2022-11-07-hugo_image_size/">閱讀全文</a><div class="post-tags">
+1 &lt;center&gt;&lt;img src=&#34;圖片位置&#34; width=&#34;400&#34; alt=&#34;圖片名稱&#34;&gt;&lt;/center&gt; 下圖分別為 width=&quot;300&quot;、width=&quot;400&quot;
+2. Admonition 主要可以用來 Highlight 一些重要的東西，需要自行補兩個{{ }}，如下圖
+1 2 3 &lt; admonition type=tip title=&#34;This is a tip&#34; open=true &gt; Some tips... &lt; /admonition &gt; Admonition type 允許的類別 note This is a NoteSome Note... abstract This is a AbstractSome Abstract... info This is a InfoSome Info... tip This is a TipSome Tip.</div><div class="post-footer">
+        <a href="/posts/2022-11-07-hugo_something_good_md/">閱讀全文</a><div class="post-tags">
                 <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/hugo/">Hugo</a></div></div>
 </article></div></div>
             </main><footer class="footer">
