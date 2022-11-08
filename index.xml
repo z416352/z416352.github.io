@@ -4,20 +4,28 @@
         <link>https://z416352.github.io/</link>
         <description>Hugo theme - LoveIt</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-TW</language><managingEditor>ch416352@gmail.com (Joshua)</managingEditor>
-            <webMaster>ch416352@gmail.com (Joshua)</webMaster><lastBuildDate>Mon, 07 Nov 2022 11:56:53 &#43;0800</lastBuildDate>
+            <webMaster>ch416352@gmail.com (Joshua)</webMaster><lastBuildDate>Tue, 08 Nov 2022 13:42:18 &#43;0800</lastBuildDate>
             <atom:link href="https://z416352.github.io/index.xml" rel="self" type="application/rss+xml" />
         <item>
-    <title>如何在 Hugo 中調整圖片的大小與一些好用的語法</title>
-    <link>https://z416352.github.io/posts/2022-11-07-hugo_something_good_md/</link>
+    <title>Hugo 中一些好用的語法</title>
+    <link>https://z416352.github.io/posts/2022-11-08-hugo_grammar/</link>
+    <pubDate>Tue, 08 Nov 2022 13:42:18 &#43;0800</pubDate>
+    <author>Joshua</author>
+    <guid>https://z416352.github.io/posts/2022-11-08-hugo_grammar/</guid>
+    <description><![CDATA[1. Admonition 主要可以用來 Highlight 一些重要的東西，需要自行補兩個{{ }}，如下圖
+1 2 3 &lt; admonition type=tip title=&#34;This is a tip&#34; open=true &gt; Some tips... &lt; /admonition &gt; Admonition type 允許的類別 note This is a NoteSome Note... abstract This is a AbstractSome Abstract... info This is a InfoSome Info... tip This is a TipSome Tip... success This is a SuccessSome Success... question This is a QuestionSome Question... Warning This is a WarningSome Warning.]]></description>
+</item>
+<item>
+    <title>如何在 Hugo 中調整圖片大小與設定文章縮圖</title>
+    <link>https://z416352.github.io/posts/2022-11-07-hugo_image/</link>
     <pubDate>Mon, 07 Nov 2022 11:56:53 &#43;0800</pubDate>
     <author>Joshua</author>
-    <guid>https://z416352.github.io/posts/2022-11-07-hugo_something_good_md/</guid>
+    <guid>https://z416352.github.io/posts/2022-11-07-hugo_image/</guid>
     <description><![CDATA[1. 如何修改圖片大小 有時候在上傳圖片的時候時常遇到上傳的圖片要嘛太大、要嘛太小的情況。一開始我都是將圖片先調整成適當大小再貼上，但實在是耗時又麻煩，過程中還需要一直反覆調整大小，有時候真的會用到很不爽啊
 因此紀錄一下目前如何修改圖片的大小，這邊的圖片位置可以放網址或是本地的圖片位置都可以，但注意的是本地圖片必須放在 /static 資料夾內
 1 &lt;img src=&#34;圖片位置&#34; width=&#34;400&#34; alt=&#34;圖片名稱&#34;&gt; 如果需要將圖片置中，可以改成這樣
 1 &lt;center&gt;&lt;img src=&#34;圖片位置&#34; width=&#34;400&#34; alt=&#34;圖片名稱&#34;&gt;&lt;/center&gt; 下圖分別為 width=&quot;300&quot;、width=&quot;400&quot;
-2. Admonition 主要可以用來 Highlight 一些重要的東西，需要自行補兩個{{ }}，如下圖
-1 2 3 &lt; admonition type=tip title=&#34;This is a tip&#34; open=true &gt; Some tips... &lt; /admonition &gt; Admonition type 允許的類別 note This is a NoteSome Note... abstract This is a AbstractSome Abstract... info This is a InfoSome Info... tip This is a TipSome Tip.]]></description>
+2. 如何設定文章縮圖 注意此文以 `loveit` 主題為例，每個主題可能會有不同的方式修改 首先需要先找出要設定成文章縮圖的圖片，最好選擇長方形的圖片，這樣比例才不會跑掉。 在 .md 檔案中的前綴寫下 1 2 featuredImage: &#34;圖片位置&#34; featuredImagePreview: &#34;圖片位置&#34; featuredImage: 在文章的一開始要放上什麼樣的圖片，如下圖會在文章內的紅色框框的一開始出現圖片，如果不希望出現，就不用設定即可。 featuredImagePreview: 文章的縮圖，設定後就會如下圖。 ]]></description>
 </item>
 </channel>
 </rss>
