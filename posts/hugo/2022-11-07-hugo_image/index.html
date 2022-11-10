@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>如何在 Hugo 中調整圖片大小與設定文章縮圖 - Joshua&#39;s Blog</title><meta name="Description" content="Hugo theme - LoveIt"><meta property="og:title" content="如何在 Hugo 中調整圖片大小與設定文章縮圖" />
+<meta property="og:description" content="1. 如何修改圖片大小 有時候在上傳圖片的時候時常遇到上傳的圖片要嘛太大、要嘛太小的情況。一開始我都是將圖片先調整成適當大小再貼上，但實在是耗時又麻煩，過程中還需要一直反覆調整大小，有時候真的會用到很不爽啊
+因此紀錄一下目前如何修改圖片的大小，這邊的圖片位置可以放網址或是本地的圖片位置都可以，但注意的是本地圖片必須放在 /static 資料夾內
+1 &lt;img src=&#34;圖片位置&#34; width=&#34;400&#34; alt=&#34;圖片名稱&#34;&gt; 如果需要將圖片置中，可以改成這樣
+1 &lt;center&gt;&lt;img src=&#34;圖片位置&#34; width=&#34;400&#34; alt=&#34;圖片名稱&#34;&gt;&lt;/center&gt; 下圖分別為 width=&quot;300&quot;、width=&quot;400&quot;
+2. 如何設定文章縮圖 注意此文以 `loveit` 主題為例，每個主題可能會有不同的方式修改 首先需要先找出要設定成文章縮圖的圖片，最好選擇長方形的圖片，這樣比例才不會跑掉。 在 .md 檔案中的前綴寫下 1 2 featuredImage: &#34;圖片位置&#34; featuredImagePreview: &#34;圖片位置&#34; featuredImage: 在文章的一開始要放上什麼樣的圖片，如下圖會在文章內的紅色框框的一開始出現圖片，如果不希望出現，就不用設定即可。 featuredImagePreview: 文章的縮圖，設定後就會如下圖。 " />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://z416352.github.io/posts/hugo/2022-11-07-hugo_image/" /><meta property="og:image" content="https://z416352.github.io/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-11-07T11:56:53+08:00" />
+<meta property="article:modified_time" content="2022-11-07T11:56:53+08:00" /><meta property="og:site_name" content="My cool site" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://z416352.github.io/logo.png"/>
+
+<meta name="twitter:title" content="如何在 Hugo 中調整圖片大小與設定文章縮圖"/>
+<meta name="twitter:description" content="1. 如何修改圖片大小 有時候在上傳圖片的時候時常遇到上傳的圖片要嘛太大、要嘛太小的情況。一開始我都是將圖片先調整成適當大小再貼上，但實在是耗時又麻煩，過程中還需要一直反覆調整大小，有時候真的會用到很不爽啊
+因此紀錄一下目前如何修改圖片的大小，這邊的圖片位置可以放網址或是本地的圖片位置都可以，但注意的是本地圖片必須放在 /static 資料夾內
+1 &lt;img src=&#34;圖片位置&#34; width=&#34;400&#34; alt=&#34;圖片名稱&#34;&gt; 如果需要將圖片置中，可以改成這樣
+1 &lt;center&gt;&lt;img src=&#34;圖片位置&#34; width=&#34;400&#34; alt=&#34;圖片名稱&#34;&gt;&lt;/center&gt; 下圖分別為 width=&quot;300&quot;、width=&quot;400&quot;
+2. 如何設定文章縮圖 注意此文以 `loveit` 主題為例，每個主題可能會有不同的方式修改 首先需要先找出要設定成文章縮圖的圖片，最好選擇長方形的圖片，這樣比例才不會跑掉。 在 .md 檔案中的前綴寫下 1 2 featuredImage: &#34;圖片位置&#34; featuredImagePreview: &#34;圖片位置&#34; featuredImage: 在文章的一開始要放上什麼樣的圖片，如下圖會在文章內的紅色框框的一開始出現圖片，如果不希望出現，就不用設定即可。 featuredImagePreview: 文章的縮圖，設定後就會如下圖。 "/>
+<meta name="application-name" content="My cool site">
+<meta name="apple-mobile-web-app-title" content="My cool site"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="/images/avatar.jpg"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://z416352.github.io/posts/hugo/2022-11-07-hugo_image/" /><link rel="next" href="https://z416352.github.io/posts/hugo/2022-11-08-hugo_grammar/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "如何在 Hugo 中調整圖片大小與設定文章縮圖",
+        "inLanguage": "zh-TW",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/z416352.github.io\/posts\/hugo\/2022-11-07-hugo_image\/"
+        },"genre": "posts","keywords": "Hugo","wordcount":  39 ,
+        "url": "https:\/\/z416352.github.io\/posts\/hugo\/2022-11-07-hugo_image\/","datePublished": "2022-11-07T11:56:53+08:00","dateModified": "2022-11-07T11:56:53+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "Joshua"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Joshua&#39;s Blog"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/images/avatar.jpg"
+        data-srcset="/images/avatar.jpg, /images/avatar.jpg 1.5x, /images/avatar.jpg 2x"
+        data-sizes="auto"
+        alt="/images/avatar.jpg"
+        title="/images/avatar.jpg" /><span id="id-1" class="typeit"></span></a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> Posts </a><a class="menu-item" href="/tags/"> Tags </a><a class="menu-item" href="/categories/"> Categories </a><a class="menu-item" href="/about/"> About </a><span class="menu-item delimiter"></span><a href="javascript:void(0);" class="menu-item theme-switch" title="切換主題">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Joshua&#39;s Blog"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/images/avatar.jpg"
+        data-srcset="/images/avatar.jpg, /images/avatar.jpg 1.5x, /images/avatar.jpg 2x"
+        data-sizes="auto"
+        alt="/images/avatar.jpg"
+        title="/images/avatar.jpg" /><span id="id-2" class="typeit"></span></a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><a class="menu-item" href="/posts/" title="">Posts</a><a class="menu-item" href="/tags/" title="">Tags</a><a class="menu-item" href="/categories/" title="">Categories</a><a class="menu-item" href="/about/" title="">About</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切換主題">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目錄</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">如何在 Hugo 中調整圖片大小與設定文章縮圖</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Joshua</a></span>&nbsp;<span class="post-category">收錄於 <a href="/categories/hugo%E7%B3%BB%E5%88%97/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Hugo系列</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-11-07">2022-11-07</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;約 39 字&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;預計閱讀 1 分鐘&nbsp;</div>
+        </div><div class="featured-image"><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/assets/2022-11-07-Hugo_Image/2022-11-07-Hugo_Image-20221108163237.png"
+        data-srcset="/assets/2022-11-07-Hugo_Image/2022-11-07-Hugo_Image-20221108163237.png, /assets/2022-11-07-Hugo_Image/2022-11-07-Hugo_Image-20221108163237.png 1.5x, /assets/2022-11-07-Hugo_Image/2022-11-07-Hugo_Image-20221108163237.png 2x"
+        data-sizes="auto"
+        alt="/assets/2022-11-07-Hugo_Image/2022-11-07-Hugo_Image-20221108163237.png"
+        title="/assets/2022-11-07-Hugo_Image/2022-11-07-Hugo_Image-20221108163237.png" /></div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>目錄</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#1-如何修改圖片大小">1. 如何修改圖片大小</a></li>
+    <li><a href="#2-如何設定文章縮圖">2. 如何設定文章縮圖</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="1-如何修改圖片大小">1. 如何修改圖片大小</h2>
+<p>有時候在上傳圖片的時候時常遇到上傳的圖片要嘛太大、要嘛太小的情況。一開始我都是將圖片先調整成適當大小再貼上，但實在是耗時又麻煩，過程中還需要一直反覆調整大小，有時候真的會用到很不爽啊</p>
+<p>因此紀錄一下目前如何修改圖片的大小，這邊的圖片位置可以放<strong>網址</strong>或是<strong>本地的圖片位置</strong>都可以，但注意的是本地圖片必須放在 <code>/static</code> 資料夾內</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">img</span> <span class="na">src</span><span class="o">=</span><span class="s">&#34;圖片位置&#34;</span> <span class="na">width</span><span class="o">=</span><span class="s">&#34;400&#34;</span> <span class="na">alt</span><span class="o">=</span><span class="s">&#34;圖片名稱&#34;</span><span class="p">&gt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>如果需要將圖片置中，可以改成這樣</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">center</span><span class="p">&gt;&lt;</span><span class="nt">img</span> <span class="na">src</span><span class="o">=</span><span class="s">&#34;圖片位置&#34;</span> <span class="na">width</span><span class="o">=</span><span class="s">&#34;400&#34;</span> <span class="na">alt</span><span class="o">=</span><span class="s">&#34;圖片名稱&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">center</span><span class="p">&gt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>下圖分別為 <code>width=&quot;300&quot;</code>、<code>width=&quot;400&quot;</code></p>
+<center><img src="/assets/2022-11-07-Hugo_Image/2022-11-07-Hugo_Image-20221107143745.png" width="300"></center>
+<center><img src="/assets/2022-11-07-Hugo_Image/2022-11-07-Hugo_Image-20221107143745.png" width="400"></center>
+<h2 id="2-如何設定文章縮圖">2. 如何設定文章縮圖</h2>
+<div class="details admonition info open">
+        <div class="details-summary admonition-title">
+            <i class="icon fas fa-info-circle fa-fw" aria-hidden="true"></i>注意<i class="details-icon fas fa-angle-right fa-fw" aria-hidden="true"></i>
+        </div>
+        <div class="details-content">
+            <div class="admonition-content"><pre><code>此文以 `loveit` 主題為例，每個主題可能會有不同的方式修改
+</code></pre>
+</div>
+        </div>
+    </div>
+<ol>
+<li>首先需要先找出要設定成文章縮圖的圖片，<strong>最好選擇長方形的圖片</strong>，這樣比例才不會跑掉。</li>
+<li>在 <code>.md</code> 檔案中的前綴寫下</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">featuredImage: &#34;圖片位置&#34;
+</span></span><span class="line"><span class="cl">featuredImagePreview: &#34;圖片位置&#34; 
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>featuredImage: 在文章的一開始要放上什麼樣的圖片，如下圖會在文章內的<strong>紅色框框</strong>的一開始出現圖片，如果不希望出現，就不用設定即可。</li>
+</ul>
+<center><img src="/assets/2022-11-07-Hugo_Image/2022-11-07-Hugo_Image-20221108140245.png" width="700"></center>
+<ul>
+<li>featuredImagePreview: 文章的縮圖，設定後就會如下圖。</li>
+</ul>
+<center><img src="/assets/2022-11-07-Hugo_Image/2022-11-07-Hugo_Image-20221108140610.png"  width="700"></center></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新於 2022-11-07</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://z416352.github.io/posts/hugo/2022-11-07-hugo_image/" data-title="如何在 Hugo 中調整圖片大小與設定文章縮圖" data-hashtags="Hugo"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://z416352.github.io/posts/hugo/2022-11-07-hugo_image/" data-hashtag="Hugo"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://z416352.github.io/posts/hugo/2022-11-07-hugo_image/" data-title="如何在 Hugo 中調整圖片大小與設定文章縮圖"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://z416352.github.io/posts/hugo/2022-11-07-hugo_image/" data-title="如何在 Hugo 中調整圖片大小與設定文章縮圖" data-image="/assets/2022-11-07-Hugo_Image/2022-11-07-Hugo_Image-20221108163237.png"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Blogger" data-sharer="blogger" data-url="https://z416352.github.io/posts/hugo/2022-11-07-hugo_image/" data-title="如何在 Hugo 中調整圖片大小與設定文章縮圖" data-description=""><i class="fab fa-blogger fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/hugo/">Hugo</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主頁</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+            <a href="/posts/hugo/2022-11-08-hugo_grammar/" class="next" rel="next" title="Hugo 中一些好用的語法">Hugo 中一些好用的語法<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+
+(function() {
+    
+    
+    
+    
+
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    
+    var disqus_shortname = 'ch416352';
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com/" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.105.0">Hugo</a> 強力驅動 | 主題 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2022</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">Joshua</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a> <span id="busuanzi_container_site_uv">
+  總瀏覽<span id="busuanzi_value_site_uv"></span>次
+</span></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到頂部">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看評論">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/typeit@8.6.0/dist/index.umd.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"複製到剪貼板","maxShownLines":20},"data":{"id-1":"Joshua's Blog","id-2":"Joshua's Blog"},"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"id-1":["id-1"],"id-2":["id-2"]},"duration":-1,"speed":100}};</script><script type="text/javascript" src="/js/theme.min.js"></script><script type="text/javascript">
+            window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
+            gtag('config', 'G-4NTY87FQMQ', { 'anonymize_ip': true });
+        </script><script type="text/javascript" src="https://www.googletagmanager.com/gtag/js?id=G-4NTY87FQMQ" async></script></body>
+</html>
