@@ -80,6 +80,33 @@
         alt="/images/avatar.jpg"
         title="/images/avatar.jpg" /></a></div><div class="home-subtitle">記錄自己平時學到的新東西，讓自己與其他人少走一些彎路</div><div class="links"><a href="https://github.com/https://github.com/z416352" title="GitHub" target="_blank" rel="noopener noreffer me"><i class="fab fa-github fa-fw" aria-hidden="true"></i></a><a href="mailto:ch416352@gmail.com" title="Email" rel="me"><i class="far fa-envelope fa-fw" aria-hidden="true"></i></a></div></div>
 <article class="single summary" itemscope itemtype="http://schema.org/Article"><div class="featured-image-preview">
+            <a href="/posts/order_flow/2022-11-10-order_flow_ch1/"><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/assets/2022-11-10-Order_Flow_Ch1/2022-11-10-Order_Flow_Ch1-20221110224722.png"
+        data-srcset="/assets/2022-11-10-Order_Flow_Ch1/2022-11-10-Order_Flow_Ch1-20221110224722.png, /assets/2022-11-10-Order_Flow_Ch1/2022-11-10-Order_Flow_Ch1-20221110224722.png 1.5x, /assets/2022-11-10-Order_Flow_Ch1/2022-11-10-Order_Flow_Ch1-20221110224722.png 2x"
+        data-sizes="auto"
+        alt="/assets/2022-11-10-Order_Flow_Ch1/2022-11-10-Order_Flow_Ch1-20221110224722.png"
+        title="/assets/2022-11-10-Order_Flow_Ch1/2022-11-10-Order_Flow_Ch1-20221110224722.png" /></a>
+        </div><h1 class="single-title" itemprop="name headline">
+        <a href="/posts/order_flow/2022-11-10-order_flow_ch1/">Ch 1. 什麼叫做訂單流交易 ? 流動性又是什麼 ?</a>
+    </h1><div class="post-meta"><span class="post-author"><a href="/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Joshua</a></span>&nbsp;<span class="post-publish">發佈於 <time datetime="2022-11-10">2022-11-10</time></span>&nbsp;<span class="post-category">收錄於 <a href="/categories/%E4%BA%A4%E6%98%93/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>交易</a></span></div><div class="content">前言 我的第一筆投資是在大一的時候，當初買了第一張股票，根本不知道那個東西是什麼鬼，但是沒過幾天就突然漲上去了，還記得當初賣掉就賺了6000元，心想「挖靠 ! 這個東西真的可以賺錢 ???」我相信這個應該是每個人第一次投資賺錢或賠錢的第一個想法XDD。
+但因為都是無腦買所以開始慢慢賠錢，後面決定開始學習。從一般的基本面再到籌碼分析最後又到了技術分析，通通學了一遍，但始終覺得缺少了一點什麼。大概就是那種數學課學了很多的數學公式，也都會用，但就是不懂推導過程的感覺。這個情況一直到我最近學了訂單流的交易才慢慢瞭解這些技術分析背後的含意，而且發現南出來討論的人也沒有特別多，所以希望可以讓想要學的人少走彎路，順便自己也可以把自己學習的東西記錄下來 !
+提醒貼心提示: 以下的內容只是自己的學習紀錄，並非完全正確，如果有錯誤歡迎大家討論 !! 1. 什麼叫做訂單流交易 ? 就我的理解是透過 K 線找出有 相對較強的買/賣單的位置 ，更白話來說其實就是平常所說的那些支撐/壓力，但找出來有什麼幫助呢 ?
+因為這些點位可能有著一些銀行或機構 (或著可以稱他們為主力) 參與其中，我們的目的就是希望跟隨著這些主力一起獲利。 因為靠近這些相對強的點位，所以可以擁有更好的盈虧比1 後面我會介紹一些在訂單流交易中常用到的一些名詞，以及它所代表的內涵意義。
+2. 流動性 (Liquidity) 是什麼 ? 流動性表示那些未成交的訂單，這些訂單會掛在上面等著價格抵達來消耗。
+當價格上漲力度不夠的時候可能造成無法消耗上方的流動性的時候就會造成價格下跌。反之當下跌力度不夠無法消耗下方的流動性則會造成反彈。
+注意流動性可說是在交易市場中的戰略物資，基本上後面的文章都會圍繞在流動性的討論。至於為什麼流動性會是戰略物資呢 ? 這部分會在下面的流動性池中討論到流動性池 (Liquidity Pool) 剛剛介紹完流動性的定義，接下來要講一下流動性池又是什麼，流動性代表著掛在上面的未成交訂單，那顧名思義流動性池就表示著堆積很多流動性的地方。
+至於這些堆積的流動性是由什麼樣的人組成呢 ?，它大致可以由以下兩種人所組成 :
+停損的人 做突破交易的人 至於要怎麼找到那些可能是流動性池的地方呢 ? 我覺得這個就有點偏主觀的尋找，大致的思路就是往當價格突破或跌破某個價位時，哪邊會有最多人停損的方面來思考。
+可以從下圖中這個結構是由兩個黃色圈圈所形成的雙頂結構。
+先講第一類停損的人，一般來說，有持倉做空的人當價格往上漲突破了雙頂的最高點代表著這個結構被破壞了，可能會有一波上漲的行情。因此這些人往往會先採取停損的作法以免損失過大。這些做空停損的人會為市場帶來大量買單。 第二類做突破交易的人，如同第一點一樣，當這個結構被突破後被認為可能會有一波上漲行情，因此他們會直接買入帶來大量買單。 這兩種人同時都會在突破破雙頂結構的時候產生大量的買單，因此上方就會堆積許多的流動性，這種地方我們就稱為 流動性池 (Liquidity Pool) 。由於這些都是大量的買單，因此也稱為買方流動性(Buy side liquidity; BSL)。反之，如果都是賣單的話則稱為賣方流動性(Sell side liquidity; SSL)。
+剛剛在流動性的地方有說到流動性是一個戰略物資，它是受到主力爭相掠奪的，原因是這些主力的資金較為龐大，如果一次完成交易會造成價滑並且讓它的成本變高，因此它需要掠奪流動性高的地方以完成它的交易，像是這種流動性池就很有可能是他的目標。以紫色的圈圈為例，這種掠奪流動性池的方式稱之為獵取止損(Stop Hunt)。獵取止損後續會再介紹到，以更白話的方式形容的話就是一個假突破。
+可以看到當Stop Hunt之後價格就直線往下掉，但這也並非一定會這樣，會需要依照不同的情況來判斷。
+3. 總結 大概統整一下這篇文章所講的一些東西 :</div><div class="post-footer">
+        <a href="/posts/order_flow/2022-11-10-order_flow_ch1/">閱讀全文</a><div class="post-tags">
+                <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/order-flow/">Order Flow</a></div></div>
+</article><article class="single summary" itemscope itemtype="http://schema.org/Article"><div class="featured-image-preview">
             <a href="/posts/hugo/2022-11-08-hugo_grammar/"><img
         class="lazyload"
         src="/svg/loading.min.svg"
@@ -107,6 +134,8 @@
         <a href="/posts/hugo/2022-11-07-hugo_image/">如何在 Hugo 中調整圖片大小與設定文章縮圖</a>
     </h1><div class="post-meta"><span class="post-author"><a href="/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Joshua</a></span>&nbsp;<span class="post-publish">發佈於 <time datetime="2022-11-07">2022-11-07</time></span>&nbsp;<span class="post-category">收錄於 <a href="/categories/hugo%E7%B3%BB%E5%88%97/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Hugo系列</a></span></div><div class="content">1. 如何修改圖片大小 有時候在上傳圖片的時候時常遇到上傳的圖片要嘛太大、要嘛太小的情況。一開始我都是將圖片先調整成適當大小再貼上，但實在是耗時又麻煩，過程中還需要一直反覆調整大小，有時候真的會用到很不爽啊
 因此紀錄一下目前如何修改圖片的大小，這邊的圖片位置可以放網址或是本地的圖片位置都可以，但注意的是本地圖片必須放在 /static 資料夾內
+提醒也可以透過下面的連結去試試看，這個採用了 Hugo 的 Shortcodes 的方式，並且是使用figure而非下面的src，但不確定是不是主題的原因，我使用的時候會無法修改圖片大小。
+🔗Shortcodes | Hugo (gohugo.io)
 1 &lt;img src=&#34;圖片位置&#34; width=&#34;400&#34; alt=&#34;圖片名稱&#34;&gt; 如果需要將圖片置中，可以改成這樣
 1 &lt;center&gt;&lt;img src=&#34;圖片位置&#34; width=&#34;400&#34; alt=&#34;圖片名稱&#34;&gt;&lt;/center&gt; 下圖分別為 width=&quot;300&quot;、width=&quot;400&quot;
 2. 如何設定文章縮圖 注意此文以 `loveit` 主題為例，每個主題可能會有不同的方式修改 首先需要先找出要設定成文章縮圖的圖片，最好選擇長方形的圖片，這樣比例才不會跑掉。 在 .md 檔案中的前綴寫下 1 2 featuredImage: &#34;圖片位置&#34; featuredImagePreview: &#34;圖片位置&#34; featuredImage: 在文章的一開始要放上什麼樣的圖片，如下圖會在文章內的紅色框框的一開始出現圖片，如果不希望出現，就不用設定即可。 featuredImagePreview: 文章的縮圖，設定後就會如下圖。 </div><div class="post-footer">

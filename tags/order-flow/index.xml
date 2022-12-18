@@ -1,10 +1,10 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
-        <title>所有文章 - Joshua&#39;s Blog</title>
-        <link>https://z416352.github.io/posts/</link>
-        <description>所有文章 | Joshua&#39;s Blog</description>
+        <title>Order Flow - 標籤 - Joshua&#39;s Blog</title>
+        <link>https://z416352.github.io/tags/order-flow/</link>
+        <description>Order Flow - 標籤 - Joshua&#39;s Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-TW</language><managingEditor>ch416352@gmail.com (Joshua)</managingEditor>
-            <webMaster>ch416352@gmail.com (Joshua)</webMaster><lastBuildDate>Thu, 10 Nov 2022 11:38:27 &#43;0800</lastBuildDate><atom:link href="https://z416352.github.io/posts/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>ch416352@gmail.com (Joshua)</webMaster><lastBuildDate>Thu, 10 Nov 2022 11:38:27 &#43;0800</lastBuildDate><atom:link href="https://z416352.github.io/tags/order-flow/" rel="self" type="application/rss+xml" /><item>
     <title>Ch 1. 什麼叫做訂單流交易 ? 流動性又是什麼 ?</title>
     <link>https://z416352.github.io/posts/order_flow/2022-11-10-order_flow_ch1/</link>
     <pubDate>Thu, 10 Nov 2022 11:38:27 &#43;0800</pubDate>
@@ -24,33 +24,6 @@
 剛剛在流動性的地方有說到流動性是一個戰略物資，它是受到主力爭相掠奪的，原因是這些主力的資金較為龐大，如果一次完成交易會造成價滑並且讓它的成本變高，因此它需要掠奪流動性高的地方以完成它的交易，像是這種流動性池就很有可能是他的目標。以紫色的圈圈為例，這種掠奪流動性池的方式稱之為獵取止損(Stop Hunt)。獵取止損後續會再介紹到，以更白話的方式形容的話就是一個假突破。
 可以看到當Stop Hunt之後價格就直線往下掉，但這也並非一定會這樣，會需要依照不同的情況來判斷。
 3. 總結 大概統整一下這篇文章所講的一些東西 :]]></description>
-</item>
-<item>
-    <title>Hugo 中一些好用的語法</title>
-    <link>https://z416352.github.io/posts/hugo/2022-11-08-hugo_grammar/</link>
-    <pubDate>Tue, 08 Nov 2022 13:42:18 &#43;0800</pubDate>
-    <author>Joshua</author>
-    <guid>https://z416352.github.io/posts/hugo/2022-11-08-hugo_grammar/</guid>
-    <description><![CDATA[<div class="featured-image">
-                <img src="/assets/2022-11-08-Hugo_grammar/2022-11-08-Hugo_grammar-20221108163816.png" referrerpolicy="no-referrer">
-            </div>1. Admonition 主要可以用來 Highlight 一些重要的東西，需要自行補兩個{{ }}，如下圖
-1 2 3 &lt; admonition type=tip title=&#34;This is a tip&#34; open=true &gt; Some tips... &lt; /admonition &gt; Admonition type 允許的類別 note This is a NoteSome Note... abstract This is a AbstractSome Abstract... info This is a InfoSome Info... tip This is a TipSome Tip... success This is a SuccessSome Success... question This is a QuestionSome Question... Warning This is a WarningSome Warning.]]></description>
-</item>
-<item>
-    <title>如何在 Hugo 中調整圖片大小與設定文章縮圖</title>
-    <link>https://z416352.github.io/posts/hugo/2022-11-07-hugo_image/</link>
-    <pubDate>Mon, 07 Nov 2022 11:56:53 &#43;0800</pubDate>
-    <author>Joshua</author>
-    <guid>https://z416352.github.io/posts/hugo/2022-11-07-hugo_image/</guid>
-    <description><![CDATA[<div class="featured-image">
-                <img src="/assets/2022-11-07-Hugo_Image/2022-11-07-Hugo_Image-20221108163237.png" referrerpolicy="no-referrer">
-            </div>1. 如何修改圖片大小 有時候在上傳圖片的時候時常遇到上傳的圖片要嘛太大、要嘛太小的情況。一開始我都是將圖片先調整成適當大小再貼上，但實在是耗時又麻煩，過程中還需要一直反覆調整大小，有時候真的會用到很不爽啊
-因此紀錄一下目前如何修改圖片的大小，這邊的圖片位置可以放網址或是本地的圖片位置都可以，但注意的是本地圖片必須放在 /static 資料夾內
-提醒也可以透過下面的連結去試試看，這個採用了 Hugo 的 Shortcodes 的方式，並且是使用figure而非下面的src，但不確定是不是主題的原因，我使用的時候會無法修改圖片大小。
-🔗Shortcodes | Hugo (gohugo.io)
-1 &lt;img src=&#34;圖片位置&#34; width=&#34;400&#34; alt=&#34;圖片名稱&#34;&gt; 如果需要將圖片置中，可以改成這樣
-1 &lt;center&gt;&lt;img src=&#34;圖片位置&#34; width=&#34;400&#34; alt=&#34;圖片名稱&#34;&gt;&lt;/center&gt; 下圖分別為 width=&quot;300&quot;、width=&quot;400&quot;
-2. 如何設定文章縮圖 注意此文以 `loveit` 主題為例，每個主題可能會有不同的方式修改 首先需要先找出要設定成文章縮圖的圖片，最好選擇長方形的圖片，這樣比例才不會跑掉。 在 .md 檔案中的前綴寫下 1 2 featuredImage: &#34;圖片位置&#34; featuredImagePreview: &#34;圖片位置&#34; featuredImage: 在文章的一開始要放上什麼樣的圖片，如下圖會在文章內的紅色框框的一開始出現圖片，如果不希望出現，就不用設定即可。 featuredImagePreview: 文章的縮圖，設定後就會如下圖。 ]]></description>
 </item>
 </channel>
 </rss>

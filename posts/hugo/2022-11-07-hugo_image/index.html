@@ -7,13 +7,15 @@
         <title>如何在 Hugo 中調整圖片大小與設定文章縮圖 - Joshua&#39;s Blog</title><meta name="Description" content="Hugo theme - LoveIt"><meta property="og:title" content="如何在 Hugo 中調整圖片大小與設定文章縮圖" />
 <meta property="og:description" content="1. 如何修改圖片大小 有時候在上傳圖片的時候時常遇到上傳的圖片要嘛太大、要嘛太小的情況。一開始我都是將圖片先調整成適當大小再貼上，但實在是耗時又麻煩，過程中還需要一直反覆調整大小，有時候真的會用到很不爽啊
 因此紀錄一下目前如何修改圖片的大小，這邊的圖片位置可以放網址或是本地的圖片位置都可以，但注意的是本地圖片必須放在 /static 資料夾內
+提醒也可以透過下面的連結去試試看，這個採用了 Hugo 的 Shortcodes 的方式，並且是使用figure而非下面的src，但不確定是不是主題的原因，我使用的時候會無法修改圖片大小。
+🔗Shortcodes | Hugo (gohugo.io)
 1 &lt;img src=&#34;圖片位置&#34; width=&#34;400&#34; alt=&#34;圖片名稱&#34;&gt; 如果需要將圖片置中，可以改成這樣
 1 &lt;center&gt;&lt;img src=&#34;圖片位置&#34; width=&#34;400&#34; alt=&#34;圖片名稱&#34;&gt;&lt;/center&gt; 下圖分別為 width=&quot;300&quot;、width=&quot;400&quot;
 2. 如何設定文章縮圖 注意此文以 `loveit` 主題為例，每個主題可能會有不同的方式修改 首先需要先找出要設定成文章縮圖的圖片，最好選擇長方形的圖片，這樣比例才不會跑掉。 在 .md 檔案中的前綴寫下 1 2 featuredImage: &#34;圖片位置&#34; featuredImagePreview: &#34;圖片位置&#34; featuredImage: 在文章的一開始要放上什麼樣的圖片，如下圖會在文章內的紅色框框的一開始出現圖片，如果不希望出現，就不用設定即可。 featuredImagePreview: 文章的縮圖，設定後就會如下圖。 " />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://z416352.github.io/posts/hugo/2022-11-07-hugo_image/" /><meta property="og:image" content="https://z416352.github.io/logo.png"/><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2022-11-07T11:56:53+08:00" />
-<meta property="article:modified_time" content="2022-11-07T11:56:53+08:00" /><meta property="og:site_name" content="My cool site" />
+<meta property="article:modified_time" content="2022-12-18T14:08:01+08:00" /><meta property="og:site_name" content="My cool site" />
 
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://z416352.github.io/logo.png"/>
@@ -21,6 +23,8 @@
 <meta name="twitter:title" content="如何在 Hugo 中調整圖片大小與設定文章縮圖"/>
 <meta name="twitter:description" content="1. 如何修改圖片大小 有時候在上傳圖片的時候時常遇到上傳的圖片要嘛太大、要嘛太小的情況。一開始我都是將圖片先調整成適當大小再貼上，但實在是耗時又麻煩，過程中還需要一直反覆調整大小，有時候真的會用到很不爽啊
 因此紀錄一下目前如何修改圖片的大小，這邊的圖片位置可以放網址或是本地的圖片位置都可以，但注意的是本地圖片必須放在 /static 資料夾內
+提醒也可以透過下面的連結去試試看，這個採用了 Hugo 的 Shortcodes 的方式，並且是使用figure而非下面的src，但不確定是不是主題的原因，我使用的時候會無法修改圖片大小。
+🔗Shortcodes | Hugo (gohugo.io)
 1 &lt;img src=&#34;圖片位置&#34; width=&#34;400&#34; alt=&#34;圖片名稱&#34;&gt; 如果需要將圖片置中，可以改成這樣
 1 &lt;center&gt;&lt;img src=&#34;圖片位置&#34; width=&#34;400&#34; alt=&#34;圖片名稱&#34;&gt;&lt;/center&gt; 下圖分別為 width=&quot;300&quot;、width=&quot;400&quot;
 2. 如何設定文章縮圖 注意此文以 `loveit` 主題為例，每個主題可能會有不同的方式修改 首先需要先找出要設定成文章縮圖的圖片，最好選擇長方形的圖片，這樣比例才不會跑掉。 在 .md 檔案中的前綴寫下 1 2 featuredImage: &#34;圖片位置&#34; featuredImagePreview: &#34;圖片位置&#34; featuredImage: 在文章的一開始要放上什麼樣的圖片，如下圖會在文章內的紅色框框的一開始出現圖片，如果不希望出現，就不用設定即可。 featuredImagePreview: 文章的縮圖，設定後就會如下圖。 "/>
@@ -36,8 +40,8 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/z416352.github.io\/posts\/hugo\/2022-11-07-hugo_image\/"
-        },"genre": "posts","keywords": "Hugo","wordcount":  39 ,
-        "url": "https:\/\/z416352.github.io\/posts\/hugo\/2022-11-07-hugo_image\/","datePublished": "2022-11-07T11:56:53+08:00","dateModified": "2022-11-07T11:56:53+08:00","publisher": {
+        },"genre": "posts","keywords": "Hugo","wordcount":  49 ,
+        "url": "https:\/\/z416352.github.io\/posts\/hugo\/2022-11-07-hugo_image\/","datePublished": "2022-11-07T11:56:53+08:00","dateModified": "2022-12-18T14:08:01+08:00","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
                 "@type": "Person",
@@ -92,8 +96,11 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">如何在 Hugo 中調整圖片大小與設定文章縮圖</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Joshua</a></span>&nbsp;<span class="post-category">收錄於 <a href="/categories/hugo%E7%B3%BB%E5%88%97/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Hugo系列</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-11-07">2022-11-07</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;約 39 字&nbsp;
-                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;預計閱讀 1 分鐘&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-11-07">2022-11-07</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;約 49 字&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;預計閱讀 1 分鐘&nbsp;
+                <div class="post-info-mod">
+                    <span>更新於 2022-12-18</span>
+                </div></div>
         </div><div class="featured-image"><img
         class="lazyload"
         src="/svg/loading.min.svg"
@@ -115,6 +122,16 @@
             </div><div class="content" id="content"><h2 id="1-如何修改圖片大小">1. 如何修改圖片大小</h2>
 <p>有時候在上傳圖片的時候時常遇到上傳的圖片要嘛太大、要嘛太小的情況。一開始我都是將圖片先調整成適當大小再貼上，但實在是耗時又麻煩，過程中還需要一直反覆調整大小，有時候真的會用到很不爽啊</p>
 <p>因此紀錄一下目前如何修改圖片的大小，這邊的圖片位置可以放<strong>網址</strong>或是<strong>本地的圖片位置</strong>都可以，但注意的是本地圖片必須放在 <code>/static</code> 資料夾內</p>
+<div class="details admonition info open">
+        <div class="details-summary admonition-title">
+            <i class="icon fas fa-info-circle fa-fw" aria-hidden="true"></i>提醒<i class="details-icon fas fa-angle-right fa-fw" aria-hidden="true"></i>
+        </div>
+        <div class="details-content">
+            <div class="admonition-content"><p>也可以透過下面的連結去試試看，這個採用了 Hugo 的 Shortcodes 的方式，並且是使用<code>figure</code>而非下面的<code>src</code>，但不確定是不是主題的原因，我使用的時候會無法修改圖片大小。</p>
+<p>🔗<a href="https://gohugo.io/content-management/shortcodes/#figure" target="_blank" rel="noopener noreffer ">Shortcodes | Hugo (gohugo.io)</a></p>
+</div>
+        </div>
+    </div>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -161,7 +178,7 @@
 </span></span></code></pre></td></tr></table>
 </div>
 </div><ul>
-<li>featuredImage: 在文章的一開始要放上什麼樣的圖片，如下圖會在文章內的<strong>紅色框框</strong>的一開始出現圖片，如果不希望出現，就不用設定即可。</li>
+<li>featuredImage: 在文章的一開始要放上什麼樣的圖片，如下圖會在文章內的<font color=Red><strong>紅色框框</strong></font>的一開始出現圖片，如果不希望出現，就不用設定即可。</li>
 </ul>
 <center><img src="/assets/2022-11-07-Hugo_Image/2022-11-07-Hugo_Image-20221108140245.png" width="700"></center>
 <ul>
@@ -170,9 +187,7 @@
 <center><img src="/assets/2022-11-07-Hugo_Image/2022-11-07-Hugo_Image-20221108140610.png"  width="700"></center></div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
-            <div class="post-info-mod">
-                <span>更新於 2022-11-07</span>
-            </div></div>
+            </div>
         <div class="post-info-line">
             <div class="post-info-md"></div>
             <div class="post-info-share">
@@ -189,7 +204,8 @@
     </div>
 
     <div class="post-nav">
-            <a href="/posts/hugo/2022-11-08-hugo_grammar/" class="next" rel="next" title="Hugo 中一些好用的語法">Hugo 中一些好用的語法<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+            <a href="/posts/hugo/2022-11-08-hugo_grammar/" class="next" rel="next" title="Hugo 中一些好用的語法">Hugo 中一些好用的語法<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a><br><br>
+    </div>
 </div>
 <div id="disqus_thread"></div>
 <script type="text/javascript">
