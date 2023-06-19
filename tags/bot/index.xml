@@ -1,0 +1,20 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Bot - 標籤 - Joshua&#39;s Blog</title>
+        <link>https://z416352.github.io/tags/bot/</link>
+        <description>Bot - 標籤 - Joshua&#39;s Blog</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-TW</language><managingEditor>ch416352@gmail.com (Joshua)</managingEditor>
+            <webMaster>ch416352@gmail.com (Joshua)</webMaster><lastBuildDate>Sat, 22 Apr 2023 00:19:45 &#43;0800</lastBuildDate><atom:link href="https://z416352.github.io/tags/bot/" rel="self" type="application/rss+xml" /><item>
+    <title>[Bot系列 1] 在 GCP 上面建立一個自己的 Telegram Bot</title>
+    <link>https://z416352.github.io/posts/dev/2023-04-22-telegrambot_gcp/</link>
+    <pubDate>Sat, 22 Apr 2023 00:19:45 &#43;0800</pubDate>
+    <author>Joshua</author>
+    <guid>https://z416352.github.io/posts/dev/2023-04-22-telegrambot_gcp/</guid>
+    <description><![CDATA[前言 如果你想要在 GCP 上建立一個免費的 Telegram Bot，需要準備以下幾個東西：
+GCP VM 固定的 IP 位址 Flask nginx、ngrok 因為 Telegram 傳送給 Bot 的訊息需要走 HTTPS，所以還需要擁有自己的網域和 SSL 憑證。在這部份，我們可以透過使用 nip.io 以及 certbot 來達成。
+1. GCP 在 GCP 上，每個 Google 帳號都可以免費試用 90 天或 300 美元的額度，因此我們可以在 GCP 上建立 VM 或 Kubernetes 而不需要花費任何費用。
+首先，我們需要在 GCP 上建立一個 VM 作為我們的開發環境，同時作為 Bot 的執行地方，並使用 Ubuntu 20.04 作為軟體平台。在建立 VM 後，VM 的外部 IP 位址預設是臨時的，這意味著每當 VM 重啟時 IP 位址可能會更改。這會導致每次都需要重新設定 Webhook 的位置。因此，我們可以按照下圖所示的方式進行修改。
+進去之後就依照妳想要的做填寫，&ldquo;連接到:&rdquo; 的部分則選擇妳剛剛創建的 VM ，最後就可以看到如第一張圖一樣 &ldquo;外部 IP 位址&rdquo; 已經變成固定的。]]></description>
+</item>
+</channel>
+</rss>
