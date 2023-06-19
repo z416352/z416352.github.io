@@ -10,7 +10,9 @@
     <pubDate>Sat, 22 Apr 2023 00:19:45 &#43;0800</pubDate>
     <author>Joshua</author>
     <guid>https://z416352.github.io/posts/dev/2023-04-22-telegrambot_gcp/</guid>
-    <description><![CDATA[前言 如果你想要在 GCP 上建立一個免費的 Telegram Bot，需要準備以下幾個東西：
+    <description><![CDATA[<div class="featured-image">
+                <img src="/assets/2023-04-22-TelegramBot_GCP/2023-04-22-TelegramBot_GCP-20230620013056.png" referrerpolicy="no-referrer">
+            </div>前言 如果你想要在 GCP 上建立一個免費的 Telegram Bot，需要準備以下幾個東西：
 GCP VM 固定的 IP 位址 Flask nginx、ngrok 因為 Telegram 傳送給 Bot 的訊息需要走 HTTPS，所以還需要擁有自己的網域和 SSL 憑證。在這部份，我們可以透過使用 nip.io 以及 certbot 來達成。
 1. GCP 在 GCP 上，每個 Google 帳號都可以免費試用 90 天或 300 美元的額度，因此我們可以在 GCP 上建立 VM 或 Kubernetes 而不需要花費任何費用。
 首先，我們需要在 GCP 上建立一個 VM 作為我們的開發環境，同時作為 Bot 的執行地方，並使用 Ubuntu 20.04 作為軟體平台。在建立 VM 後，VM 的外部 IP 位址預設是臨時的，這意味著每當 VM 重啟時 IP 位址可能會更改。這會導致每次都需要重新設定 Webhook 的位置。因此，我們可以按照下圖所示的方式進行修改。
@@ -44,7 +46,7 @@ GCP VM 固定的 IP 位址 Flask nginx、ngrok 因為 Telegram 傳送給 Bot 的
     <author>Joshua</author>
     <guid>https://z416352.github.io/posts/hugo/2022-11-08-hugo_grammar/</guid>
     <description><![CDATA[<div class="featured-image">
-                <img src="/assets/2022-11-08-Hugo_grammar/2022-11-08-Hugo_grammar-20221108163816.png" referrerpolicy="no-referrer">
+                <img src="/assets/2022-11-08-Hugo_grammar/2022-11-08-Hugo_grammar-20230620013308.png" referrerpolicy="no-referrer">
             </div>1. Admonition 主要可以用來 Highlight 一些重要的東西，需要自行補兩個{{ }}，如下圖
 1 2 3 &lt; admonition type=tip title=&#34;This is a tip&#34; open=true &gt; Some tips... &lt; /admonition &gt; Admonition type 允許的類別 note This is a NoteSome Note... abstract This is a AbstractSome Abstract... info This is a InfoSome Info... tip This is a TipSome Tip... success This is a SuccessSome Success... question This is a QuestionSome Question... Warning This is a WarningSome Warning.]]></description>
 </item>
@@ -55,7 +57,7 @@ GCP VM 固定的 IP 位址 Flask nginx、ngrok 因為 Telegram 傳送給 Bot 的
     <author>Joshua</author>
     <guid>https://z416352.github.io/posts/hugo/2022-11-07-hugo_image/</guid>
     <description><![CDATA[<div class="featured-image">
-                <img src="/assets/2022-11-07-Hugo_Image/2022-11-07-Hugo_Image-20221108163237.png" referrerpolicy="no-referrer">
+                <img src="/assets/2022-11-07-Hugo_Image/2022-11-07-Hugo_Image-20230620013442.png" referrerpolicy="no-referrer">
             </div>1. 如何修改圖片大小 有時候在上傳圖片的時候時常遇到上傳的圖片要嘛太大、要嘛太小的情況。一開始我都是將圖片先調整成適當大小再貼上，但實在是耗時又麻煩，過程中還需要一直反覆調整大小，有時候真的會用到很不爽啊
 因此紀錄一下目前如何修改圖片的大小，這邊的圖片位置可以放網址或是本地的圖片位置都可以，但注意的是本地圖片必須放在 /static 資料夾內
 提醒也可以透過下面的連結去試試看，這個採用了 Hugo 的 Shortcodes 的方式，並且是使用figure而非下面的src，但不確定是不是主題的原因，我使用的時候會無法修改圖片大小。
