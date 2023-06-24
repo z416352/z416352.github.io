@@ -6,10 +6,10 @@
         <generator>Hugo -- gohugo.io</generator><language>zh-TW</language><managingEditor>ch416352@gmail.com (Joshua)</managingEditor>
             <webMaster>ch416352@gmail.com (Joshua)</webMaster><lastBuildDate>Thu, 10 Nov 2022 11:38:27 &#43;0800</lastBuildDate><atom:link href="https://z416352.github.io/categories/%E4%BA%A4%E6%98%93/" rel="self" type="application/rss+xml" /><item>
     <title>[交易Ch1] 什麼叫做訂單流交易 ? 流動性又是什麼 ?</title>
-    <link>https://z416352.github.io/posts/order_flow/2022/11-order_flow_ch1/</link>
+    <link>https://z416352.github.io/posts/order_flow/2022/11/order_flow_ch1/</link>
     <pubDate>Thu, 10 Nov 2022 11:38:27 &#43;0800</pubDate>
     <author>Joshua</author>
-    <guid>https://z416352.github.io/posts/order_flow/2022/11-order_flow_ch1/</guid>
+    <guid>https://z416352.github.io/posts/order_flow/2022/11/order_flow_ch1/</guid>
     <description><![CDATA[前言 我的第一筆投資是在大一的時候，當初買了第一張股票，根本不知道那個東西是什麼鬼，但是沒過幾天就突然漲上去了，還記得當初賣掉就賺了6000元，心想「挖靠 ! 這個東西真的可以賺錢 ???」我相信這個應該是每個人第一次投資賺錢或賠錢的第一個想法XDD。
 但因為都是無腦買所以開始慢慢賠錢，後面決定開始學習。從一般的基本面再到籌碼分析最後又到了技術分析，通通學了一遍，但始終覺得缺少了一點什麼。大概就是那種數學課學了很多的數學公式，也都會用，但就是不懂推導過程的感覺。這個情況一直到我最近學了訂單流的交易才慢慢瞭解這些技術分析背後的含意，而且發現南出來討論的人也沒有特別多，所以希望可以讓想要學的人少走彎路，順便自己也可以把自己學習的東西記錄下來 !
 提醒貼心提示: 以下的內容只是自己的學習紀錄，並非完全正確，如果有錯誤歡迎大家討論 !! 1. 什麼叫做訂單流交易 ? 就我的理解是透過 K 線找出有 相對較強的買/賣單的位置 ，更白話來說其實就是平常所說的那些支撐/壓力，但找出來有什麼幫助呢 ?

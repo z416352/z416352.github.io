@@ -6,10 +6,10 @@
         <generator>Hugo -- gohugo.io</generator><language>zh-TW</language><managingEditor>ch416352@gmail.com (Joshua)</managingEditor>
             <webMaster>ch416352@gmail.com (Joshua)</webMaster><lastBuildDate>Tue, 08 Nov 2022 13:42:18 &#43;0800</lastBuildDate><atom:link href="https://z416352.github.io/tags/hugo/" rel="self" type="application/rss+xml" /><item>
     <title>Hugo 中一些好用的語法</title>
-    <link>https://z416352.github.io/posts/hugo/2022-11-08-hugo_grammar/</link>
+    <link>https://z416352.github.io/posts/hugo/2022/11/hugo_grammar/2022-11-08-hugo_grammar/</link>
     <pubDate>Tue, 08 Nov 2022 13:42:18 &#43;0800</pubDate>
     <author>Joshua</author>
-    <guid>https://z416352.github.io/posts/hugo/2022-11-08-hugo_grammar/</guid>
+    <guid>https://z416352.github.io/posts/hugo/2022/11/hugo_grammar/2022-11-08-hugo_grammar/</guid>
     <description><![CDATA[<div class="featured-image">
                 <img src="/assets/2022-11-08-Hugo_grammar/2022-11-08-Hugo_grammar-20230620013308.png" referrerpolicy="no-referrer">
             </div>1. Admonition 主要可以用來 Highlight 一些重要的東西，需要自行補兩個{{ }}，如下圖
@@ -17,10 +17,10 @@
 </item>
 <item>
     <title>如何在 Hugo 中調整圖片大小與設定文章縮圖</title>
-    <link>https://z416352.github.io/posts/hugo/2022-11-07-hugo_image/</link>
+    <link>https://z416352.github.io/posts/hugo/2022/11/hugo_image/2022-11-07-hugo_image/</link>
     <pubDate>Mon, 07 Nov 2022 11:56:53 &#43;0800</pubDate>
     <author>Joshua</author>
-    <guid>https://z416352.github.io/posts/hugo/2022-11-07-hugo_image/</guid>
+    <guid>https://z416352.github.io/posts/hugo/2022/11/hugo_image/2022-11-07-hugo_image/</guid>
     <description><![CDATA[<div class="featured-image">
                 <img src="/assets/2022-11-07-Hugo_Image/2022-11-07-Hugo_Image-20230620013442.png" referrerpolicy="no-referrer">
             </div>1. 如何修改圖片大小 有時候在上傳圖片的時候時常遇到上傳的圖片要嘛太大、要嘛太小的情況。一開始我都是將圖片先調整成適當大小再貼上，但實在是耗時又麻煩，過程中還需要一直反覆調整大小，有時候真的會用到很不爽啊
