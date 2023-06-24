@@ -6,12 +6,12 @@
         <generator>Hugo -- gohugo.io</generator><language>zh-TW</language><managingEditor>ch416352@gmail.com (Joshua)</managingEditor>
             <webMaster>ch416352@gmail.com (Joshua)</webMaster><lastBuildDate>Sat, 22 Apr 2023 00:19:45 &#43;0800</lastBuildDate><atom:link href="https://z416352.github.io/categories/%E7%A8%8B%E5%BC%8F/" rel="self" type="application/rss+xml" /><item>
     <title>[Bot系列 1] 在 GCP 上面建立一個自己的 Telegram Bot</title>
-    <link>https://z416352.github.io/posts/dev/2023/2023-04-22-telegrambot_gcp/</link>
+    <link>https://z416352.github.io/posts/dev/2023/04/telegrambot_gcp/telegrambot_gcp/</link>
     <pubDate>Sat, 22 Apr 2023 00:19:45 &#43;0800</pubDate>
     <author>Joshua</author>
-    <guid>https://z416352.github.io/posts/dev/2023/2023-04-22-telegrambot_gcp/</guid>
+    <guid>https://z416352.github.io/posts/dev/2023/04/telegrambot_gcp/telegrambot_gcp/</guid>
     <description><![CDATA[<div class="featured-image">
-                <img src="/assets/2023-04-22-TelegramBot_GCP/2023-04-22-TelegramBot_GCP-20230620013056.png" referrerpolicy="no-referrer">
+                <img src="/2023-04-22-TelegramBot_GCP-20230620013056.png" referrerpolicy="no-referrer">
             </div>前言 如果你想要在 GCP 上建立一個免費的 Telegram Bot，需要準備以下幾個東西：
 GCP VM 固定的 IP 位址 Flask nginx、ngrok 因為 Telegram 傳送給 Bot 的訊息需要走 HTTPS，所以還需要擁有自己的網域和 SSL 憑證。在這部份，我們可以透過使用 nip.io 以及 certbot 來達成。
 1. GCP 在 GCP 上，每個 Google 帳號都可以免費試用 90 天或 300 美元的額度，因此我們可以在 GCP 上建立 VM 或 Kubernetes 而不需要花費任何費用。

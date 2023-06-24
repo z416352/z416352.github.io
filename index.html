@@ -80,22 +80,22 @@
         alt="/images/avatar.jpg"
         title="/images/avatar.jpg" /></a></div><div class="home-subtitle">記錄自己平時學到的新東西，讓自己與其他人少走一些彎路</div><div class="links"><a href="https://github.com/https://github.com/z416352" title="GitHub" target="_blank" rel="noopener noreffer me"><i class="fab fa-github fa-fw" aria-hidden="true"></i></a><a href="mailto:ch416352@gmail.com" title="Email" rel="me"><i class="far fa-envelope fa-fw" aria-hidden="true"></i></a></div></div>
 <article class="single summary" itemscope itemtype="http://schema.org/Article"><div class="featured-image-preview">
-            <a href="/posts/dev/2023/2023-04-22-telegrambot_gcp/"><img
+            <a href="/posts/dev/2023/04/telegrambot_gcp/telegrambot_gcp/"><img
         class="lazyload"
         src="/svg/loading.min.svg"
-        data-src="/assets/2023-04-22-TelegramBot_GCP/2023-04-22-TelegramBot_GCP-20230620013056.png"
-        data-srcset="/assets/2023-04-22-TelegramBot_GCP/2023-04-22-TelegramBot_GCP-20230620013056.png, /assets/2023-04-22-TelegramBot_GCP/2023-04-22-TelegramBot_GCP-20230620013056.png 1.5x, /assets/2023-04-22-TelegramBot_GCP/2023-04-22-TelegramBot_GCP-20230620013056.png 2x"
+        data-src="../2023-04-22-TelegramBot_GCP-20230620013056.png"
+        data-srcset="../2023-04-22-TelegramBot_GCP-20230620013056.png, ../2023-04-22-TelegramBot_GCP-20230620013056.png 1.5x, ../2023-04-22-TelegramBot_GCP-20230620013056.png 2x"
         data-sizes="auto"
-        alt="/assets/2023-04-22-TelegramBot_GCP/2023-04-22-TelegramBot_GCP-20230620013056.png"
-        title="/assets/2023-04-22-TelegramBot_GCP/2023-04-22-TelegramBot_GCP-20230620013056.png" /></a>
+        alt="../2023-04-22-TelegramBot_GCP-20230620013056.png"
+        title="../2023-04-22-TelegramBot_GCP-20230620013056.png" /></a>
         </div><h1 class="single-title" itemprop="name headline">
-        <a href="/posts/dev/2023/2023-04-22-telegrambot_gcp/">[Bot系列 1] 在 GCP 上面建立一個自己的 Telegram Bot</a>
+        <a href="/posts/dev/2023/04/telegrambot_gcp/telegrambot_gcp/">[Bot系列 1] 在 GCP 上面建立一個自己的 Telegram Bot</a>
     </h1><div class="post-meta"><span class="post-author"><a href="/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Joshua</a></span>&nbsp;<span class="post-publish">發佈於 <time datetime="2023-04-22">2023-04-22</time></span>&nbsp;<span class="post-category">收錄於 <a href="/categories/%E7%A8%8B%E5%BC%8F/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>程式</a></span></div><div class="content">前言 如果你想要在 GCP 上建立一個免費的 Telegram Bot，需要準備以下幾個東西：
 GCP VM 固定的 IP 位址 Flask nginx、ngrok 因為 Telegram 傳送給 Bot 的訊息需要走 HTTPS，所以還需要擁有自己的網域和 SSL 憑證。在這部份，我們可以透過使用 nip.io 以及 certbot 來達成。
 1. GCP 在 GCP 上，每個 Google 帳號都可以免費試用 90 天或 300 美元的額度，因此我們可以在 GCP 上建立 VM 或 Kubernetes 而不需要花費任何費用。
 首先，我們需要在 GCP 上建立一個 VM 作為我們的開發環境，同時作為 Bot 的執行地方，並使用 Ubuntu 20.04 作為軟體平台。在建立 VM 後，VM 的外部 IP 位址預設是臨時的，這意味著每當 VM 重啟時 IP 位址可能會更改。這會導致每次都需要重新設定 Webhook 的位置。因此，我們可以按照下圖所示的方式進行修改。
 進去之後就依照妳想要的做填寫，&ldquo;連接到:&rdquo; 的部分則選擇妳剛剛創建的 VM ，最後就可以看到如第一張圖一樣 &ldquo;外部 IP 位址&rdquo; 已經變成固定的。</div><div class="post-footer">
-        <a href="/posts/dev/2023/2023-04-22-telegrambot_gcp/">閱讀全文</a><div class="post-tags">
+        <a href="/posts/dev/2023/04/telegrambot_gcp/telegrambot_gcp/">閱讀全文</a><div class="post-tags">
                 <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/%E7%A8%8B%E5%BC%8F/">程式</a>,&nbsp;<a href="/tags/bot/">Bot</a></div></div>
 </article><article class="single summary" itemscope itemtype="http://schema.org/Article"><div class="featured-image-preview">
             <a href="/posts/order_flow/2022/11-order_flow_ch1/"><img
