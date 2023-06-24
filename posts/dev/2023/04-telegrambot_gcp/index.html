@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>[Bot系列 1] 在 GCP 上面建立一個自己的 Telegram Bot - Joshua&#39;s Blog</title><meta name="Description" content="Hugo theme - LoveIt"><meta property="og:title" content="[Bot系列 1] 在 GCP 上面建立一個自己的 Telegram Bot" />
+<meta property="og:description" content="前言 如果你想要在 GCP 上建立一個免費的 Telegram Bot，需要準備以下幾個東西：
+GCP VM 固定的 IP 位址 Flask nginx、ngrok 因為 Telegram 傳送給 Bot 的訊息需要走 HTTPS，所以還需要擁有自己的網域和 SSL 憑證。在這部份，我們可以透過使用 nip.io 以及 certbot 來達成。
+1. GCP 在 GCP 上，每個 Google 帳號都可以免費試用 90 天或 300 美元的額度，因此我們可以在 GCP 上建立 VM 或 Kubernetes 而不需要花費任何費用。
+首先，我們需要在 GCP 上建立一個 VM 作為我們的開發環境，同時作為 Bot 的執行地方，並使用 Ubuntu 20.04 作為軟體平台。在建立 VM 後，VM 的外部 IP 位址預設是臨時的，這意味著每當 VM 重啟時 IP 位址可能會更改。這會導致每次都需要重新設定 Webhook 的位置。因此，我們可以按照下圖所示的方式進行修改。
+進去之後就依照妳想要的做填寫，&ldquo;連接到:&rdquo; 的部分則選擇妳剛剛創建的 VM ，最後就可以看到如第一張圖一樣 &ldquo;外部 IP 位址&rdquo; 已經變成固定的。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://z416352.github.io/posts/dev/2023/04-telegrambot_gcp/" /><meta property="og:image" content="https://z416352.github.io/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-04-22T00:19:45+08:00" />
+<meta property="article:modified_time" content="2023-04-22T00:19:45+08:00" /><meta property="og:site_name" content="My cool site" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://z416352.github.io/logo.png"/>
+
+<meta name="twitter:title" content="[Bot系列 1] 在 GCP 上面建立一個自己的 Telegram Bot"/>
+<meta name="twitter:description" content="前言 如果你想要在 GCP 上建立一個免費的 Telegram Bot，需要準備以下幾個東西：
+GCP VM 固定的 IP 位址 Flask nginx、ngrok 因為 Telegram 傳送給 Bot 的訊息需要走 HTTPS，所以還需要擁有自己的網域和 SSL 憑證。在這部份，我們可以透過使用 nip.io 以及 certbot 來達成。
+1. GCP 在 GCP 上，每個 Google 帳號都可以免費試用 90 天或 300 美元的額度，因此我們可以在 GCP 上建立 VM 或 Kubernetes 而不需要花費任何費用。
+首先，我們需要在 GCP 上建立一個 VM 作為我們的開發環境，同時作為 Bot 的執行地方，並使用 Ubuntu 20.04 作為軟體平台。在建立 VM 後，VM 的外部 IP 位址預設是臨時的，這意味著每當 VM 重啟時 IP 位址可能會更改。這會導致每次都需要重新設定 Webhook 的位置。因此，我們可以按照下圖所示的方式進行修改。
+進去之後就依照妳想要的做填寫，&ldquo;連接到:&rdquo; 的部分則選擇妳剛剛創建的 VM ，最後就可以看到如第一張圖一樣 &ldquo;外部 IP 位址&rdquo; 已經變成固定的。"/>
+<meta name="application-name" content="My cool site">
+<meta name="apple-mobile-web-app-title" content="My cool site"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="/images/avatar.jpg"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://z416352.github.io/posts/dev/2023/04-telegrambot_gcp/" /><link rel="prev" href="https://z416352.github.io/posts/order_flow/2022/11-order_flow_ch1/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "[Bot系列 1] 在 GCP 上面建立一個自己的 Telegram Bot",
+        "inLanguage": "zh-TW",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/z416352.github.io\/posts\/dev\/2023\/04-telegrambot_gcp\/"
+        },"genre": "posts","keywords": "程式, Bot","wordcount":  887 ,
+        "url": "https:\/\/z416352.github.io\/posts\/dev\/2023\/04-telegrambot_gcp\/","datePublished": "2023-04-22T00:19:45+08:00","dateModified": "2023-04-22T00:19:45+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "Joshua"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Joshua&#39;s Blog"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/images/avatar.jpg"
+        data-srcset="/images/avatar.jpg, /images/avatar.jpg 1.5x, /images/avatar.jpg 2x"
+        data-sizes="auto"
+        alt="/images/avatar.jpg"
+        title="/images/avatar.jpg" /><span id="id-1" class="typeit"></span></a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> Posts </a><a class="menu-item" href="/tags/"> Tags </a><a class="menu-item" href="/categories/"> Categories </a><a class="menu-item" href="/about/"> About </a><span class="menu-item delimiter"></span><a href="javascript:void(0);" class="menu-item theme-switch" title="切換主題">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Joshua&#39;s Blog"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/images/avatar.jpg"
+        data-srcset="/images/avatar.jpg, /images/avatar.jpg 1.5x, /images/avatar.jpg 2x"
+        data-sizes="auto"
+        alt="/images/avatar.jpg"
+        title="/images/avatar.jpg" /><span id="id-2" class="typeit"></span></a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><a class="menu-item" href="/posts/" title="">Posts</a><a class="menu-item" href="/tags/" title="">Tags</a><a class="menu-item" href="/categories/" title="">Categories</a><a class="menu-item" href="/about/" title="">About</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切換主題">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目錄</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">[Bot系列 1] 在 GCP 上面建立一個自己的 Telegram Bot</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Joshua</a></span>&nbsp;<span class="post-category">收錄於 <a href="/categories/%E7%A8%8B%E5%BC%8F/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>程式</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-04-22">2023-04-22</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;約 887 字&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;預計閱讀 5 分鐘&nbsp;
+                <div class="post-info-mod">
+                    <span>更新於 2023-04-22</span>
+                </div></div>
+        </div><div class="featured-image"><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/assets/2023-04-22-TelegramBot_GCP/2023-04-22-TelegramBot_GCP-20230620013056.png"
+        data-srcset="/assets/2023-04-22-TelegramBot_GCP/2023-04-22-TelegramBot_GCP-20230620013056.png, /assets/2023-04-22-TelegramBot_GCP/2023-04-22-TelegramBot_GCP-20230620013056.png 1.5x, /assets/2023-04-22-TelegramBot_GCP/2023-04-22-TelegramBot_GCP-20230620013056.png 2x"
+        data-sizes="auto"
+        alt="/assets/2023-04-22-TelegramBot_GCP/2023-04-22-TelegramBot_GCP-20230620013056.png"
+        title="/assets/2023-04-22-TelegramBot_GCP/2023-04-22-TelegramBot_GCP-20230620013056.png" /></div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>目錄</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#前言">前言</a></li>
+    <li><a href="#1-gcp">1. GCP</a></li>
+    <li><a href="#2-flask-and-telegram-bot">2. Flask and Telegram bot</a>
+      <ul>
+        <li><a href="#21-flask-是什麼">2.1 Flask 是什麼</a></li>
+        <li><a href="#22-telegram-bot">2.2 Telegram bot</a></li>
+        <li><a href="#23-ngrok-測試">2.3 ngrok 測試</a></li>
+      </ul>
+    </li>
+    <li><a href="#3-nginx-和-公開網址">3. Nginx 和 公開網址</a>
+      <ul>
+        <li><a href="#31-overview">3.1 Overview</a></li>
+        <li><a href="#32-流程">3.2 流程</a></li>
+        <li><a href="#33-nginx-安裝--ssl-申請">3.3 Nginx 安裝 &amp; SSL 申請</a></li>
+        <li><a href="#34-nginx-轉發">3.4 Nginx 轉發</a></li>
+      </ul>
+    </li>
+    <li><a href="#35-完成">3.5 完成</a></li>
+    <li><a href="#reference">Reference</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="前言">前言</h2>
+<p>如果你想要在 GCP 上建立一個免費的 Telegram Bot，需要準備以下幾個東西：</p>
+<ol>
+<li><strong>GCP VM</strong></li>
+<li><strong>固定的 IP 位址</strong></li>
+<li><strong>Flask</strong></li>
+<li><strong>nginx、ngrok</strong></li>
+</ol>
+<center><img src="../image.png" width="750"></center>
+<p>因為 Telegram 傳送給 Bot 的訊息需要走 HTTPS，所以還需要擁有自己的網域和 SSL 憑證。在這部份，我們可以透過使用 <code>nip.io</code> 以及 <code>certbot</code> 來達成。</p>
+<h2 id="1-gcp">1. GCP</h2>
+<p>在 GCP 上，每個 Google 帳號都可以免費試用 90 天或 300 美元的額度，因此我們可以在 GCP 上建立 VM 或 Kubernetes 而不需要花費任何費用。</p>
+<p>首先，我們需要在 GCP 上建立一個 VM 作為我們的開發環境，同時作為 Bot 的執行地方，並使用 Ubuntu 20.04 作為軟體平台。在建立 VM 後，VM 的外部 IP 位址預設是臨時的，這意味著每當 VM 重啟時 IP 位址可能會更改。這會導致每次都需要重新設定 Webhook 的位置。因此，我們可以按照下圖所示的方式進行修改。</p>
+<center><img src="/assets/2023-04-22-TelegramBot_GCP/2023-04-22-TelegramBot_GCP-20230422023913.png" width="750"></center>
+<center><img src="/assets/2023-04-22-TelegramBot_GCP/2023-04-22-TelegramBot_GCP-20230422024237.png" width="750"></center>
+<p>進去之後就依照妳想要的做填寫，&ldquo;連接到:&rdquo; 的部分則選擇妳剛剛創建的 VM ，最後就可以看到如第一張圖一樣 &ldquo;外部 IP 位址&rdquo; 已經變成固定的。</p>
+<center><img src="/assets/2023-04-22-TelegramBot_GCP/2023-04-22-TelegramBot_GCP-20230422024535.png" width="750"></center>
+<p>到這邊為止我們的1、2步驟就完成了。接下來就會透過 Flask 來建立我們 Bot 的 API。</p>
+<h2 id="2-flask-and-telegram-bot">2. Flask and Telegram bot</h2>
+<h3 id="21-flask-是什麼">2.1 Flask 是什麼</h3>
+<p>Flask 是一個輕量級的 Python Web 框架，它的目標是簡單易用。它提供了基本的 Web 開發工具和一些可擴展的插件，可以幫助開發者快速構建 Web 應用程序。可以通過很短的程式就運行起來，下面為一個最簡單的範例，並通過 python 指令執行即可啟動。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># flask_test.py</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">Flask</span><span class="p">,</span> <span class="n">render_template</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">app</span> <span class="o">=</span> <span class="n">Flask</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">index</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="s1">&#39;Hello, World!&#39;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/about&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">about</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">render_template</span><span class="p">(</span><span class="s1">&#39;about.html&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">     
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li><strong>/</strong> 路由 ( 根目錄 )，當用戶訪問應用程序的根路徑時，會顯示 <strong>&ldquo;Hello, World !&rdquo;</strong>。</li>
+<li><em><strong>/about</strong></em> 路由，當用戶訪問 <strong>/about</strong> 時，會顯示一個渲染的 HTML 頁面，該頁面可以在 templates 文件夾中找到。</li>
+</ul>
+<p>由於 Flask 預設是使用 port 5000，所以只需要輸入 <a href="http://127.0.0.1:5000" target="_blank" rel="noopener noreffer ">http://127.0.0.1:5000</a> 就可以看到 &ldquo;Hello, World !&rdquo; 的頁面。</p>
+<h3 id="22-telegram-bot">2.2 Telegram bot</h3>
+<p>在開始寫程式之前我們會需要先創建一個自己的 telegram bot，如何創建機器人並且取得 Bot 的 access token 的部分網路資源都蠻多的就不多敘述。</p>
+<p>這邊我們會使用 python 中的 <strong>python-telegram-bot</strong> 套件來運行我們的 Bot 程式，我安裝的版本號為 <code>13.15</code>。可以通過下面的指令進行安裝</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">pip install python-telegram-bot<span class="o">==</span>13.15
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>安裝好之後就可以開始寫一個簡單的範例程式，其中 <code>config.ini</code> 可以用來記錄 <strong>Token 和 webhook url</strong>，這樣會比較方便管理。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-ini" data-lang="ini"><span class="line"><span class="cl"><span class="c1"># config.ini</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">[TELEGRAM]</span>
+</span></span><span class="line"><span class="cl"><span class="na">ACCESS_TOKEN</span> <span class="o">=</span> <span class="s">&lt;Telegram Bot Token&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="na">WEBHOOK_URL</span> <span class="o">=</span> <span class="s">&lt;Webhook Url&gt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># main.py</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">logging</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">configparser</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">Flask</span><span class="p">,</span> <span class="n">request</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">requests</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">telegram</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">telegram</span> <span class="kn">import</span> <span class="n">Update</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">telegram.ext</span> <span class="kn">import</span> <span class="n">Updater</span><span class="p">,</span> <span class="n">Filters</span><span class="p">,</span> <span class="n">CallbackContext</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">telegram.ext</span> <span class="kn">import</span> <span class="n">MessageHandler</span><span class="p">,</span> <span class="n">CommandHandler</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Load data from config.ini file</span>
+</span></span><span class="line"><span class="cl"><span class="n">config</span> <span class="o">=</span> <span class="n">configparser</span><span class="o">.</span><span class="n">ConfigParser</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="n">config</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="s1">&#39;config.ini&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 設定 bot token 和 webhook URL</span>
+</span></span><span class="line"><span class="cl"><span class="n">TOKEN</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s1">&#39;TELEGRAM&#39;</span><span class="p">][</span><span class="s1">&#39;ACCESS_TOKEN&#39;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="n">WEBHOOK_URL</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s1">&#39;TELEGRAM&#39;</span><span class="p">][</span><span class="s1">&#39;WEBHOOK_URL&#39;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 之後用來設定 Bot 的 webhook</span>
+</span></span><span class="line"><span class="cl"><span class="n">Info_Webhook_URL</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&#34;https://api.telegram.org/bot</span><span class="si">{</span><span class="n">TOKEN</span><span class="si">}</span><span class="s2">/getWebhookInfo&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">Set_Webhook_URL</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&#34;https://api.telegram.org/bot</span><span class="si">{</span><span class="n">TOKEN</span><span class="si">}</span><span class="s2">/setWebhook?url=</span><span class="si">{</span><span class="n">WEBHOOK_URL</span><span class="si">}</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">Delete_WebhookInfo_URL</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&#34;https://api.telegram.org/bot</span><span class="si">{</span><span class="n">TOKEN</span><span class="si">}</span><span class="s2">/deleteWebhook&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 創建 Flask 應用程序對象</span>
+</span></span><span class="line"><span class="cl"><span class="n">app</span> <span class="o">=</span> <span class="n">Flask</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 定義 /start 指令處理函式</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">start</span><span class="p">(</span><span class="n">update</span><span class="p">:</span> <span class="n">Update</span><span class="p">,</span> <span class="n">context</span><span class="p">:</span> <span class="n">CallbackContext</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">context</span><span class="o">.</span><span class="n">bot</span><span class="o">.</span><span class="n">send_message</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">        <span class="n">chat_id</span><span class="o">=</span><span class="n">update</span><span class="o">.</span><span class="n">message</span><span class="o">.</span><span class="n">chat</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&#34;歡迎使用本機器人！&#34;</span><span class="p">)</span>  
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">reply_handler</span><span class="p">(</span><span class="n">update</span><span class="p">:</span> <span class="n">Update</span><span class="p">,</span> <span class="n">context</span><span class="p">:</span> <span class="n">CallbackContext</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;Reply message.&#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">update</span><span class="o">.</span><span class="n">message</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">context</span><span class="o">.</span><span class="n">bot</span><span class="o">.</span><span class="n">send_message</span><span class="p">(</span><span class="n">chat_id</span><span class="o">=</span><span class="n">update</span><span class="o">.</span><span class="n">message</span><span class="o">.</span><span class="n">chat</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="n">update</span><span class="o">.</span><span class="n">message</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 定義 webhook 接收請求的路由</span>
+</span></span><span class="line"><span class="cl"><span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/callback&#39;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;POST&#39;</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">webhook</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 從 POST 請求中解析更新</span>
+</span></span><span class="line"><span class="cl">    <span class="n">update</span> <span class="o">=</span> <span class="n">telegram</span><span class="o">.</span><span class="n">Update</span><span class="o">.</span><span class="n">de_json</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">get_json</span><span class="p">(</span><span class="n">force</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="n">updater</span><span class="o">.</span><span class="n">bot</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">   
+</span></span><span class="line"><span class="cl">	<span class="c1"># 將更新傳遞給調度器進行處理</span>
+</span></span><span class="line"><span class="cl">    <span class="n">updater</span><span class="o">.</span><span class="n">dispatcher</span><span class="o">.</span><span class="n">process_update</span><span class="p">(</span><span class="n">update</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="c1"># 回應 OK 狀態碼</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="s1">&#39;OK&#39;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">updater</span> <span class="o">=</span> <span class="n">Updater</span><span class="p">(</span><span class="n">TOKEN</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">updater</span><span class="o">.</span><span class="n">dispatcher</span><span class="o">.</span><span class="n">add_handler</span><span class="p">(</span><span class="n">MessageHandler</span><span class="p">(</span><span class="n">Filters</span><span class="o">.</span><span class="n">text</span> <span class="o">&amp;</span> <span class="o">~</span><span class="n">Filters</span><span class="o">.</span><span class="n">command</span><span class="p">,</span> <span class="n">reply_handler</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl"><span class="n">updater</span><span class="o">.</span><span class="n">dispatcher</span><span class="o">.</span><span class="n">add_handler</span><span class="p">(</span><span class="n">CommandHandler</span><span class="p">(</span><span class="s2">&#34;start&#34;</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="n">start</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&#34;__main__&#34;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">Delete_WebhookInfo_URL</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">Set_Webhook_URL</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">Info_Webhook_URL</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">debug</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">5000</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="details admonition tip open">
+        <div class="details-summary admonition-title">
+            <i class="icon fas fa-lightbulb fa-fw" aria-hidden="true"></i>Tip<i class="details-icon fas fa-angle-right fa-fw" aria-hidden="true"></i>
+        </div>
+        <div class="details-content">
+            <div class="admonition-content"><p><code>add_handler</code>的順序會影響訊息的結果。例如後續可能會使用到的 <strong>ConversationHandler</strong> 如果放在 <strong>MessageHandler</strong> 之後，就有可能造成需要傳遞給 ConversationHandler 的資料被 MessageHandler 搶走。以下這兩種有可能產生不同的結果。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">updater</span><span class="o">.</span><span class="n">dispatcher</span><span class="o">.</span><span class="n">add_handler</span><span class="p">(</span><span class="n">Conversation</span><span class="o">.</span><span class="n">conv_handler</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">updater</span><span class="o">.</span><span class="n">dispatcher</span><span class="o">.</span><span class="n">add_handler</span><span class="p">(</span><span class="n">MessageHandler</span><span class="p">(</span><span class="o">~</span><span class="n">Filters</span><span class="o">.</span><span class="n">command</span><span class="p">,</span> <span class="n">reply_handler</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># OR</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">updater</span><span class="o">.</span><span class="n">dispatcher</span><span class="o">.</span><span class="n">add_handler</span><span class="p">(</span><span class="n">MessageHandler</span><span class="p">(</span><span class="o">~</span><span class="n">Filters</span><span class="o">.</span><span class="n">command</span><span class="p">,</span> <span class="n">reply_handler</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl"><span class="n">updater</span><span class="o">.</span><span class="n">dispatcher</span><span class="o">.</span><span class="n">add_handler</span><span class="p">(</span><span class="n">Conversation</span><span class="o">.</span><span class="n">conv_handler</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></div>
+        </div>
+    </div>
+<p>其中可以 57、58 行的 <code>MessageHandler</code>、<code>CommandHandler</code>，它們是主要用於處理不同種類訊息的處理器。</p>
+<ul>
+<li>
+<p><em><strong>CommandHandler</strong></em> : <strong>處理命令</strong>訊息的處理器，當用戶在聊天中輸入以 / 開頭的文字，Bot 會收到一個命令訊息，例如 /start。CommandHandler 可以根據不同的命令，執行不同的操作，例如回覆用戶、儲存用戶數據、發送響應訊息等。</p>
+</li>
+<li>
+<p><em><strong>MessageHandler</strong></em> : 是<strong>處理普通訊息</strong>的處理器，當用戶在聊天中發送文字、圖片、語音、影片等訊息時，Bot 會收到一個普通訊息。MessageHandler 可以根據不同的訊息類型，執行不同的操作，例如回覆用戶、儲存用戶數據、發送響應訊息等。</p>
+</li>
+</ul>
+<blockquote>
+<p>其中可以看到 MessageHandler 中的 <code>Filters.text</code> 和 <code>~Filters.command</code>，這邊主要是用來進一步篩選使用者傳送的資訊。</p>
+<ul>
+<li><em><strong>Filters.text</strong></em> : 代表純文字的訊息可以接收。</li>
+<li><em><strong>~Filters.command</strong></em> : 代表不接受指令相關的訊息 ( 例如: /start )。如果想要他也接收的話可以把前面的 <strong>&quot;~&quot;</strong> 去除掉。</li>
+</ul>
+</blockquote>
+<h3 id="23-ngrok-測試">2.3 ngrok 測試</h3>
+<p>現在我們已經有了一個簡易的 Telegram Bot 的程式了，接者就是要來測試這個程式是否可以順利運行。我們可以透過 ngrok 這個軟體來進行測試。ngrok 是一款開源的<strong>反向代理軟體</strong>，它可以將本地應用程序公開到公共網路。讓大家通過它提供的網址讓外部流量轉發到本地應用程式上。</p>
+<p>首先，先到官網上下載 <a href="https://ngrok.com/download" target="_blank" rel="noopener noreffer ">ngrok</a> 。下載好之後執行下方指令後，就可以看到下圖中紅色方框內的網址就是可以讓外部設備連線到本地應用的 URL。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">ngrok http <span class="m">5000</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><center><img src="/assets/2023-04-22-TelegramBot_GCP/2023-04-22-TelegramBot_GCP-20230422203629.png" width="750"></center>
+<p>將這個 URL 複製並添加到 <a href="#22-telegram-bot" rel="">2.2</a> 中創建的 <strong>config.ini</strong> 檔案中的 <strong>WEBHOOK_URL</strong> 中。但是最後還必須要加上 <code>/callback</code> 才可以，這是因為設定 flask 的時候所設定的。所以最後的 config.ini 就會長這樣。這樣，應用程式就可以使用 ngrok 提供的 URL 來接收來自 Telegram 伺服器的 Webhook 請求了。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-ini" data-lang="ini"><span class="line"><span class="cl"><span class="c1"># config.ini</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">[TELEGRAM]</span>
+</span></span><span class="line"><span class="cl"><span class="na">ACCESS_TOKEN</span> <span class="o">=</span> <span class="s">&lt;Telegram Bot Token&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="na">WEBHOOK_URL</span> <span class="o">=</span> <span class="s">https://3cbe-114-24-61-19.jp.ngrok.io/callback</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>但是因為這個只是為了方便做程式上的測試使用，而且 ngrok 所提供的 URL 也是有時間限制的。所以我們接下來會透過 <strong>nip.io</strong> 和 <strong>certbot</strong> 建立一個自己的公開網址。</p>
+<h2 id="3-nginx-和-公開網址">3. Nginx 和 公開網址</h2>
+<p>由於 Telegram 伺服器所傳送過來資料都必須要採用 <code>https</code> 的方式，所以我們必須要註冊一個 SSL 的憑證來達到 https 的功能</p>
+<h3 id="31-overview">3.1 Overview</h3>
+<h4 id="nipio">nip.io</h4>
+<p>Nip.io 是一個特殊的 DNS 服務，它可以讓我們使用 IP 地址作為域名來訪問網站，而無需設置本地 DNS。例如，IP 地址為 10.0.0.1，就可以使用 10.0.0.1.nip.io 這樣的域名來訪問網站。</p>
+<h4 id="certbot">certbot</h4>
+<p>Certbot 是一個免費、開源的工具，它可以簡化 HTTPS 通信的部署過程，並且提供自動化的 SSL/TLS 憑證管理和更新。Certbot 可以自動化地向 Let&rsquo;s Encrypt 獲取 SSL/TLS 憑證，並且自動部署在您的網站上，從而實現簡化且安全的 HTTPS 部署。</p>
+<h4 id="nginx">Nginx</h4>
+<p>Nginx 是一個高性能的、開源的網頁伺服器和反向代理服務器。它被廣泛地應用於網站和應用程式的部署中，並且在處理高流量和低延遲的網路應用程式時表現出色。</p>
+<p>Nginx 支持多種網頁服務器、反向代理和負載平衡的功能，例如靜態文件服務、動態內容的處理、HTTP/2 協議、SSL/TLS 加密、IP 限制、基於 URI 的路由、緩存、安全性等等。Nginx 還具有高可擴展性和高可定制性，它可以通過模組化的方式擴展和定制其功能，並且可以輕鬆地整合到現有的系統中。</p>
+<p>在實際生產環境中 nginx 會比 ngrok 來的要好及穩定。</p>
+<h3 id="32-流程">3.2 流程</h3>
+<p>這邊的流程我們透過 nip.io 和 certbot 搞定 https 之後。<strong>將我們的 Bot 透過 Flask 運行在本地端，接者將 nginx 作為我們對外的接口，當外部流量進來的時候可以透過 nginx 轉發到 bot 上面。</strong></p>
+<h3 id="33-nginx-安裝--ssl-申請">3.3 Nginx 安裝 &amp; SSL 申請</h3>
+<h4 id="331-nginx-安裝">3.3.1 Nginx 安裝</h4>
+<p>在 GCP 的 VM 中透過下面的指令安裝 nginx。安裝完成之後在瀏覽器輸入 <code>http://&lt;VM_IP&gt;</code> 就可以看到 nginx 成功執行的畫面</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo apt-get install nginx
+</span></span><span class="line"><span class="cl">sudo systemctl start nginx
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>檢查 Nginx 配置檔案是否正確，<code>/etc/nginx/nginx.conf</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo nginx -t
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="332-ssl-申請">3.3.2 SSL 申請</h4>
+<p>我們可以透過上面提到的 <a href="https://certbot.eff.org/instructions?ws=nginx&amp;os=ubuntufocal" target="_blank" rel="noopener noreffer ">Certbot</a> 進行申請SSL，根據自己的系統進行選擇，這邊我是選擇 <code>nginx</code> 和 <code>Ubuntu 20</code>。</p>
+<center><img src="/assets/2023-04-22-TelegramBot_GCP/2023-04-22-TelegramBot_GCP-20230422230026.png" width="750"></center>
+<p><strong>Certbot 需要使用到<code>snapd</code>。確認是否有安裝到 snapd。</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">snap version
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>確保 snapd 是最新版</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo snap install core<span class="p">;</span> sudo snap refresh core
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>安裝 Certbot</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo snap install --classic certbot
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>確保 Certbot 指令可以運作</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo ln -s /snap/bin/certbot /usr/bin/certbot
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>Run Certbot，並且讓他自動幫你修改 nginx 的設定檔</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">sudo certbot --nginx
+</span></span></code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>過程中會要輸入一些資料，其中 <code>domain</code> 的部分就輸入 <code>&lt;VM_IP&gt;.nip.io</code> 即可，或是本身就有其他的 domain 也可以用在這邊</p>
+</blockquote>
+<p><strong>檢查自動訂閱 SSL</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo certbot renew --dry-run
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>檢查 nginx 設定檔是否有錯誤並重啟</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo nginx -t
+</span></span><span class="line"><span class="cl">sudo systemctl reload nginx
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 如果有需要再執行</span>
+</span></span><span class="line"><span class="cl">sudo systemctl reload nginx
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>現在再通過 <code>https://&lt;VM_IP&gt;.nip.io</code> 應該就可以看到 nginx 成功的畫面了，如果有看到就代表成功。</p>
+<h3 id="34-nginx-轉發">3.4 Nginx 轉發</h3>
+<p>現在我們都已經設定好了，但是還沒有將外部流量轉發到 bot 上面，所以 telegram 伺服器還沒有辦法與 bot 溝通。</p>
+<p>我們 bot 會在 VM 的本地端運行。所以現在的流程是需要將 <code>https://&lt;VM_IP&gt;.nip.io/callback</code> 的流量轉發到 <code>http://127.0.0.1:5000/callback</code> ( Bot 的接口 ) 上面</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">cd</span> /etc/nginx/sites-available
+</span></span><span class="line"><span class="cl">sudo vim default
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>在 server 的 <strong>{ }</strong> 之中添加下面的程式</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">location /callback <span class="o">{</span>
+</span></span><span class="line"><span class="cl">		proxy_pass http://127.0.0.1:5000<span class="p">;</span>
+</span></span><span class="line"><span class="cl">		proxy_set_header Host <span class="nv">$host</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">		proxy_set_header X-Real-IP <span class="nv">$remote_addr</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li><em><strong>/callback</strong></em> 代表從哪個地方接收到的，要根據你 bot 的接口位置修改</li>
+<li><em><strong>proxy_pass</strong></em> 代表要轉發到的 address</li>
+</ul>
+<p><strong>最後，檢查 nginx 設定檔是否有錯誤並重啟</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo nginx -t
+</span></span><span class="line"><span class="cl">sudo systemctl reload nginx
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="35-完成">3.5 完成</h2>
+<p>現在全部的事情都完畢了，我們只需要執行 Bot 後，到 Telegram 中輸入 <code>/start</code> 就可以看到我們的機器人有正常的回覆了</p>
+<center><img src="/assets/2023-04-22-TelegramBot_GCP/2023-04-22-TelegramBot_GCP-20230422233629.png" width="500"></center>
+<p><strong>現在我們的程式都是運行在 VM 上面，這樣除了不好維護之外也不易管理。所以，下一步我們就是要使用到 <code>container</code> 的技術來將我們的機器人運行到 <code>Docker</code> 上面。</strong></p>
+<h2 id="reference">Reference</h2>
+<ol>
+<li><a href="https://blog.jihongo.com/en/posts/2020/05/31/deploy-a-simple-flask-app-on-gcp-with-nginx/" target="_blank" rel="noopener noreffer ">Deploy a simple flask app on GCP with Nginx – JIHONGO&rsquo;s Blog</a></li>
+<li><a href="https://maxxsh.medium.com/setup-free-ssl-certificate-for-website-on-google-cloud-platform-90a249a6bce3" target="_blank" rel="noopener noreffer ">Setup SSL Certificate for Website on Google Cloud Platform | by Max Shestov | Medium</a></li>
+<li><a href="https://zaoldyeck.medium.com/%E6%89%8B%E6%8A%8A%E6%89%8B%E6%95%99%E4%BD%A0%E6%80%8E%E9%BA%BC%E6%89%93%E9%80%A0-telegram-bot-a7b539c3402a" target="_blank" rel="noopener noreffer ">（一）一步步打造 Telegram Bot. 最近因為一些契機學了 Python 3，用它做了一個 Telegram… | by zaoldyeck | Medium</a></li>
+</ol>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            </div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://z416352.github.io/posts/dev/2023/04-telegrambot_gcp/" data-title="[Bot系列 1] 在 GCP 上面建立一個自己的 Telegram Bot" data-hashtags="程式,Bot"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://z416352.github.io/posts/dev/2023/04-telegrambot_gcp/" data-hashtag="程式"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://z416352.github.io/posts/dev/2023/04-telegrambot_gcp/" data-title="[Bot系列 1] 在 GCP 上面建立一個自己的 Telegram Bot"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://z416352.github.io/posts/dev/2023/04-telegrambot_gcp/" data-title="[Bot系列 1] 在 GCP 上面建立一個自己的 Telegram Bot" data-image="/assets/2023-04-22-TelegramBot_GCP/2023-04-22-TelegramBot_GCP-20230620013056.png"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Blogger" data-sharer="blogger" data-url="https://z416352.github.io/posts/dev/2023/04-telegrambot_gcp/" data-title="[Bot系列 1] 在 GCP 上面建立一個自己的 Telegram Bot" data-description=""><i class="fab fa-blogger fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/%E7%A8%8B%E5%BC%8F/">程式</a>,&nbsp;<a href="/tags/bot/">Bot</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主頁</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/order_flow/2022/11-order_flow_ch1/" class="prev" rel="prev" title="[交易Ch1] 什麼叫做訂單流交易 ? 流動性又是什麼 ?"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>[交易Ch1] 什麼叫做訂單流交易 ? 流動性又是什麼 ?</a><br><br>
+    </div>
+</div>
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+
+(function() {
+    
+    
+    
+    
+
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    
+    var disqus_shortname = 'ch416352';
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com/" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.105.0">Hugo</a> 強力驅動 | 主題 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2022 - 2023</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">Joshua</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a> <span id="busuanzi_container_site_uv">
+  總瀏覽<span id="busuanzi_value_site_uv"></span>次
+</span></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到頂部">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看評論">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/typeit@8.6.0/dist/index.umd.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"複製到剪貼板","maxShownLines":20},"data":{"id-1":"Joshua's Blog","id-2":"Joshua's Blog"},"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"id-1":["id-1"],"id-2":["id-2"]},"duration":-1,"speed":100}};</script><script type="text/javascript" src="/js/theme.min.js"></script><script type="text/javascript">
+            window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
+            gtag('config', 'G-4NTY87FQMQ', { 'anonymize_ip': true });
+        </script><script type="text/javascript" src="https://www.googletagmanager.com/gtag/js?id=G-4NTY87FQMQ" async></script></body>
+</html>
