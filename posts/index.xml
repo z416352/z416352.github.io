@@ -1,12 +1,10 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
-        <title>Joshua&#39;s Blog</title>
-        <link>https://z416352.github.io/</link>
-        <description>Hugo theme - LoveIt</description>
+        <title>所有文章 - Joshua&#39;s Blog</title>
+        <link>https://z416352.github.io/posts/</link>
+        <description>所有文章 | Joshua&#39;s Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-TW</language><managingEditor>ch416352@gmail.com (Joshua)</managingEditor>
-            <webMaster>ch416352@gmail.com (Joshua)</webMaster><lastBuildDate>Sat, 22 Apr 2023 00:19:45 &#43;0800</lastBuildDate>
-            <atom:link href="https://z416352.github.io/index.xml" rel="self" type="application/rss+xml" />
-        <item>
+            <webMaster>ch416352@gmail.com (Joshua)</webMaster><lastBuildDate>Sat, 22 Apr 2023 00:19:45 &#43;0800</lastBuildDate><atom:link href="https://z416352.github.io/posts/" rel="self" type="application/rss+xml" /><item>
     <title>[Bot系列 1] 在 GCP 上面建立一個自己的 Telegram Bot</title>
     <link>https://z416352.github.io/posts/dev/2023/04/telegrambot_gcp/telegrambot_gcp/</link>
     <pubDate>Sat, 22 Apr 2023 00:19:45 &#43;0800</pubDate>

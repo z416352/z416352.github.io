@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Hugo 中一些好用的語法 - Joshua&#39;s Blog</title><meta name="Description" content="Hugo theme - LoveIt"><meta property="og:title" content="Hugo 中一些好用的語法" />
+<meta property="og:description" content="1. Admonition 主要可以用來 Highlight 一些重要的東西，需要自行補兩個{{ }}，如下圖
+1 2 3 &lt; admonition type=tip title=&#34;This is a tip&#34; open=true &gt; Some tips... &lt; /admonition &gt; Admonition type 允許的類別 note This is a NoteSome Note... abstract This is a AbstractSome Abstract... info This is a InfoSome Info... tip This is a TipSome Tip... success This is a SuccessSome Success... question This is a QuestionSome Question... Warning This is a WarningSome Warning." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://z416352.github.io/posts/hugo/2022/11/hugo_grammar/2022-11-08-hugo_grammar/" /><meta property="og:image" content="https://z416352.github.io/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-11-08T13:42:18+08:00" />
+<meta property="article:modified_time" content="2022-11-08T13:42:18+08:00" /><meta property="og:site_name" content="My cool site" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://z416352.github.io/logo.png"/>
+
+<meta name="twitter:title" content="Hugo 中一些好用的語法"/>
+<meta name="twitter:description" content="1. Admonition 主要可以用來 Highlight 一些重要的東西，需要自行補兩個{{ }}，如下圖
+1 2 3 &lt; admonition type=tip title=&#34;This is a tip&#34; open=true &gt; Some tips... &lt; /admonition &gt; Admonition type 允許的類別 note This is a NoteSome Note... abstract This is a AbstractSome Abstract... info This is a InfoSome Info... tip This is a TipSome Tip... success This is a SuccessSome Success... question This is a QuestionSome Question... Warning This is a WarningSome Warning."/>
+<meta name="application-name" content="My cool site">
+<meta name="apple-mobile-web-app-title" content="My cool site"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="/images/avatar.jpg"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://z416352.github.io/posts/hugo/2022/11/hugo_grammar/2022-11-08-hugo_grammar/" /><link rel="prev" href="https://z416352.github.io/posts/hugo/2022/11/hugo_image/2022-11-07-hugo_image/" /><link rel="next" href="https://z416352.github.io/posts/order_flow/2022/11/order_flow_ch1/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Hugo 中一些好用的語法",
+        "inLanguage": "zh-TW",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/z416352.github.io\/posts\/hugo\/2022\/11\/hugo_grammar\/2022-11-08-hugo_grammar\/"
+        },"genre": "posts","keywords": "Hugo","wordcount":  135 ,
+        "url": "https:\/\/z416352.github.io\/posts\/hugo\/2022\/11\/hugo_grammar\/2022-11-08-hugo_grammar\/","datePublished": "2022-11-08T13:42:18+08:00","dateModified": "2022-11-08T13:42:18+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "Joshua"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Joshua&#39;s Blog"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/images/avatar.jpg"
+        data-srcset="/images/avatar.jpg, /images/avatar.jpg 1.5x, /images/avatar.jpg 2x"
+        data-sizes="auto"
+        alt="/images/avatar.jpg"
+        title="/images/avatar.jpg" /><span id="id-1" class="typeit"></span></a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> Posts </a><a class="menu-item" href="/tags/"> Tags </a><a class="menu-item" href="/categories/"> Categories </a><a class="menu-item" href="/about/"> About </a><span class="menu-item delimiter"></span><a href="javascript:void(0);" class="menu-item theme-switch" title="切換主題">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Joshua&#39;s Blog"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/images/avatar.jpg"
+        data-srcset="/images/avatar.jpg, /images/avatar.jpg 1.5x, /images/avatar.jpg 2x"
+        data-sizes="auto"
+        alt="/images/avatar.jpg"
+        title="/images/avatar.jpg" /><span id="id-2" class="typeit"></span></a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><a class="menu-item" href="/posts/" title="">Posts</a><a class="menu-item" href="/tags/" title="">Tags</a><a class="menu-item" href="/categories/" title="">Categories</a><a class="menu-item" href="/about/" title="">About</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切換主題">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目錄</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Hugo 中一些好用的語法</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Joshua</a></span>&nbsp;<span class="post-category">收錄於 <a href="/categories/hugo%E7%B3%BB%E5%88%97/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Hugo系列</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-11-08">2022-11-08</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;約 135 字&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;預計閱讀 1 分鐘&nbsp;</div>
+        </div><div class="featured-image"><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="../2022-11-08-Hugo_grammar-20230620013308.png"
+        data-srcset="../2022-11-08-Hugo_grammar-20230620013308.png, ../2022-11-08-Hugo_grammar-20230620013308.png 1.5x, ../2022-11-08-Hugo_grammar-20230620013308.png 2x"
+        data-sizes="auto"
+        alt="../2022-11-08-Hugo_grammar-20230620013308.png"
+        title="../2022-11-08-Hugo_grammar-20230620013308.png" /></div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>目錄</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#1-admonition">1. Admonition</a>
+      <ul>
+        <li><a href="#admonition-type-允許的類別">Admonition type 允許的類別</a></li>
+      </ul>
+    </li>
+    <li><a href="#2-修改文字顏色與大小">2. 修改文字顏色與大小</a></li>
+    <li><a href="#參考">🔗參考</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="1-admonition">1. Admonition</h2>
+<p>主要可以用來 Highlight 一些重要的東西，需要自行補兩個<code>{{ }}</code>，如下圖</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">&lt; admonition type=tip title=&#34;This is a tip&#34; open=true &gt;
+</span></span><span class="line"><span class="cl">	Some tips...
+</span></span><span class="line"><span class="cl">&lt; /admonition &gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><img src="../2022-11-08-Hugo_grammar-20221108134414.png" width="600">
+<h3 id="admonition-type-允許的類別">Admonition type 允許的類別</h3>
+<ul>
+<li>
+<p>note
+<div class="details admonition note open">
+        <div class="details-summary admonition-title">
+            <i class="icon fas fa-pencil-alt fa-fw" aria-hidden="true"></i>This is a Note<i class="details-icon fas fa-angle-right fa-fw" aria-hidden="true"></i>
+        </div>
+        <div class="details-content">
+            <div class="admonition-content"><pre><code>Some Note...
+</code></pre>
+</div>
+        </div>
+    </div></p>
+</li>
+<li>
+<p>abstract
+<div class="details admonition abstract open">
+        <div class="details-summary admonition-title">
+            <i class="icon fas fa-list-ul fa-fw" aria-hidden="true"></i>This is a Abstract<i class="details-icon fas fa-angle-right fa-fw" aria-hidden="true"></i>
+        </div>
+        <div class="details-content">
+            <div class="admonition-content"><pre><code>Some Abstract...
+</code></pre>
+</div>
+        </div>
+    </div></p>
+</li>
+<li>
+<p>info
+<div class="details admonition info open">
+        <div class="details-summary admonition-title">
+            <i class="icon fas fa-info-circle fa-fw" aria-hidden="true"></i>This is a Info<i class="details-icon fas fa-angle-right fa-fw" aria-hidden="true"></i>
+        </div>
+        <div class="details-content">
+            <div class="admonition-content"><pre><code>Some Info...
+</code></pre>
+</div>
+        </div>
+    </div></p>
+</li>
+<li>
+<p>tip
+<div class="details admonition tip open">
+        <div class="details-summary admonition-title">
+            <i class="icon fas fa-lightbulb fa-fw" aria-hidden="true"></i>This is a Tip<i class="details-icon fas fa-angle-right fa-fw" aria-hidden="true"></i>
+        </div>
+        <div class="details-content">
+            <div class="admonition-content"><pre><code>Some Tip...
+</code></pre>
+</div>
+        </div>
+    </div></p>
+</li>
+<li>
+<p>success
+<div class="details admonition success open">
+        <div class="details-summary admonition-title">
+            <i class="icon fas fa-check-circle fa-fw" aria-hidden="true"></i>This is a Success<i class="details-icon fas fa-angle-right fa-fw" aria-hidden="true"></i>
+        </div>
+        <div class="details-content">
+            <div class="admonition-content"><pre><code>Some Success...
+</code></pre>
+</div>
+        </div>
+    </div></p>
+</li>
+<li>
+<p>question
+<div class="details admonition question open">
+        <div class="details-summary admonition-title">
+            <i class="icon fas fa-question-circle fa-fw" aria-hidden="true"></i>This is a Question<i class="details-icon fas fa-angle-right fa-fw" aria-hidden="true"></i>
+        </div>
+        <div class="details-content">
+            <div class="admonition-content"><pre><code>Some Question...
+</code></pre>
+</div>
+        </div>
+    </div></p>
+</li>
+<li>
+<p>Warning
+<div class="details admonition warning open">
+        <div class="details-summary admonition-title">
+            <i class="icon fas fa-exclamation-triangle fa-fw" aria-hidden="true"></i>This is a Warning<i class="details-icon fas fa-angle-right fa-fw" aria-hidden="true"></i>
+        </div>
+        <div class="details-content">
+            <div class="admonition-content"><pre><code>Some Warning...
+</code></pre>
+</div>
+        </div>
+    </div></p>
+</li>
+<li>
+<p>Failure
+<div class="details admonition failure open">
+        <div class="details-summary admonition-title">
+            <i class="icon fas fa-times-circle fa-fw" aria-hidden="true"></i>This is a Failure<i class="details-icon fas fa-angle-right fa-fw" aria-hidden="true"></i>
+        </div>
+        <div class="details-content">
+            <div class="admonition-content"><pre><code>Some Failure...
+</code></pre>
+</div>
+        </div>
+    </div></p>
+</li>
+<li>
+<p>Danger
+<div class="details admonition danger open">
+        <div class="details-summary admonition-title">
+            <i class="icon fas fa-skull-crossbones fa-fw" aria-hidden="true"></i>This is a Danger<i class="details-icon fas fa-angle-right fa-fw" aria-hidden="true"></i>
+        </div>
+        <div class="details-content">
+            <div class="admonition-content"><pre><code>Some Danger...
+</code></pre>
+</div>
+        </div>
+    </div></p>
+</li>
+<li>
+<p>Bug
+<div class="details admonition bug open">
+        <div class="details-summary admonition-title">
+            <i class="icon fas fa-bug fa-fw" aria-hidden="true"></i>This is a Bug<i class="details-icon fas fa-angle-right fa-fw" aria-hidden="true"></i>
+        </div>
+        <div class="details-content">
+            <div class="admonition-content"><pre><code>Some Bug...
+</code></pre>
+</div>
+        </div>
+    </div></p>
+</li>
+<li>
+<p>Example
+<div class="details admonition example open">
+        <div class="details-summary admonition-title">
+            <i class="icon fas fa-list-ol fa-fw" aria-hidden="true"></i>This is a Example<i class="details-icon fas fa-angle-right fa-fw" aria-hidden="true"></i>
+        </div>
+        <div class="details-content">
+            <div class="admonition-content"><pre><code>Some Example...
+</code></pre>
+</div>
+        </div>
+    </div></p>
+</li>
+<li>
+<p>Quote
+<div class="details admonition quote open">
+        <div class="details-summary admonition-title">
+            <i class="icon fas fa-quote-right fa-fw" aria-hidden="true"></i>This is a Quote<i class="details-icon fas fa-angle-right fa-fw" aria-hidden="true"></i>
+        </div>
+        <div class="details-content">
+            <div class="admonition-content"><pre><code>Some Quote...
+</code></pre>
+</div>
+        </div>
+    </div></p>
+</li>
+</ul>
+<h2 id="2-修改文字顏色與大小">2. 修改文字顏色與大小</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">&lt;font color=Yellow&gt;黃色&lt;/font&gt;
+</span></span><span class="line"><span class="cl">&lt;font color=#6F00D2 size=4&gt;紫色 大小為4&lt;/font&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>以下為實際顯示 :</p>
+<p><font color=Yellow>黃色</font></p>
+<p><font color=#6F00D2 size=6>紫色 大小為4</font></p>
+<p>🔗<a href="https://www.ifreesite.com/color/" target="_blank" rel="noopener noreffer ">色碼表參考網址</a></p>
+<h2 id="參考">🔗參考</h2>
+<ol>
+<li><a href="https://hugoloveit.com/zh-cn/theme-documentation-extended-shortcodes/" target="_blank" rel="noopener noreffer ">主题文档 - 扩展 Shortcodes - LoveIt (hugoloveit.com)</a></li>
+<li><a href="https://blog.csdn.net/heimu24/article/details/81189700" target="_blank" rel="noopener noreffer ">Markdown进阶（更改字体、颜色、大小，设置文字背景色，调整图片大小设置居中）_heimu24的博客-CSDN博客_markdown修改字体</a></li>
+</ol>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新於 2022-11-08</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://z416352.github.io/posts/hugo/2022/11/hugo_grammar/2022-11-08-hugo_grammar/" data-title="Hugo 中一些好用的語法" data-hashtags="Hugo"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://z416352.github.io/posts/hugo/2022/11/hugo_grammar/2022-11-08-hugo_grammar/" data-hashtag="Hugo"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://z416352.github.io/posts/hugo/2022/11/hugo_grammar/2022-11-08-hugo_grammar/" data-title="Hugo 中一些好用的語法"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://z416352.github.io/posts/hugo/2022/11/hugo_grammar/2022-11-08-hugo_grammar/" data-title="Hugo 中一些好用的語法" data-image="../2022-11-08-Hugo_grammar-20230620013308.png"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Blogger" data-sharer="blogger" data-url="https://z416352.github.io/posts/hugo/2022/11/hugo_grammar/2022-11-08-hugo_grammar/" data-title="Hugo 中一些好用的語法" data-description=""><i class="fab fa-blogger fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/hugo/">Hugo</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主頁</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/hugo/2022/11/hugo_image/2022-11-07-hugo_image/" class="prev" rel="prev" title="如何在 Hugo 中調整圖片大小與設定文章縮圖"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>如何在 Hugo 中調整圖片大小與設定文章縮圖</a>
+            <a href="/posts/order_flow/2022/11/order_flow_ch1/" class="next" rel="next" title="[交易Ch1] 什麼叫做訂單流交易 ? 流動性又是什麼 ?">[交易Ch1] 什麼叫做訂單流交易 ? 流動性又是什麼 ?<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+
+(function() {
+    
+    
+    
+    
+
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    
+    var disqus_shortname = 'ch416352';
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com/" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.105.0">Hugo</a> 強力驅動 | 主題 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2022 - 2023</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">Joshua</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到頂部">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看評論">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/typeit@8.6.0/dist/index.umd.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"複製到剪貼板","maxShownLines":20},"data":{"id-1":"Joshua's Blog","id-2":"Joshua's Blog"},"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"id-1":["id-1"],"id-2":["id-2"]},"duration":-1,"speed":100}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>
