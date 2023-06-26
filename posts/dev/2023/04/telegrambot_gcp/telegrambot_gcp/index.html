@@ -25,7 +25,7 @@ GCP VM 固定的 IP 位址 Flask nginx、ngrok 因為 Telegram 傳送給 Bot 的
 首先，我們需要在 GCP 上建立一個 VM 作為我們的開發環境，同時作為 Bot 的執行地方，並使用 Ubuntu 20.04 作為軟體平台。在建立 VM 後，VM 的外部 IP 位址預設是臨時的，這意味著每當 VM 重啟時 IP 位址可能會更改。這會導致每次都需要重新設定 Webhook 的位置。因此，我們可以按照下圖所示的方式進行修改。
 進去之後就依照妳想要的做填寫，&ldquo;連接到:&rdquo; 的部分則選擇妳剛剛創建的 VM ，最後就可以看到如第一張圖一樣 &ldquo;外部 IP 位址&rdquo; 已經變成固定的。"/>
 <meta name="application-name" content="My cool site">
-<meta name="apple-mobile-web-app-title" content="My cool site"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="/images/avatar.jpg"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://z416352.github.io/posts/dev/2023/04/telegrambot_gcp/telegrambot_gcp/" /><link rel="prev" href="https://z416352.github.io/posts/order_flow/2022/11/order_flow_ch1/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<meta name="apple-mobile-web-app-title" content="My cool site"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="/images/avatar.jpg"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://z416352.github.io/posts/dev/2023/04/telegrambot_gcp/telegrambot_gcp/" /><link rel="prev" href="https://z416352.github.io/posts/order_flow/2022/11/order_flow_ch1/" /><link rel="next" href="https://z416352.github.io/posts/dev/2023/02/kubernetes_tutorial_gcp/kubernetes_tutorial_gcp/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
         <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
         <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
     {
@@ -624,7 +624,8 @@ GCP VM 固定的 IP 位址 Flask nginx、ngrok 因為 Telegram 傳送給 Bot 的
         </section>
     </div>
 
-    <div class="post-nav"><a href="/posts/order_flow/2022/11/order_flow_ch1/" class="prev" rel="prev" title="[交易Ch1] 什麼叫做訂單流交易 ? 流動性又是什麼 ?"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>[交易Ch1] 什麼叫做訂單流交易 ? 流動性又是什麼 ?</a></div>
+    <div class="post-nav"><a href="/posts/order_flow/2022/11/order_flow_ch1/" class="prev" rel="prev" title="[交易Ch1] 什麼叫做訂單流交易 ? 流動性又是什麼 ?"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>[交易Ch1] 什麼叫做訂單流交易 ? 流動性又是什麼 ?</a>
+            <a href="/posts/dev/2023/02/kubernetes_tutorial_gcp/kubernetes_tutorial_gcp/" class="next" rel="next" title="如何在 GCP 上建立自己的 Kubernetes">如何在 GCP 上建立自己的 Kubernetes<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
 </div>
 <div id="disqus_thread"></div>
 <script type="text/javascript">

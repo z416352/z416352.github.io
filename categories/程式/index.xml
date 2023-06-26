@@ -4,7 +4,19 @@
         <link>https://z416352.github.io/categories/%E7%A8%8B%E5%BC%8F/</link>
         <description>程式 - 分類 - Joshua&#39;s Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-TW</language><managingEditor>ch416352@gmail.com (Joshua)</managingEditor>
-            <webMaster>ch416352@gmail.com (Joshua)</webMaster><lastBuildDate>Sat, 22 Apr 2023 00:19:45 &#43;0800</lastBuildDate><atom:link href="https://z416352.github.io/categories/%E7%A8%8B%E5%BC%8F/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>ch416352@gmail.com (Joshua)</webMaster><lastBuildDate>Mon, 26 Jun 2023 14:56:07 &#43;0800</lastBuildDate><atom:link href="https://z416352.github.io/categories/%E7%A8%8B%E5%BC%8F/" rel="self" type="application/rss+xml" /><item>
+    <title>如何在 GCP 上建立自己的 Kubernetes</title>
+    <link>https://z416352.github.io/posts/dev/2023/02/kubernetes_tutorial_gcp/kubernetes_tutorial_gcp/</link>
+    <pubDate>Mon, 26 Jun 2023 14:56:07 &#43;0800</pubDate>
+    <author>Joshua</author>
+    <guid>https://z416352.github.io/posts/dev/2023/02/kubernetes_tutorial_gcp/kubernetes_tutorial_gcp/</guid>
+    <description><![CDATA[<div class="featured-image">
+                <img src="/featuredImage.png" referrerpolicy="no-referrer">
+            </div>前言 Google Cloud Platform (GCP) 是由 Google 推出的雲端計算平台，提供各種雲端運算資源，包括虛擬機器、儲存等等。GCP 可以解決使用者本地電腦穩定性不足或是配備不夠的問題，使用者可以透過 GCP 創建屬於自己的虛擬機器，進而進行開發、分析資料或架設系統等等的工作。如果是新帳號使用者可以利用90天或300美金的體驗期來滿足自己短期的需求。
+1. 準備 在 GCP 上建立虛擬機 進入到 GCP 網站 中開始使用， 啟用 Compute Engine 功能。 點選 VM 執行個體後建立執行個體，區域的部分就近選擇台灣即可 其餘我採用的配備是 e2-medium (2 個 vCPU，4 GB 記憶體) Ubuntu 20.04 LTS (x86/64) 硬碟大小 50GB 這邊會需要配置兩台 VM 來充當 K8s 的 Master Node 和 Worker Node，配置完成後應該會可以看到跟下圖一樣的畫面 Kubernetes 安裝版本為 1.26.0-00 點選 SSH 就可以進入到 VM 的終端機操作畫面 到這邊在 GCP 上建立 VM 的內容就結束了，接下來就是如何將 Kubernetes 安裝在這兩台 VM 上面運行
+2. Master &amp; Worker node 設定 2.]]></description>
+</item>
+<item>
     <title>[Bot系列 1] 在 GCP 上面建立一個自己的 Telegram Bot</title>
     <link>https://z416352.github.io/posts/dev/2023/04/telegrambot_gcp/telegrambot_gcp/</link>
     <pubDate>Sat, 22 Apr 2023 00:19:45 &#43;0800</pubDate>

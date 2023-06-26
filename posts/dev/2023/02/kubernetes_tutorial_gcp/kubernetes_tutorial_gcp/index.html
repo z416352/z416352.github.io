@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>如何在 GCP 上建立自己的 Kubernetes - Joshua&#39;s Blog</title><meta name="Description" content="Hugo theme - LoveIt"><meta property="og:title" content="如何在 GCP 上建立自己的 Kubernetes" />
+<meta property="og:description" content="前言 Google Cloud Platform (GCP) 是由 Google 推出的雲端計算平台，提供各種雲端運算資源，包括虛擬機器、儲存等等。GCP 可以解決使用者本地電腦穩定性不足或是配備不夠的問題，使用者可以透過 GCP 創建屬於自己的虛擬機器，進而進行開發、分析資料或架設系統等等的工作。如果是新帳號使用者可以利用90天或300美金的體驗期來滿足自己短期的需求。
+1. 準備 在 GCP 上建立虛擬機 進入到 GCP 網站 中開始使用， 啟用 Compute Engine 功能。 點選 VM 執行個體後建立執行個體，區域的部分就近選擇台灣即可 其餘我採用的配備是 e2-medium (2 個 vCPU，4 GB 記憶體) Ubuntu 20.04 LTS (x86/64) 硬碟大小 50GB 這邊會需要配置兩台 VM 來充當 K8s 的 Master Node 和 Worker Node，配置完成後應該會可以看到跟下圖一樣的畫面 Kubernetes 安裝版本為 1.26.0-00 點選 SSH 就可以進入到 VM 的終端機操作畫面 到這邊在 GCP 上建立 VM 的內容就結束了，接下來就是如何將 Kubernetes 安裝在這兩台 VM 上面運行
+2. Master &amp; Worker node 設定 2." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://z416352.github.io/posts/dev/2023/02/kubernetes_tutorial_gcp/kubernetes_tutorial_gcp/" /><meta property="og:image" content="https://z416352.github.io/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-06-26T14:56:07+08:00" />
+<meta property="article:modified_time" content="2023-06-26T14:56:07+08:00" /><meta property="og:site_name" content="My cool site" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://z416352.github.io/logo.png"/>
+
+<meta name="twitter:title" content="如何在 GCP 上建立自己的 Kubernetes"/>
+<meta name="twitter:description" content="前言 Google Cloud Platform (GCP) 是由 Google 推出的雲端計算平台，提供各種雲端運算資源，包括虛擬機器、儲存等等。GCP 可以解決使用者本地電腦穩定性不足或是配備不夠的問題，使用者可以透過 GCP 創建屬於自己的虛擬機器，進而進行開發、分析資料或架設系統等等的工作。如果是新帳號使用者可以利用90天或300美金的體驗期來滿足自己短期的需求。
+1. 準備 在 GCP 上建立虛擬機 進入到 GCP 網站 中開始使用， 啟用 Compute Engine 功能。 點選 VM 執行個體後建立執行個體，區域的部分就近選擇台灣即可 其餘我採用的配備是 e2-medium (2 個 vCPU，4 GB 記憶體) Ubuntu 20.04 LTS (x86/64) 硬碟大小 50GB 這邊會需要配置兩台 VM 來充當 K8s 的 Master Node 和 Worker Node，配置完成後應該會可以看到跟下圖一樣的畫面 Kubernetes 安裝版本為 1.26.0-00 點選 SSH 就可以進入到 VM 的終端機操作畫面 到這邊在 GCP 上建立 VM 的內容就結束了，接下來就是如何將 Kubernetes 安裝在這兩台 VM 上面運行
+2. Master &amp; Worker node 設定 2."/>
+<meta name="application-name" content="My cool site">
+<meta name="apple-mobile-web-app-title" content="My cool site"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="/images/avatar.jpg"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://z416352.github.io/posts/dev/2023/02/kubernetes_tutorial_gcp/kubernetes_tutorial_gcp/" /><link rel="prev" href="https://z416352.github.io/posts/dev/2023/04/telegrambot_gcp/telegrambot_gcp/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "如何在 GCP 上建立自己的 Kubernetes",
+        "inLanguage": "zh-TW",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/z416352.github.io\/posts\/dev\/2023\/02\/kubernetes_tutorial_gcp\/kubernetes_tutorial_gcp\/"
+        },"genre": "posts","keywords": "程式, Kubernetes","wordcount":  692 ,
+        "url": "https:\/\/z416352.github.io\/posts\/dev\/2023\/02\/kubernetes_tutorial_gcp\/kubernetes_tutorial_gcp\/","datePublished": "2023-06-26T14:56:07+08:00","dateModified": "2023-06-26T14:56:07+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "Joshua"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Joshua&#39;s Blog"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/images/avatar.jpg"
+        data-srcset="/images/avatar.jpg, /images/avatar.jpg 1.5x, /images/avatar.jpg 2x"
+        data-sizes="auto"
+        alt="/images/avatar.jpg"
+        title="/images/avatar.jpg" /><span id="id-1" class="typeit"></span></a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> Posts </a><a class="menu-item" href="/tags/"> Tags </a><a class="menu-item" href="/categories/"> Categories </a><a class="menu-item" href="/about/"> About </a><span class="menu-item delimiter"></span><a href="javascript:void(0);" class="menu-item theme-switch" title="切換主題">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Joshua&#39;s Blog"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/images/avatar.jpg"
+        data-srcset="/images/avatar.jpg, /images/avatar.jpg 1.5x, /images/avatar.jpg 2x"
+        data-sizes="auto"
+        alt="/images/avatar.jpg"
+        title="/images/avatar.jpg" /><span id="id-2" class="typeit"></span></a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><a class="menu-item" href="/posts/" title="">Posts</a><a class="menu-item" href="/tags/" title="">Tags</a><a class="menu-item" href="/categories/" title="">Categories</a><a class="menu-item" href="/about/" title="">About</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切換主題">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目錄</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">如何在 GCP 上建立自己的 Kubernetes</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Joshua</a></span>&nbsp;<span class="post-category">收錄於 <a href="/categories/%E7%A8%8B%E5%BC%8F/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>程式</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-06-26">2023-06-26</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;約 692 字&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;預計閱讀 4 分鐘&nbsp;</div>
+        </div><div class="featured-image"><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="../featuredImage.png"
+        data-srcset="../featuredImage.png, ../featuredImage.png 1.5x, ../featuredImage.png 2x"
+        data-sizes="auto"
+        alt="../featuredImage.png"
+        title="../featuredImage.png" /></div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>目錄</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#前言">前言</a></li>
+    <li><a href="#1-準備">1. 準備</a>
+      <ul>
+        <li><a href="#在-gcp-上建立虛擬機">在 GCP 上建立虛擬機</a></li>
+      </ul>
+    </li>
+    <li><a href="#2-master--worker-node-設定">2. Master &amp; Worker node 設定</a>
+      <ul>
+        <li><a href="#21-更新與安裝套件">2.1 更新與安裝套件</a></li>
+        <li><a href="#22-forwarding-ipv4-and-letting-iptables-see-bridged-traffic">2.2 Forwarding IPv4 and letting iptables see bridged traffic</a></li>
+        <li><a href="#23-containerd-安裝">2.3 Containerd 安裝</a></li>
+      </ul>
+    </li>
+    <li><a href="#3-安裝-kubeadmkubeletkubectl">3. 安裝 Kubeadm、Kubelet、kubectl</a>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+    <li><a href="#4-佈署-pod-network-插件">4. 佈署 Pod Network 插件</a></li>
+    <li><a href="#5-worker-node-加入-cluster-中">5. Worker node 加入 Cluster 中</a></li>
+    <li><a href="#參考">🔗參考</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="前言">前言</h2>
+<p><strong>Google Cloud Platform (GCP)</strong> 是由 Google 推出的雲端計算平台，提供各種雲端運算資源，包括虛擬機器、儲存等等。GCP 可以解決使用者本地電腦穩定性不足或是配備不夠的問題，使用者可以透過 GCP 創建屬於自己的虛擬機器，進而進行開發、分析資料或架設系統等等的工作。如果是新帳號使用者可以利用<strong>90天或300美金</strong>的體驗期來滿足自己短期的需求。</p>
+<h2 id="1-準備">1. 準備</h2>
+<h3 id="在-gcp-上建立虛擬機">在 GCP 上建立虛擬機</h3>
+<ol>
+<li>進入到 <a href="https://console.cloud.google.com/" target="_blank" rel="noopener noreffer ">GCP 網站</a> 中開始使用，</li>
+<li>啟用 <strong>Compute Engine</strong> 功能。</li>
+<li>點選 <strong>VM 執行個體</strong>後<strong>建立執行個體</strong>，區域的部分就近選擇台灣即可</li>
+<li>其餘我採用的配備是
+<ul>
+<li>e2-medium (2 個 vCPU，4 GB 記憶體)</li>
+<li>Ubuntu 20.04 LTS (x86/64)</li>
+<li>硬碟大小 50GB</li>
+</ul>
+</li>
+<li>這邊會需要配置兩台 VM 來充當 K8s 的 Master Node 和 Worker Node，配置完成後應該會可以看到跟下圖一樣的畫面</li>
+<li><code>Kubernetes 安裝版本為 1.26.0-00</code></li>
+</ol>
+<center><img src="../2023-02-28-Kubernetes_tutorial_GCP-20230304120313.png" width="800"></center>
+<ol>
+<li>點選 <strong>SSH</strong> 就可以進入到 VM 的終端機操作畫面</li>
+</ol>
+<p><strong>到這邊在 GCP 上建立 VM 的內容就結束了，接下來就是如何將 Kubernetes 安裝在這兩台 VM 上面運行</strong></p>
+<h2 id="2-master--worker-node-設定">2. Master &amp; Worker node 設定</h2>
+<h3 id="21-更新與安裝套件">2.1 更新與安裝套件</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Bash" data-lang="Bash"><span class="line"><span class="cl">sudo apt update -y
+</span></span><span class="line"><span class="cl">sudo apt upgrade -y
+</span></span><span class="line"><span class="cl">sudo apt install vim net-tools wget -y
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="22-forwarding-ipv4-and-letting-iptables-see-bridged-traffic">2.2 Forwarding IPv4 and letting iptables see bridged traffic</h3>
+<ul>
+<li><a href="https://kubernetes.io/docs/setup/production-environment/container-runtimes/#install-and-configure-prerequisites" target="_blank" rel="noopener noreffer ">Install and configure prerequisites
+</a></li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Bash" data-lang="Bash"><span class="line"><span class="cl">cat <span class="s">&lt;&lt;EOF | sudo tee /etc/modules-load.d/k8s.conf
+</span></span></span><span class="line"><span class="cl"><span class="s">overlay
+</span></span></span><span class="line"><span class="cl"><span class="s">br_netfilter
+</span></span></span><span class="line"><span class="cl"><span class="s">EOF</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">sudo modprobe overlay
+</span></span><span class="line"><span class="cl">sudo modprobe br_netfilter
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># sysctl params required by setup, params persist across reboots</span>
+</span></span><span class="line"><span class="cl">cat <span class="s">&lt;&lt;EOF | sudo tee /etc/sysctl.d/k8s.conf
+</span></span></span><span class="line"><span class="cl"><span class="s">net.bridge.bridge-nf-call-iptables  = 1
+</span></span></span><span class="line"><span class="cl"><span class="s">net.bridge.bridge-nf-call-ip6tables = 1
+</span></span></span><span class="line"><span class="cl"><span class="s">net.ipv4.ip_forward                 = 1
+</span></span></span><span class="line"><span class="cl"><span class="s">EOF</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Apply sysctl params without reboot</span>
+</span></span><span class="line"><span class="cl">sudo sysctl --system
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ol start="2">
+<li>查看是否正常</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Bash" data-lang="Bash"><span class="line"><span class="cl">lsmod <span class="p">|</span> grep br_netfilter
+</span></span><span class="line"><span class="cl">lsmod <span class="p">|</span> grep overlay
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ol start="3">
+<li>看剛剛設定的值是否都 <strong>=1</strong>，最後的結果應該會跟下圖一樣</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Bash" data-lang="Bash"><span class="line"><span class="cl">sysctl net.bridge.bridge-nf-call-iptables net.bridge.bridge-nf-call-ip6tables net.ipv4.ip_forward
+</span></span></code></pre></td></tr></table>
+</div>
+</div><center><img src="../Forwarding and bridge setting.png" width="600"></center>
+<h3 id="23-containerd-安裝">2.3 Containerd 安裝</h3>
+<ul>
+<li><a href="https://docs.docker.com/engine/install/ubuntu/" target="_blank" rel="noopener noreffer ">Install Docker Engine on Ubuntu | Docker Documentation</a></li>
+</ul>
+<p>這邊還是推薦安裝 containerd，不推薦安裝 Docker，因為 K8s 後面的版本已經捨棄了 Docker。如果一定要安裝 Docker 還會需要多安裝一個 <strong>cri-dockerd</strong>，會比較複雜</p>
+<div class="details admonition note open">
+        <div class="details-summary admonition-title">
+            <i class="icon fas fa-pencil-alt fa-fw" aria-hidden="true"></i>如果有舊版的再執行<i class="details-icon fas fa-angle-right fa-fw" aria-hidden="true"></i>
+        </div>
+        <div class="details-content">
+            <div class="admonition-content"><p>移除舊版的 Docker、containerd</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Bash" data-lang="Bash"><span class="line"><span class="cl"> <span class="k">for</span> pkg in docker.io docker-doc docker-compose podman-docker containerd runc<span class="p">;</span> <span class="k">do</span> sudo apt-get remove <span class="nv">$pkg</span><span class="p">;</span> <span class="k">done</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></div>
+        </div>
+    </div>
+<ol>
+<li>安裝必要的套件</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Bash" data-lang="Bash"><span class="line"><span class="cl">sudo apt-get update
+</span></span><span class="line"><span class="cl">sudo apt-get install ca-certificates curl gnupg
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ol start="2">
+<li>添加 Docker 的官方 GPG 密鑰</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Bash" data-lang="Bash"><span class="line"><span class="cl">sudo install -m <span class="m">0755</span> -d /etc/apt/keyrings
+</span></span><span class="line"><span class="cl">curl -fsSL https://download.docker.com/linux/ubuntu/gpg <span class="p">|</span> sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+</span></span><span class="line"><span class="cl">sudo chmod a+r /etc/apt/keyrings/docker.gpg
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ol start="3">
+<li>使用以下命令設置存儲庫</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Bash" data-lang="Bash"><span class="line"><span class="cl"><span class="nb">echo</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>  <span class="s2">&#34;deb [arch=&#34;</span><span class="k">$(</span>dpkg --print-architecture<span class="k">)</span><span class="s2">&#34; signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
+</span></span></span><span class="line"><span class="cl"><span class="s2">  &#34;</span><span class="k">$(</span>. /etc/os-release <span class="o">&amp;&amp;</span> <span class="nb">echo</span> <span class="s2">&#34;</span><span class="nv">$VERSION_CODENAME</span><span class="s2">&#34;</span><span class="k">)</span><span class="s2">&#34; stable&#34;</span> <span class="p">|</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>  sudo tee /etc/apt/sources.list.d/docker.list &gt; /dev/null
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ol start="4">
+<li>安裝 containerd，這邊與官網的不一樣，這邊我們只需要安裝 containerd 就好，不需要安裝 Docker</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Bash" data-lang="Bash"><span class="line"><span class="cl">sudo apt-get update
+</span></span><span class="line"><span class="cl">sudo apt-get install containerd.io 
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ol start="5">
+<li>查看 containerd 安裝版本，如果正常安裝成功就會有下圖的樣子</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Bash" data-lang="Bash"><span class="line"><span class="cl">sudo ctr version
+</span></span></code></pre></td></tr></table>
+</div>
+</div><center><img src="../show conatinerd version.png" width="600"></center>
+<ol start="6">
+<li>產生 containerd 的 <code>config.toml</code> 檔案</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Bash" data-lang="Bash"><span class="line"><span class="cl"><span class="c1"># 先進入 root 模式</span>
+</span></span><span class="line"><span class="cl">sudo su
+</span></span><span class="line"><span class="cl">sudo containerd config default &gt; /etc/containerd/config.toml
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 離開 root 模式</span>
+</span></span><span class="line"><span class="cl"><span class="nb">exit</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ol start="7">
+<li>啟動 containerd 並查看狀態</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">sudo systemctl enable containerd
+</span></span><span class="line"><span class="cl">sudo systemctl restart containerd.service 
+</span></span><span class="line"><span class="cl">sudo systemctl status containerd.service
+</span></span></code></pre></td></tr></table>
+</div>
+</div><center><img src="../containerd status.png" width="750"></center>
+<h2 id="3-安裝-kubeadmkubeletkubectl">3. 安裝 Kubeadm、Kubelet、kubectl</h2>
+<ul>
+<li><a href="https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/#installing-kubeadm-kubelet-and-kubectl" target="_blank" rel="noopener noreffer ">Kubernetes 官網</a></li>
+</ul>
+<ol>
+<li>關閉 swap</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Bash" data-lang="Bash"><span class="line"><span class="cl">sudo swapoff -a
+</span></span><span class="line"><span class="cl">top
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ol start="2">
+<li>安裝相關套件</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Bash" data-lang="Bash"><span class="line"><span class="cl">sudo apt-get update
+</span></span><span class="line"><span class="cl">sudo apt-get install -y apt-transport-https ca-certificates curl
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ol start="3">
+<li>Download the Google Cloud public signing key</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Bash" data-lang="Bash"><span class="line"><span class="cl">curl -fsSL https://packages.cloud.google.com/apt/doc/apt-key.gpg <span class="p">|</span> sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-archive-keyring.gpg
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ol start="4">
+<li>Add the Kubernetes apt repository</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">echo &#34;deb [signed-by=/etc/apt/keyrings/kubernetes-archive-keyring.gpg] https://apt.kubernetes.io/ kubernetes-xenial main&#34; | sudo tee /etc/apt/sources.list.d/kubernetes.list
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ol start="5">
+<li>更新 apt repository</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Bash" data-lang="Bash"><span class="line"><span class="cl">sudo apt-get update
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ol start="6">
+<li>安裝 kubeadm &amp; kubelet &amp; kubectl</li>
+</ol>
+<p>這邊有兩個選擇，一個是安裝最新版本，另一個是安裝指定版本。我這邊是安裝 <code>1.26.0-00</code></p>
+<hr>
+<h4 id="安裝指定版本"><strong>安裝指定版本</strong></h4>
+<ol>
+<li>查看可安裝版本</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Bash" data-lang="Bash"><span class="line"><span class="cl">apt-cache madison kubeadm
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ol start="2">
+<li>安裝指定版本</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Bash" data-lang="Bash"><span class="line"><span class="cl"><span class="nv">K_VER</span><span class="o">=</span><span class="s2">&#34;&lt;version&gt;&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># ex : K_VER=&#34;1.26.0-00&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">sudo apt-get install -y <span class="nv">kubelet</span><span class="o">=</span><span class="si">${</span><span class="nv">K_VER</span><span class="si">}</span> <span class="nv">kubectl</span><span class="o">=</span><span class="si">${</span><span class="nv">K_VER</span><span class="si">}</span> <span class="nv">kubeadm</span><span class="o">=</span><span class="si">${</span><span class="nv">K_VER</span><span class="si">}</span>
+</span></span><span class="line"><span class="cl">sudo apt-mark hold kubelet kubeadm kubectl
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="安裝最新版本"><strong>安裝最新版本</strong></h4>
+<ol>
+<li>直接安裝就可以了</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Bash" data-lang="Bash"><span class="line"><span class="cl">sudo apt-get install -y kubelet kubeadm kubectl
+</span></span><span class="line"><span class="cl">sudo apt-mark hold kubelet kubeadm kubectl
+</span></span></code></pre></td></tr></table>
+</div>
+</div><hr>
+<ol start="7">
+<li>確認 kubeadm 安裝版本</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Bash" data-lang="Bash"><span class="line"><span class="cl">sudo kubeadm version
+</span></span></code></pre></td></tr></table>
+</div>
+</div><center><img src="../Kubeadm version.png" width="750"></center>
+<ol start="8">
+<li><code>Worker Node 只需要做到這一步就好，直接接後面的</code>
+<a href="#5-worker-node-%e5%8a%a0%e5%85%a5-cluster-%e4%b8%ad" rel="">第五章</a></li>
+</ol>
+<p>啟動 kubelet 並查看狀態，此時沒有 running 是正常的</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Bash" data-lang="Bash"><span class="line"><span class="cl">sudo systemctl <span class="nb">enable</span> kubelet
+</span></span><span class="line"><span class="cl">sudo systemctl restart kubelet
+</span></span><span class="line"><span class="cl">sudo systemctl status kubelet
+</span></span></code></pre></td></tr></table>
+</div>
+</div><center><img src="../Kubelet status.png" width="650"></center>
+<ol start="9">
+<li>拉取初始化需要的 image</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Bash" data-lang="Bash"><span class="line"><span class="cl">sudo kubeadm config images pull
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ol start="10">
+<li>kubernetes 初始化</li>
+</ol>
+<blockquote>
+<p>指令中的 domain 可以由 <a href="https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/#installing-runtime" target="_blank" rel="noopener noreffer ">Kubernetes 官網</a> 獲得，根據自己安裝的 <code>container runtime</code> 來決定要使用哪個</p>
+</blockquote>
+<p>要把最下面的 <code>join...</code> 記錄起來，之後 worker node 加入到 cluster 的時候會用到</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Bash" data-lang="Bash"><span class="line"><span class="cl">sudo kubeadm init --pod-network-cidr<span class="o">=</span>192.168.0.0/16 --cri-socket<span class="o">=</span>unix:///var/run/containerd/containerd.sock 
+</span></span></code></pre></td></tr></table>
+</div>
+</div><center><img src="../Kubeadm init.png" width="800"></center>
+<ol start="11">
+<li>把剛剛第 10 步獲得的指令輸入</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Bash" data-lang="Bash"><span class="line"><span class="cl">mkdir -p <span class="nv">$HOME</span>/.kube
+</span></span><span class="line"><span class="cl">sudo cp -i /etc/kubernetes/admin.conf <span class="nv">$HOME</span>/.kube/config
+</span></span><span class="line"><span class="cl">sudo chown <span class="k">$(</span>id -u<span class="k">)</span>:<span class="k">$(</span>id -g<span class="k">)</span> <span class="nv">$HOME</span>/.kube/config
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ol start="12">
+<li>加入 path</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Bash" data-lang="Bash"><span class="line"><span class="cl"><span class="c1"># 進入 root mod</span>
+</span></span><span class="line"><span class="cl">sudo su
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s1">&#39;export KUBECONFIG=/etc/kubernetes/admin.conf&#39;</span> &gt;&gt; ~/.bashrc
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 啟用</span>
+</span></span><span class="line"><span class="cl"><span class="nb">source</span> ~/.bashrc
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ol start="13">
+<li>查看 cluster，<strong>此時都還是 root mod，後續使用到 k8s 指令的時候都要在 root 模式下使用</strong></li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Bash" data-lang="Bash"><span class="line"><span class="cl">kubectl get nodes
+</span></span></code></pre></td></tr></table>
+</div>
+</div><center><img src="../get node(only master).png" width="650"></center>
+<h2 id="4-佈署-pod-network-插件">4. 佈署 Pod Network 插件</h2>
+<ol>
+<li>佈署 Calico</li>
+</ol>
+<ul>
+<li><a href="https://docs.tigera.io/calico/latest/getting-started/kubernetes/quickstart" target="_blank" rel="noopener noreffer ">Calico</a></li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Bash" data-lang="Bash"><span class="line"><span class="cl">kubectl create -f https://raw.githubusercontent.com/projectcalico/calico/v3.26.1/manifests/tigera-operator.yaml
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">kubectl create -f https://raw.githubusercontent.com/projectcalico/calico/v3.26.1/manifests/custom-resources.yaml
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ol start="2">
+<li>查看安裝情況</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Bash" data-lang="Bash"><span class="line"><span class="cl">kubectl get pods -A
+</span></span></code></pre></td></tr></table>
+</div>
+</div><center><img src="../Calico pods.png" width="750"></center>
+<h2 id="5-worker-node-加入-cluster-中">5. Worker node 加入 Cluster 中</h2>
+<p>Worker node 只需要做到<strong>第三章的第 8 步驟即可</strong>。接者，直接輸入剛剛從 Master 中獲得的<code>join...</code>指令</p>
+<center><img src="../Worker node join command.png" width="750"></center>
+<p>最後在 <strong>Master node 的 VM</strong> 再次查看 node 的情況就可以看到剛剛加入的 Worker node 就成功了</p>
+<center><img src="../get node(worker and master).png" width="700"></center>
+<h2 id="參考">🔗參考</h2>
+<ol>
+<li><a href="https://kubernetes.io/docs/setup/" target="_blank" rel="noopener noreffer ">Kubernetes 官網</a></li>
+<li><a href="https://collabnix.com/how-to-install-kubernetes-cluster-on-ubuntu-20-04-with-kubeadm/" target="_blank" rel="noopener noreffer ">How to Install Kubernetes Cluster on Ubuntu 20.04 with kubeadm – Collabnix</a></li>
+<li><a href="https://thenewstack.io/how-to-deploy-kubernetes-with-kubeadm-and-containerd/" target="_blank" rel="noopener noreffer ">How to Deploy Kubernetes with Kubeadm and containerd - The New Stack</a></li>
+<li><a href="https://xie.infoq.cn/article/27882c10a234290ad12ace8fb" target="_blank" rel="noopener noreffer ">Kubernetes手记（3）- 核心组件/附件_k8s_雪雷_InfoQ写作社区</a></li>
+<li><a href="https://www.youtube.com/watch?v=o6bxo0Oeg6o" target="_blank" rel="noopener noreffer ">Install Kubernetes Cluster with kubeadm 2022 (Linux VM/Mac/Windows, x86/Arm) - YouTube</a></li>
+</ol>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新於 2023-06-26</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://z416352.github.io/posts/dev/2023/02/kubernetes_tutorial_gcp/kubernetes_tutorial_gcp/" data-title="如何在 GCP 上建立自己的 Kubernetes" data-hashtags="程式,Kubernetes"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://z416352.github.io/posts/dev/2023/02/kubernetes_tutorial_gcp/kubernetes_tutorial_gcp/" data-hashtag="程式"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://z416352.github.io/posts/dev/2023/02/kubernetes_tutorial_gcp/kubernetes_tutorial_gcp/" data-title="如何在 GCP 上建立自己的 Kubernetes"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://z416352.github.io/posts/dev/2023/02/kubernetes_tutorial_gcp/kubernetes_tutorial_gcp/" data-title="如何在 GCP 上建立自己的 Kubernetes" data-image="../featuredImage.png"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Blogger" data-sharer="blogger" data-url="https://z416352.github.io/posts/dev/2023/02/kubernetes_tutorial_gcp/kubernetes_tutorial_gcp/" data-title="如何在 GCP 上建立自己的 Kubernetes" data-description=""><i class="fab fa-blogger fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/%E7%A8%8B%E5%BC%8F/">程式</a>,&nbsp;<a href="/tags/kubernetes/">Kubernetes</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主頁</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/dev/2023/04/telegrambot_gcp/telegrambot_gcp/" class="prev" rel="prev" title="[Bot系列 1] 在 GCP 上面建立一個自己的 Telegram Bot"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>[Bot系列 1] 在 GCP 上面建立一個自己的 Telegram Bot</a></div>
+</div>
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+
+(function() {
+    
+    
+    
+    
+
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    
+    var disqus_shortname = 'ch416352';
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com/" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.105.0">Hugo</a> 強力驅動 | 主題 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2022 - 2023</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">Joshua</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到頂部">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看評論">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/typeit@8.6.0/dist/index.umd.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"複製到剪貼板","maxShownLines":20},"data":{"id-1":"Joshua's Blog","id-2":"Joshua's Blog"},"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"id-1":["id-1"],"id-2":["id-2"]},"duration":-1,"speed":100}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>
