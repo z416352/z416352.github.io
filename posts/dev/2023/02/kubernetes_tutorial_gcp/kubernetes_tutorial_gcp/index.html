@@ -4,6 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="robots" content="noodp" />
+        <meta name="google-site-verification" content="KcM2w78Gu2wNiAKB8cRJ_YIeDs0sEdlPtzcUX-JCdoE" />
         <title>如何在 GCP 上建立自己的 Kubernetes - Joshua&#39;s Blog</title><meta name="Description" content="Hugo theme - LoveIt"><meta property="og:title" content="如何在 GCP 上建立自己的 Kubernetes" />
 <meta property="og:description" content="前言 Google Cloud Platform (GCP) 是由 Google 推出的雲端計算平台，提供各種雲端運算資源，包括虛擬機器、儲存等等。GCP 可以解決使用者本地電腦穩定性不足或是配備不夠的問題，使用者可以透過 GCP 創建屬於自己的虛擬機器，進而進行開發、分析資料或架設系統等等的工作。如果是新帳號使用者可以利用90天或300美金的體驗期來滿足自己短期的需求。
 1. 準備 在 GCP 上建立虛擬機 進入到 GCP 網站 中開始使用， 啟用 Compute Engine 功能。 點選 VM 執行個體後建立執行個體，區域的部分就近選擇台灣即可 其餘我採用的配備是 e2-medium (2 個 vCPU，4 GB 記憶體) Ubuntu 20.04 LTS (x86/64) 硬碟大小 50GB 這邊會需要配置兩台 VM 來充當 K8s 的 Master Node 和 Worker Node，配置完成後應該會可以看到跟下圖一樣的畫面 Kubernetes 安裝版本為 1.26.0-00 點選 SSH 就可以進入到 VM 的終端機操作畫面 到這邊在 GCP 上建立 VM 的內容就結束了，接下來就是如何將 Kubernetes 安裝在這兩台 VM 上面運行
@@ -23,7 +24,8 @@
 <meta name="application-name" content="My cool site">
 <meta name="apple-mobile-web-app-title" content="My cool site"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="/images/avatar.jpg"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://z416352.github.io/posts/dev/2023/02/kubernetes_tutorial_gcp/kubernetes_tutorial_gcp/" /><link rel="prev" href="https://z416352.github.io/posts/dev/2023/04/telegrambot_gcp/telegrambot_gcp/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
         <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><meta name="google-site-verification" content="KcM2w78Gu2wNiAKB8cRJ_YIeDs0sEdlPtzcUX-JCdoE" />
+    <script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
