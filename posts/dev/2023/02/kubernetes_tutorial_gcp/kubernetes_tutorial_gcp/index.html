@@ -32,7 +32,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/z416352.github.io\/posts\/dev\/2023\/02\/kubernetes_tutorial_gcp\/kubernetes_tutorial_gcp\/"
-        },"genre": "posts","keywords": "程式, Kubernetes","wordcount":  692 ,
+        },"genre": "posts","keywords": "程式, Kubernetes","wordcount":  704 ,
         "url": "https:\/\/z416352.github.io\/posts\/dev\/2023\/02\/kubernetes_tutorial_gcp\/kubernetes_tutorial_gcp\/","datePublished": "2023-06-26T14:56:07+08:00","dateModified": "2023-06-26T14:56:07+08:00","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
@@ -88,7 +88,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">如何在 GCP 上建立自己的 Kubernetes</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Joshua</a></span>&nbsp;<span class="post-category">收錄於 <a href="/categories/%E7%A8%8B%E5%BC%8F/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>程式</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-06-26">2023-06-26</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;約 692 字&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-06-26">2023-06-26</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;約 704 字&nbsp;
                 <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;預計閱讀 4 分鐘&nbsp;</div>
         </div><div class="featured-image"><img
         class="lazyload"
@@ -586,10 +586,12 @@
 </div><center><img src="../get node(only master).png" width="650"></center>
 <h2 id="4-佈署-pod-network-插件">4. 佈署 Pod Network 插件</h2>
 <ol>
-<li>佈署 Calico</li>
+<li>這邊我選擇 Calico，當然還有其他的可以選擇，例如 Flannel 插件。不同的插件在 <code>kubeadm init ...</code>時，<code>--pod-network-cidr</code>輸入的 IP 範圍會不太一樣，如果使用 Flannel，就會是<code>--pod-network-cidr=10.244.0.0/16</code></li>
 </ol>
 <ul>
+<li><a href="https://kubernetes.io/docs/concepts/cluster-administration/addons/" target="_blank" rel="noopener noreffer ">Kubernetes官網 | 插件列表</a></li>
 <li><a href="https://docs.tigera.io/calico/latest/getting-started/kubernetes/quickstart" target="_blank" rel="noopener noreffer ">Calico</a></li>
+<li><a href="https://github.com/flannel-io/flannel#deploying-flannel-manually" target="_blank" rel="noopener noreffer ">Flannel</a></li>
 </ul>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -603,7 +605,7 @@
 </span></span><span class="line"><span class="cl">kubectl create -f https://raw.githubusercontent.com/projectcalico/calico/v3.26.1/manifests/custom-resources.yaml
 </span></span></code></pre></td></tr></table>
 </div>
-</div><ol start="2">
+</div><ol>
 <li>查看安裝情況</li>
 </ol>
 <div class="highlight"><div class="chroma">
