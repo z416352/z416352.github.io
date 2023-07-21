@@ -34,7 +34,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/z416352.github.io\/posts\/dev\/2023\/02\/kubernetes_tutorial_gcp\/kubernetes_tutorial_gcp\/"
-        },"genre": "posts","keywords": "程式, Kubernetes","wordcount":  704 ,
+        },"genre": "posts","keywords": "程式, Kubernetes, GCP","wordcount":  725 ,
         "url": "https:\/\/z416352.github.io\/posts\/dev\/2023\/02\/kubernetes_tutorial_gcp\/kubernetes_tutorial_gcp\/","datePublished": "2023-06-26T14:56:07+08:00","dateModified": "2023-06-27T12:47:18+08:00","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
@@ -93,7 +93,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">如何在 GCP 上建立自己的 Kubernetes</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Joshua</a></span>&nbsp;<span class="post-category">收錄於 <a href="/categories/%E7%A8%8B%E5%BC%8F/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>程式</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-06-26">2023-06-26</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;約 704 字&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-06-26">2023-06-26</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;約 725 字&nbsp;
                 <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;預計閱讀 4 分鐘&nbsp;</div>
         </div><div class="featured-image"><img
         class="lazyload"
@@ -129,6 +129,11 @@
     </li>
     <li><a href="#4-佈署-pod-network-插件">4. 佈署 Pod Network 插件</a></li>
     <li><a href="#5-worker-node-加入-cluster-中">5. Worker node 加入 Cluster 中</a></li>
+    <li><a href="#6-備註">6. 備註</a>
+      <ul>
+        <li><a href="#1-產生-join-指令">1. 產生 <strong>join</strong> 指令</a></li>
+      </ul>
+    </li>
     <li><a href="#參考">🔗參考</a></li>
   </ul>
 </nav></div>
@@ -150,7 +155,7 @@
 <li>這邊會需要配置兩台 VM 來充當 K8s 的 Master Node 和 Worker Node，配置完成後應該會可以看到跟下圖一樣的畫面</li>
 <li><code>Kubernetes 安裝版本為 1.26.0-00</code></li>
 </ol>
-<center><img src="../2023-02-28-Kubernetes_tutorial_GCP-20230304120313.png" width="800"></center>
+<center><img src="../2023-02-28-Kubernetes_tutorial_GCP-20230304120313.png" width="750"></center>
 <ol>
 <li>點選 <strong>SSH</strong> 就可以進入到 VM 的終端機操作畫面</li>
 </ol>
@@ -529,7 +534,7 @@
 <blockquote>
 <p>指令中的 domain 可以由 <a href="https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/#installing-runtime" target="_blank" rel="noopener noreffer ">Kubernetes 官網</a> 獲得，根據自己安裝的 <code>container runtime</code> 來決定要使用哪個</p>
 </blockquote>
-<p>要把最下面的 <code>join...</code> 記錄起來，之後 worker node 加入到 cluster 的時候會用到</p>
+<p>要把最下面的 <code>join...</code> 記錄起來，之後 worker node 加入到 cluster 的時候會用到。如果忘記可以<a href="#%e7%94%a2%e7%94%9f-join-%e6%8c%87%e4%bb%a4" rel="">參考這邊</a></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -538,7 +543,7 @@
 <pre tabindex="0" class="chroma"><code class="language-Bash" data-lang="Bash"><span class="line"><span class="cl">sudo kubeadm init --pod-network-cidr<span class="o">=</span>192.168.0.0/16 --cri-socket<span class="o">=</span>unix:///var/run/containerd/containerd.sock 
 </span></span></code></pre></td></tr></table>
 </div>
-</div><center><img src="../Kubeadm init.png" width="800"></center>
+</div><center><img src="../Kubeadm init.png" width="750"></center>
 <ol start="11">
 <li>把剛剛第 10 步獲得的指令輸入</li>
 </ol>
@@ -627,7 +632,21 @@
 <center><img src="../Worker node join command.png" width="750"></center>
 <p>最後在 <strong>Master node 的 VM</strong> 再次查看 node 的情況就可以看到剛剛加入的 Worker node 就成功了</p>
 <center><img src="../get node(worker and master).png" width="700"></center>
-<h2 id="參考">🔗參考</h2>
+<h2 id="6-備註">6. 備註</h2>
+<h3 id="1-產生-join-指令">1. 產生 <strong>join</strong> 指令</h3>
+<p>如果 <code>join ...</code> 指令到期或是忘記記錄下來，可以透過這個指令產生新的 join 指令</p>
+<ul>
+<li><a href="https://kubernetes.io/docs/reference/setup-tools/kubeadm/kubeadm-token/#cmd-token-create" target="_blank" rel="noopener noreffer ">Token create | Kubernetes</a></li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Bash" data-lang="Bash"><span class="line"><span class="cl">kubeadm token create --print-join-command
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="參考">🔗參考</h2>
 <ol>
 <li><a href="https://kubernetes.io/docs/setup/" target="_blank" rel="noopener noreffer ">Kubernetes 官網</a></li>
 <li><a href="https://collabnix.com/how-to-install-kubernetes-cluster-on-ubuntu-20-04-with-kubeadm/" target="_blank" rel="noopener noreffer ">How to Install Kubernetes Cluster on Ubuntu 20.04 with kubeadm – Collabnix</a></li>
@@ -639,19 +658,19 @@
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
-                <span>更新於 2023-06-27&nbsp;<a class="git-hash" href="https://github.com/dillonzq/LoveIt/commit/085439e2ba5567b00cdaa2368865ff1bf754c7fd" target="_blank" title="commit by z416352(43094601&#43;z416352@users.noreply.github.com) 085439e2ba5567b00cdaa2368865ff1bf754c7fd: edit post (kuberentes on gcp)">
+                <span>更新於 2023-06-27&nbsp;<a class="git-hash" href="https://github.com/z416352/z416352.github.io/commit/085439e2ba5567b00cdaa2368865ff1bf754c7fd" target="_blank" title="commit by z416352(43094601&#43;z416352@users.noreply.github.com) 085439e2ba5567b00cdaa2368865ff1bf754c7fd: edit post (kuberentes on gcp)">
                                     <i class="fas fa-hashtag fa-fw" aria-hidden="true"></i>085439e</a></span>
             </div></div>
         <div class="post-info-line">
             <div class="post-info-md"></div>
             <div class="post-info-share">
-                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://z416352.github.io/posts/dev/2023/02/kubernetes_tutorial_gcp/kubernetes_tutorial_gcp/" data-title="如何在 GCP 上建立自己的 Kubernetes" data-hashtags="程式,Kubernetes"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://z416352.github.io/posts/dev/2023/02/kubernetes_tutorial_gcp/kubernetes_tutorial_gcp/" data-hashtag="程式"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://z416352.github.io/posts/dev/2023/02/kubernetes_tutorial_gcp/kubernetes_tutorial_gcp/" data-title="如何在 GCP 上建立自己的 Kubernetes"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://z416352.github.io/posts/dev/2023/02/kubernetes_tutorial_gcp/kubernetes_tutorial_gcp/" data-title="如何在 GCP 上建立自己的 Kubernetes" data-image="../featuredImage.png"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Blogger" data-sharer="blogger" data-url="https://z416352.github.io/posts/dev/2023/02/kubernetes_tutorial_gcp/kubernetes_tutorial_gcp/" data-title="如何在 GCP 上建立自己的 Kubernetes" data-description=""><i class="fab fa-blogger fa-fw" aria-hidden="true"></i></a></span>
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://z416352.github.io/posts/dev/2023/02/kubernetes_tutorial_gcp/kubernetes_tutorial_gcp/" data-title="如何在 GCP 上建立自己的 Kubernetes" data-hashtags="程式,Kubernetes,GCP"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://z416352.github.io/posts/dev/2023/02/kubernetes_tutorial_gcp/kubernetes_tutorial_gcp/" data-hashtag="程式"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://z416352.github.io/posts/dev/2023/02/kubernetes_tutorial_gcp/kubernetes_tutorial_gcp/" data-title="如何在 GCP 上建立自己的 Kubernetes"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://z416352.github.io/posts/dev/2023/02/kubernetes_tutorial_gcp/kubernetes_tutorial_gcp/" data-title="如何在 GCP 上建立自己的 Kubernetes" data-image="../featuredImage.png"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Blogger" data-sharer="blogger" data-url="https://z416352.github.io/posts/dev/2023/02/kubernetes_tutorial_gcp/kubernetes_tutorial_gcp/" data-title="如何在 GCP 上建立自己的 Kubernetes" data-description=""><i class="fab fa-blogger fa-fw" aria-hidden="true"></i></a></span>
             </div>
         </div>
     </div>
 
     <div class="post-info-more">
-        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/%E7%A8%8B%E5%BC%8F/">程式</a>,&nbsp;<a href="/tags/kubernetes/">Kubernetes</a></section>
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/%E7%A8%8B%E5%BC%8F/">程式</a>,&nbsp;<a href="/tags/kubernetes/">Kubernetes</a>,&nbsp;<a href="/tags/gcp/">GCP</a></section>
         <section>
             <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主頁</a></span>
         </section>
