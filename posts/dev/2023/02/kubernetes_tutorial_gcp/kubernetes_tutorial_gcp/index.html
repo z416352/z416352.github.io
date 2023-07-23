@@ -34,7 +34,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/z416352.github.io\/posts\/dev\/2023\/02\/kubernetes_tutorial_gcp\/kubernetes_tutorial_gcp\/"
-        },"genre": "posts","keywords": "程式, Kubernetes, GCP","wordcount":  725 ,
+        },"genre": "posts","keywords": "程式, Kubernetes, GCP","wordcount":  884 ,
         "url": "https:\/\/z416352.github.io\/posts\/dev\/2023\/02\/kubernetes_tutorial_gcp\/kubernetes_tutorial_gcp\/","datePublished": "2023-06-26T14:56:07+08:00","dateModified": "2023-06-27T12:47:18+08:00","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
@@ -93,8 +93,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">如何在 GCP 上建立自己的 Kubernetes</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Joshua</a></span>&nbsp;<span class="post-category">收錄於 <a href="/categories/%E7%A8%8B%E5%BC%8F/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>程式</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-06-26">2023-06-26</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;約 725 字&nbsp;
-                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;預計閱讀 4 分鐘&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-06-26">2023-06-26</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;約 884 字&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;預計閱讀 5 分鐘&nbsp;</div>
         </div><div class="featured-image"><img
         class="lazyload"
         src="/svg/loading.min.svg"
@@ -129,9 +129,15 @@
     </li>
     <li><a href="#4-佈署-pod-network-插件">4. 佈署 Pod Network 插件</a></li>
     <li><a href="#5-worker-node-加入-cluster-中">5. Worker node 加入 Cluster 中</a></li>
-    <li><a href="#6-備註">6. 備註</a>
+    <li><a href="#6-好用工具">6. 好用工具</a>
       <ul>
-        <li><a href="#1-產生-join-指令">1. 產生 <strong>join</strong> 指令</a></li>
+        <li><a href="#61-kubectl-autocomplete">6.1 Kubectl autocomplete</a></li>
+        <li><a href="#62-kubenskubectx">6.2 kubens、kubectx</a></li>
+      </ul>
+    </li>
+    <li><a href="#7-備註">7. 備註</a>
+      <ul>
+        <li><a href="#1-重新產生-join-指令">1. 重新產生 <strong>join</strong> 指令</a></li>
       </ul>
     </li>
     <li><a href="#參考">🔗參考</a></li>
@@ -518,7 +524,7 @@
 </div>
 </div><center><img src="../Kubelet status.png" width="650"></center>
 <ol start="9">
-<li>拉取初始化需要的 image</li>
+<li><strong>(Master)</strong> 拉取初始化需要的 image</li>
 </ol>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -529,12 +535,12 @@
 </span></span></code></pre></td></tr></table>
 </div>
 </div><ol start="10">
-<li>kubernetes 初始化</li>
+<li><strong>(Master)</strong> kubernetes 初始化</li>
 </ol>
 <blockquote>
 <p>指令中的 domain 可以由 <a href="https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/#installing-runtime" target="_blank" rel="noopener noreffer ">Kubernetes 官網</a> 獲得，根據自己安裝的 <code>container runtime</code> 來決定要使用哪個</p>
 </blockquote>
-<p>要把最下面的 <code>join...</code> 記錄起來，之後 worker node 加入到 cluster 的時候會用到。如果忘記可以<a href="#%e7%94%a2%e7%94%9f-join-%e6%8c%87%e4%bb%a4" rel="">參考這邊</a></p>
+<p>要把最下面的 <code>join...</code> 記錄起來，之後 worker node 加入到 cluster 的時候會用到。如果忘記可以<a href="#%e9%87%8d%e6%96%b0%e7%94%a2%e7%94%9f-join-%e6%8c%87%e4%bb%a4" rel="">參考這邊</a></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -632,8 +638,100 @@
 <center><img src="../Worker node join command.png" width="750"></center>
 <p>最後在 <strong>Master node 的 VM</strong> 再次查看 node 的情況就可以看到剛剛加入的 Worker node 就成功了</p>
 <center><img src="../get node(worker and master).png" width="700"></center>
-<h2 id="6-備註">6. 備註</h2>
-<h3 id="1-產生-join-指令">1. 產生 <strong>join</strong> 指令</h3>
+<h2 id="6-好用工具">6. 好用工具</h2>
+<h3 id="61-kubectl-autocomplete">6.1 Kubectl autocomplete</h3>
+<ul>
+<li><a href="https://kubernetes.io/docs/reference/kubectl/cheatsheet/" target="_blank" rel="noopener noreffer ">kubectl Cheat Sheet | Kubernetes</a></li>
+<li><a href="https://www.cnblogs.com/albert919/p/16677978.html" target="_blank" rel="noopener noreffer ">kubectl 补全报错</a></li>
+</ul>
+<p><strong>可以直接把打一半的指令直接補全，多案幾次 Tab 還會告訴妳有什麼樣的指令可以輸入，可以節省時間 !</strong></p>
+<ol>
+<li>安裝必要套件 bash-completion</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Bash" data-lang="Bash"><span class="line"><span class="cl">sudo apt install bash-completion
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ol start="2">
+<li>設定 autocomplete</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Bash" data-lang="Bash"><span class="line"><span class="cl"><span class="nb">source</span> &lt;<span class="o">(</span>kubectl completion bash<span class="o">)</span> <span class="c1"># set up autocomplete in bash into the current shell, bash-completion package should be installed first.</span>
+</span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s2">&#34;source &lt;(kubectl completion bash)&#34;</span> &gt;&gt; ~/.bashrc <span class="c1"># add autocomplete permanently to your bash shell.</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ol start="3">
+<li>以後只要打 &lsquo;k&rsquo; 就可以表示 &lsquo;kubectl&rsquo;，比較方便</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Bash" data-lang="Bash"><span class="line"><span class="cl"><span class="nb">alias</span> <span class="nv">k</span><span class="o">=</span>kubectl
+</span></span><span class="line"><span class="cl"><span class="nb">complete</span> -o default -F __start_kubectl k
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ol start="4">
+<li>之後只需要按 <strong>Tab</strong>，就可以自動幫妳補上指令，不用自己打完。</li>
+</ol>
+<div class="details admonition note open">
+        <div class="details-summary admonition-title">
+            <i class="icon fas fa-pencil-alt fa-fw" aria-hidden="true"></i>Trouble<i class="details-icon fas fa-angle-right fa-fw" aria-hidden="true"></i>
+        </div>
+        <div class="details-content">
+            <div class="admonition-content"><p>如果出現這種錯誤</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Bash" data-lang="Bash"><span class="line"><span class="cl">_get_comp_words_by_ref: <span class="nb">command</span> not found
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>輸入</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Bash" data-lang="Bash"><span class="line"><span class="cl"><span class="nb">source</span> /usr/share/bash-completion/bash_completion
+</span></span></code></pre></td></tr></table>
+</div>
+</div></div>
+        </div>
+    </div>
+<h3 id="62-kubenskubectx">6.2 kubens、kubectx</h3>
+<ul>
+<li><a href="https://github.com/ahmetb/kubectx" target="_blank" rel="noopener noreffer ">Github | ahmetb/kubectx: Faster way to switch between clusters and namespaces in kubectl</a></li>
+</ul>
+<p><strong>kubectx</strong> 可以快速的自由切換 contexts (clusters)</p>
+<p><strong>kubens</strong> 可以快速的自由切換 Kubernetes 的 namespaces</p>
+<p>可以看 Github 的教學比較完整</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Bash" data-lang="Bash"><span class="line"><span class="cl">sudo git clone https://github.com/ahmetb/kubectx /opt/kubectx
+</span></span><span class="line"><span class="cl">sudo ln -s /opt/kubectx/kubectx /usr/local/bin/kubectx
+</span></span><span class="line"><span class="cl">sudo ln -s /opt/kubectx/kubens /usr/local/bin/kubens
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="7-備註">7. 備註</h2>
+<h3 id="1-重新產生-join-指令">1. 重新產生 <strong>join</strong> 指令</h3>
 <p>如果 <code>join ...</code> 指令到期或是忘記記錄下來，可以透過這個指令產生新的 join 指令</p>
 <ul>
 <li><a href="https://kubernetes.io/docs/reference/setup-tools/kubeadm/kubeadm-token/#cmd-token-create" target="_blank" rel="noopener noreffer ">Token create | Kubernetes</a></li>
@@ -653,6 +751,8 @@
 <li><a href="https://thenewstack.io/how-to-deploy-kubernetes-with-kubeadm-and-containerd/" target="_blank" rel="noopener noreffer ">How to Deploy Kubernetes with Kubeadm and containerd - The New Stack</a></li>
 <li><a href="https://xie.infoq.cn/article/27882c10a234290ad12ace8fb" target="_blank" rel="noopener noreffer ">Kubernetes手记（3）- 核心组件/附件_k8s_雪雷_InfoQ写作社区</a></li>
 <li><a href="https://www.youtube.com/watch?v=o6bxo0Oeg6o" target="_blank" rel="noopener noreffer ">Install Kubernetes Cluster with kubeadm 2022 (Linux VM/Mac/Windows, x86/Arm) - YouTube</a></li>
+<li><a href="https://www.cnblogs.com/albert919/p/16677978.html" target="_blank" rel="noopener noreffer ">kubectl 补全报错：-bash: _get_comp_words_by_ref: command not found - 点点滴滴的努力 - 博客园 (cnblogs.com)</a></li>
+<li><a href="https://github.com/ahmetb/kubectx" target="_blank" rel="noopener noreffer ">ahmetb/kubectx: Faster way to switch between clusters and namespaces in kubectl (github.com)</a></li>
 </ol>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
