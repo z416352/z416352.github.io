@@ -1,10 +1,10 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
-        <title>Bot - 標籤 - Joshua&#39;s Blog</title>
-        <link>https://z416352.github.io/tags/bot/</link>
-        <description>Bot - 標籤 - Joshua&#39;s Blog</description>
+        <title>Docker - 標籤 - Joshua&#39;s Blog</title>
+        <link>https://z416352.github.io/tags/docker/</link>
+        <description>Docker - 標籤 - Joshua&#39;s Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-TW</language><managingEditor>ch416352@gmail.com (Joshua)</managingEditor>
-            <webMaster>ch416352@gmail.com (Joshua)</webMaster><lastBuildDate>Mon, 24 Jul 2023 21:27:29 &#43;0800</lastBuildDate><atom:link href="https://z416352.github.io/tags/bot/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>ch416352@gmail.com (Joshua)</webMaster><lastBuildDate>Mon, 24 Jul 2023 21:27:29 &#43;0800</lastBuildDate><atom:link href="https://z416352.github.io/tags/docker/" rel="self" type="application/rss+xml" /><item>
     <title>[Bot系列 2] 將 Telegram Bot 建立在 Docker 上</title>
     <link>https://z416352.github.io/posts/dev/2023/04/telegrambot_on_docker/telegrambot_on_docker/</link>
     <pubDate>Mon, 24 Jul 2023 21:27:29 &#43;0800</pubDate>
@@ -20,20 +20,6 @@ Image: 它包含了執行應用程式所需的所有內容：程式碼、依賴�
 Container: 是 image 的一個 實例(instance)，是輕量級、獨立和可移植的，比起將應用程式執行在 VM 中，在 container 中執行可以更快速地啟動、停止和刪除。每個容器都是隔離的，可以避免應用程式之間的干擾。但安全性方面則遜於 VM
 流程大概可以總結成這樣
 2. Build Image 由於 Container 的建立需要透過 Image，所以我們需要先將我們上一章寫出來的程式包裝成 Image]]></description>
-</item>
-<item>
-    <title>[Bot系列 1] 在 GCP 上面建立一個自己的 Telegram Bot</title>
-    <link>https://z416352.github.io/posts/dev/2023/04/telegrambot_gcp/telegrambot_gcp/</link>
-    <pubDate>Sat, 22 Apr 2023 00:19:45 &#43;0800</pubDate>
-    <author>Joshua</author>
-    <guid>https://z416352.github.io/posts/dev/2023/04/telegrambot_gcp/telegrambot_gcp/</guid>
-    <description><![CDATA[<div class="featured-image">
-                <img src="/2023-04-22-TelegramBot_GCP-20230620013056.png" referrerpolicy="no-referrer">
-            </div>前言 如果你想要在 GCP 上建立一個免費的 Telegram Bot，需要準備以下幾個東西：
-GCP VM 固定的 IP 位址 Flask nginx、ngrok 因為 Telegram 傳送給 Bot 的訊息需要走 HTTPS，所以還需要擁有自己的網域和 SSL 憑證。在這部份，我們可以透過使用 nip.io 以及 certbot 來達成。
-1. GCP 在 GCP 上，每個 Google 帳號都可以免費試用 90 天或 300 美元的額度，因此我們可以在 GCP 上建立 VM 或 Kubernetes 而不需要花費任何費用。
-首先，我們需要在 GCP 上建立一個 VM 作為我們的開發環境，同時作為 Bot 的執行地方，並使用 Ubuntu 20.04 作為軟體平台。在建立 VM 後，VM 的外部 IP 位址預設是臨時的，這意味著每當 VM 重啟時 IP 位址可能會更改。這會導致每次都需要重新設定 Webhook 的位置。因此，我們可以按照下圖所示的方式進行修改。
-進去之後就依照妳想要的做填寫，&ldquo;連接到:&rdquo; 的部分則選擇妳剛剛創建的 VM ，最後就可以看到如第一張圖一樣 &ldquo;外部 IP 位址&rdquo; 已經變成固定的。]]></description>
 </item>
 </channel>
 </rss>

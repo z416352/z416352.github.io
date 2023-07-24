@@ -22,7 +22,7 @@
 1. 準備 在 GCP 上建立虛擬機 進入到 GCP 網站 中開始使用， 啟用 Compute Engine 功能。 點選 VM 執行個體後建立執行個體，區域的部分就近選擇台灣即可 其餘我採用的配備是 e2-medium (2 個 vCPU，4 GB 記憶體) Ubuntu 20.04 LTS (x86/64) 硬碟大小 50GB 這邊會需要配置兩台 VM 來充當 K8s 的 Master Node 和 Worker Node，配置完成後應該會可以看到跟下圖一樣的畫面 Kubernetes 安裝版本為 1.26.0-00 點選 SSH 就可以進入到 VM 的終端機操作畫面 到這邊在 GCP 上建立 VM 的內容就結束了，接下來就是如何將 Kubernetes 安裝在這兩台 VM 上面運行
 2. Master &amp; Worker node 設定 2."/>
 <meta name="application-name" content="My cool site">
-<meta name="apple-mobile-web-app-title" content="My cool site"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="/images/avatar.jpg"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://z416352.github.io/posts/dev/2023/02/kubernetes_tutorial_gcp/kubernetes_tutorial_gcp/" /><link rel="prev" href="https://z416352.github.io/posts/dev/2023/04/telegrambot_gcp/telegrambot_gcp/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<meta name="apple-mobile-web-app-title" content="My cool site"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="/images/avatar.jpg"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://z416352.github.io/posts/dev/2023/02/kubernetes_tutorial_gcp/kubernetes_tutorial_gcp/" /><link rel="prev" href="https://z416352.github.io/posts/dev/2023/04/telegrambot_gcp/telegrambot_gcp/" /><link rel="next" href="https://z416352.github.io/posts/dev/2023/04/telegrambot_on_docker/telegrambot_on_docker/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
         <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
         <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><meta name="google-site-verification" content="KcM2w78Gu2wNiAKB8cRJ_YIeDs0sEdlPtzcUX-JCdoE" />
     <script type="application/ld+json">
@@ -780,7 +780,8 @@
         </section>
     </div>
 
-    <div class="post-nav"><a href="/posts/dev/2023/04/telegrambot_gcp/telegrambot_gcp/" class="prev" rel="prev" title="[Bot系列 1] 在 GCP 上面建立一個自己的 Telegram Bot"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>[Bot系列 1] 在 GCP 上面建立一個自己的 Telegram Bot</a></div>
+    <div class="post-nav"><a href="/posts/dev/2023/04/telegrambot_gcp/telegrambot_gcp/" class="prev" rel="prev" title="[Bot系列 1] 在 GCP 上面建立一個自己的 Telegram Bot"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>[Bot系列 1] 在 GCP 上面建立一個自己的 Telegram Bot</a>
+            <a href="/posts/dev/2023/04/telegrambot_on_docker/telegrambot_on_docker/" class="next" rel="next" title="[Bot系列 2] 將 Telegram Bot 建立在 Docker 上">[Bot系列 2] 將 Telegram Bot 建立在 Docker 上<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
 </div>
 <div id="disqus_thread"></div>
 <script type="text/javascript">

@@ -4,7 +4,24 @@
         <link>https://z416352.github.io/posts/</link>
         <description>所有文章 | Joshua&#39;s Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-TW</language><managingEditor>ch416352@gmail.com (Joshua)</managingEditor>
-            <webMaster>ch416352@gmail.com (Joshua)</webMaster><lastBuildDate>Mon, 26 Jun 2023 14:56:07 &#43;0800</lastBuildDate><atom:link href="https://z416352.github.io/posts/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>ch416352@gmail.com (Joshua)</webMaster><lastBuildDate>Mon, 24 Jul 2023 21:27:29 &#43;0800</lastBuildDate><atom:link href="https://z416352.github.io/posts/" rel="self" type="application/rss+xml" /><item>
+    <title>[Bot系列 2] 將 Telegram Bot 建立在 Docker 上</title>
+    <link>https://z416352.github.io/posts/dev/2023/04/telegrambot_on_docker/telegrambot_on_docker/</link>
+    <pubDate>Mon, 24 Jul 2023 21:27:29 &#43;0800</pubDate>
+    <author>Joshua</author>
+    <guid>https://z416352.github.io/posts/dev/2023/04/telegrambot_on_docker/telegrambot_on_docker/</guid>
+    <description><![CDATA[<div class="featured-image">
+                <img src="/featuredImage.png" referrerpolicy="no-referrer">
+            </div>前言 在之前的內容中，我們提到了如何在 GCP 的 VM 上建立 Telegram Bot，相較於在本機建立，這樣的管理效率更高、更有效率。但是，仍有維護上的困難，當要執行的程式變得複雜時，就會面臨著許多問題。為了解決這些問題，我們需要使用到 Docker 技術，將先前建立的 Bot 運行在 Docker 上。這樣做的好處在於，相較於在 VM 上運行，Docker 容器更易管理。在未來，當程式規模擴大時，也可以將不同功能的程式運行在不同的容器上，再讓這些容器互相溝通。
+1. Overview 1.1 Container Container 是一種虛擬化技術，它共享了操作系統 ( linux、window 等等 ) 的底層資源。每個容器互相之間是相互隔離的，這種隔離方式能夠確保每個應用程式在運行時都擁有自己的運行環境。
+1.2 Docker Docker 是一個開源的容器化平台，讓開發者能夠輕鬆地構建、部署和運行應用程式。它使用容器技術，將應用程式和相關依賴項打包到一個稱為 映像檔(image) 的獨立單元中。這些 image 可以在任何支援 Docker 的環境中執行，而不需要擔心底層環境的不同。
+Dockerfile: 可以當作 image 的藍圖，用於定義如何構建 image。內容包含了設定環境、複製檔案、執行指令等等的內容。描述了應用程式的環境和運行時配置，我們可以透過 Dockerfile 來創建我們的 image。
+Image: 它包含了執行應用程式所需的所有內容：程式碼、依賴項、庫和環境變數。不只可以自己建立 image 外，也可以透過 Docker Hub 來下載其他人或官方包裝好的 image
+Container: 是 image 的一個 實例(instance)，是輕量級、獨立和可移植的，比起將應用程式執行在 VM 中，在 container 中執行可以更快速地啟動、停止和刪除。每個容器都是隔離的，可以避免應用程式之間的干擾。但安全性方面則遜於 VM
+流程大概可以總結成這樣
+2. Build Image 由於 Container 的建立需要透過 Image，所以我們需要先將我們上一章寫出來的程式包裝成 Image]]></description>
+</item>
+<item>
     <title>如何在 GCP 上建立自己的 Kubernetes</title>
     <link>https://z416352.github.io/posts/dev/2023/02/kubernetes_tutorial_gcp/kubernetes_tutorial_gcp/</link>
     <pubDate>Mon, 26 Jun 2023 14:56:07 &#43;0800</pubDate>

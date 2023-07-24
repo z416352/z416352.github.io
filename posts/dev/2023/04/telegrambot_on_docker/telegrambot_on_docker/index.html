@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta name="google-site-verification" content="KcM2w78Gu2wNiAKB8cRJ_YIeDs0sEdlPtzcUX-JCdoE" />
+        <title>[Bot系列 2] 將 Telegram Bot 建立在 Docker 上 - Joshua&#39;s Blog</title><meta name="Description" content="Hugo theme - LoveIt"><meta property="og:title" content="[Bot系列 2] 將 Telegram Bot 建立在 Docker 上" />
+<meta property="og:description" content="前言 在之前的內容中，我們提到了如何在 GCP 的 VM 上建立 Telegram Bot，相較於在本機建立，這樣的管理效率更高、更有效率。但是，仍有維護上的困難，當要執行的程式變得複雜時，就會面臨著許多問題。為了解決這些問題，我們需要使用到 Docker 技術，將先前建立的 Bot 運行在 Docker 上。這樣做的好處在於，相較於在 VM 上運行，Docker 容器更易管理。在未來，當程式規模擴大時，也可以將不同功能的程式運行在不同的容器上，再讓這些容器互相溝通。
+1. Overview 1.1 Container Container 是一種虛擬化技術，它共享了操作系統 ( linux、window 等等 ) 的底層資源。每個容器互相之間是相互隔離的，這種隔離方式能夠確保每個應用程式在運行時都擁有自己的運行環境。
+1.2 Docker Docker 是一個開源的容器化平台，讓開發者能夠輕鬆地構建、部署和運行應用程式。它使用容器技術，將應用程式和相關依賴項打包到一個稱為 映像檔(image) 的獨立單元中。這些 image 可以在任何支援 Docker 的環境中執行，而不需要擔心底層環境的不同。
+Dockerfile: 可以當作 image 的藍圖，用於定義如何構建 image。內容包含了設定環境、複製檔案、執行指令等等的內容。描述了應用程式的環境和運行時配置，我們可以透過 Dockerfile 來創建我們的 image。
+Image: 它包含了執行應用程式所需的所有內容：程式碼、依賴項、庫和環境變數。不只可以自己建立 image 外，也可以透過 Docker Hub 來下載其他人或官方包裝好的 image
+Container: 是 image 的一個 實例(instance)，是輕量級、獨立和可移植的，比起將應用程式執行在 VM 中，在 container 中執行可以更快速地啟動、停止和刪除。每個容器都是隔離的，可以避免應用程式之間的干擾。但安全性方面則遜於 VM
+流程大概可以總結成這樣
+2. Build Image 由於 Container 的建立需要透過 Image，所以我們需要先將我們上一章寫出來的程式包裝成 Image" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://z416352.github.io/posts/dev/2023/04/telegrambot_on_docker/telegrambot_on_docker/" /><meta property="og:image" content="https://z416352.github.io/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-07-24T21:27:29+08:00" />
+<meta property="article:modified_time" content="2023-07-24T00:17:13+08:00" /><meta property="og:site_name" content="My cool site" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://z416352.github.io/logo.png"/>
+
+<meta name="twitter:title" content="[Bot系列 2] 將 Telegram Bot 建立在 Docker 上"/>
+<meta name="twitter:description" content="前言 在之前的內容中，我們提到了如何在 GCP 的 VM 上建立 Telegram Bot，相較於在本機建立，這樣的管理效率更高、更有效率。但是，仍有維護上的困難，當要執行的程式變得複雜時，就會面臨著許多問題。為了解決這些問題，我們需要使用到 Docker 技術，將先前建立的 Bot 運行在 Docker 上。這樣做的好處在於，相較於在 VM 上運行，Docker 容器更易管理。在未來，當程式規模擴大時，也可以將不同功能的程式運行在不同的容器上，再讓這些容器互相溝通。
+1. Overview 1.1 Container Container 是一種虛擬化技術，它共享了操作系統 ( linux、window 等等 ) 的底層資源。每個容器互相之間是相互隔離的，這種隔離方式能夠確保每個應用程式在運行時都擁有自己的運行環境。
+1.2 Docker Docker 是一個開源的容器化平台，讓開發者能夠輕鬆地構建、部署和運行應用程式。它使用容器技術，將應用程式和相關依賴項打包到一個稱為 映像檔(image) 的獨立單元中。這些 image 可以在任何支援 Docker 的環境中執行，而不需要擔心底層環境的不同。
+Dockerfile: 可以當作 image 的藍圖，用於定義如何構建 image。內容包含了設定環境、複製檔案、執行指令等等的內容。描述了應用程式的環境和運行時配置，我們可以透過 Dockerfile 來創建我們的 image。
+Image: 它包含了執行應用程式所需的所有內容：程式碼、依賴項、庫和環境變數。不只可以自己建立 image 外，也可以透過 Docker Hub 來下載其他人或官方包裝好的 image
+Container: 是 image 的一個 實例(instance)，是輕量級、獨立和可移植的，比起將應用程式執行在 VM 中，在 container 中執行可以更快速地啟動、停止和刪除。每個容器都是隔離的，可以避免應用程式之間的干擾。但安全性方面則遜於 VM
+流程大概可以總結成這樣
+2. Build Image 由於 Container 的建立需要透過 Image，所以我們需要先將我們上一章寫出來的程式包裝成 Image"/>
+<meta name="application-name" content="My cool site">
+<meta name="apple-mobile-web-app-title" content="My cool site"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="/images/avatar.jpg"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://z416352.github.io/posts/dev/2023/04/telegrambot_on_docker/telegrambot_on_docker/" /><link rel="prev" href="https://z416352.github.io/posts/dev/2023/02/kubernetes_tutorial_gcp/kubernetes_tutorial_gcp/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><meta name="google-site-verification" content="KcM2w78Gu2wNiAKB8cRJ_YIeDs0sEdlPtzcUX-JCdoE" />
+    <script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "[Bot系列 2] 將 Telegram Bot 建立在 Docker 上",
+        "inLanguage": "zh-TW",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/z416352.github.io\/posts\/dev\/2023\/04\/telegrambot_on_docker\/telegrambot_on_docker\/"
+        },"genre": "posts","keywords": "程式, Bot, Docker","wordcount":  284 ,
+        "url": "https:\/\/z416352.github.io\/posts\/dev\/2023\/04\/telegrambot_on_docker\/telegrambot_on_docker\/","datePublished": "2023-07-24T21:27:29+08:00","dateModified": "2023-07-24T00:17:13+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "Joshua"
+            },"description": ""
+    }
+    </script><script type="text/javascript">
+            window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
+            gtag('config', 'G-4NTY87FQMQ', { 'anonymize_ip': true });
+        </script><script type="text/javascript" src="https://www.googletagmanager.com/gtag/js?id=G-4NTY87FQMQ" async></script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Joshua&#39;s Blog"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/images/avatar.jpg"
+        data-srcset="/images/avatar.jpg, /images/avatar.jpg 1.5x, /images/avatar.jpg 2x"
+        data-sizes="auto"
+        alt="/images/avatar.jpg"
+        title="/images/avatar.jpg" /><span id="id-1" class="typeit"></span></a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> Posts </a><a class="menu-item" href="/tags/"> Tags </a><a class="menu-item" href="/categories/"> Categories </a><a class="menu-item" href="/about/"> About </a><span class="menu-item delimiter"></span><a href="javascript:void(0);" class="menu-item theme-switch" title="切換主題">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Joshua&#39;s Blog"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/images/avatar.jpg"
+        data-srcset="/images/avatar.jpg, /images/avatar.jpg 1.5x, /images/avatar.jpg 2x"
+        data-sizes="auto"
+        alt="/images/avatar.jpg"
+        title="/images/avatar.jpg" /><span id="id-2" class="typeit"></span></a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><a class="menu-item" href="/posts/" title="">Posts</a><a class="menu-item" href="/tags/" title="">Tags</a><a class="menu-item" href="/categories/" title="">Categories</a><a class="menu-item" href="/about/" title="">About</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切換主題">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目錄</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">[Bot系列 2] 將 Telegram Bot 建立在 Docker 上</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Joshua</a></span>&nbsp;<span class="post-category">收錄於 <a href="/categories/%E7%A8%8B%E5%BC%8F/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>程式</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-07-24">2023-07-24</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;約 284 字&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;預計閱讀 2 分鐘&nbsp;</div>
+        </div><div class="featured-image"><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="../featuredImage.png"
+        data-srcset="../featuredImage.png, ../featuredImage.png 1.5x, ../featuredImage.png 2x"
+        data-sizes="auto"
+        alt="../featuredImage.png"
+        title="../featuredImage.png" /></div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>目錄</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#前言">前言</a></li>
+    <li><a href="#1-overview">1. Overview</a>
+      <ul>
+        <li><a href="#11-container">1.1 Container</a></li>
+        <li><a href="#12-docker">1.2 Docker</a></li>
+      </ul>
+    </li>
+    <li><a href="#2-build-image">2. Build Image</a></li>
+    <li><a href="#3-透過-docker-compose-運行">3. 透過 Docker Compose 運行</a></li>
+    <li><a href="#4-feature-work">4. Feature work</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="前言">前言</h2>
+<p>在之前的內容中，我們提到了如何在 GCP 的 VM 上建立 Telegram Bot，相較於在本機建立，這樣的管理效率更高、更有效率。但是，仍有維護上的困難，當要執行的程式變得複雜時，就會面臨著許多問題。為了解決這些問題，我們需要使用到 <strong>Docker</strong> 技術，將先前建立的 Bot 運行在 Docker 上。這樣做的好處在於，相較於在 VM 上運行，Docker 容器更易管理。在未來，當程式規模擴大時，也可以將不同功能的程式運行在不同的容器上，再讓這些容器互相溝通。</p>
+<h2 id="1-overview">1. Overview</h2>
+<h3 id="11-container">1.1 Container</h3>
+<p><strong>Container</strong> 是一種虛擬化技術，它共享了操作系統 ( linux、window 等等 ) 的底層資源。每個容器互相之間是相互隔離的，這種隔離方式能夠確保每個應用程式在運行時都擁有自己的運行環境。</p>
+<h3 id="12-docker">1.2 Docker</h3>
+<p><strong>Docker</strong> 是一個開源的容器化平台，讓開發者能夠輕鬆地構建、部署和運行應用程式。它使用容器技術，將應用程式和相關依賴項打包到一個稱為 <strong>映像檔(image)</strong> 的獨立單元中。這些 image 可以在任何支援 Docker 的環境中執行，而不需要擔心底層環境的不同。</p>
+<ul>
+<li>
+<p><code>Dockerfile</code>: 可以當作 image 的藍圖，用於定義如何構建 image。內容包含了設定環境、複製檔案、執行指令等等的內容。描述了應用程式的環境和運行時配置，<strong>我們可以透過 Dockerfile 來創建我們的 image。</strong></p>
+</li>
+<li>
+<p><code>Image</code>: 它包含了執行應用程式所需的所有內容：程式碼、依賴項、庫和環境變數。不只可以自己建立 image 外，也可以透過 <strong>Docker Hub</strong> 來下載其他人或官方包裝好的 image</p>
+</li>
+<li>
+<p><code>Container</code>: 是 image 的一個 實例(instance)，是<strong>輕量級、獨立和可移植</strong>的，比起將應用程式執行在 VM 中，在 container 中執行可以更快速地啟動、停止和刪除。每個容器都是隔離的，可以避免應用程式之間的干擾。但安全性方面則遜於 VM</p>
+</li>
+</ul>
+<p>流程大概可以總結成這樣</p>
+<center><img src="../docker_process.png"></center>
+<h2 id="2-build-image">2. Build Image</h2>
+<p>由於 Container 的建立需要透過 <code>Image</code>，所以我們需要先將我們<a href="https://z416352.github.io/posts/dev/2023/04/telegrambot_gcp/telegrambot_gcp/" target="_blank" rel="noopener noreffer ">上一章</a>寫出來的程式包裝成 Image</p>
+<ol>
+<li>在 <code>main.py</code> 的資料夾下建立一個新的檔案，名稱叫做 <code>Dockerfile</code></li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Dockerfile" data-lang="Dockerfile"><span class="line"><span class="cl"><span class="k">FROM</span><span class="s"> python:3.8-slim</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span><span class="k">COPY</span> <span class="o">[</span><span class="s2">&#34;main.py&#34;</span>, <span class="s2">&#34;config.ini&#34;</span>, <span class="s2">&#34;requirements.txt&#34;</span>, <span class="s2">&#34;/TelegramBot/&#34;</span><span class="o">]</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span><span class="k">WORKDIR</span><span class="s"> /TelegramBot</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span><span class="k">RUN</span> apt update <span class="o">&amp;&amp;</span><span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>    pip install -r requirements.txt<span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span><span class="k">EXPOSE</span><span class="s"> 5000</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span><span class="k">CMD</span> <span class="p">[</span><span class="s2">&#34;python3&#34;</span><span class="p">,</span> <span class="s2">&#34;main.py&#34;</span><span class="p">]</span><span class="err">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li><code>FROM</code>: 因為 Image 都是一層一層(Layer)包裝下去的，因此我們可以先引用別人設定好的 Image 在往下接下去。這樣的好處是我們可以省去一些環境安裝的過程，把重心著重在程式開發。這邊我引用 <strong>python:3.8-slim</strong> 這個 Image</li>
+<li><code>COPY</code>: 將程式需要的檔案選出來並且丟到選擇的位置。例如上面的程式我就是將 <strong>main.py、config.ini、requirements.txt</strong> 這三個檔案丟入到 container 中的 <code>TelegramBot/</code> 資料夾內</li>
+<li><code>WORKDIR</code>: 跳到工作的檔案夾內，不能使用 <code>cd ...</code> 指令，除非是在同一個 <code>RUN</code> 指令內才可以用</li>
+<li><code>RUN</code>: 在建立 Image 的時候會運行的指令</li>
+<li><code>EXPOSE</code>: container 要公開的 Port</li>
+<li><code>CMD</code>: 當 container 要運行的時候要執行的指令，例如這邊就是會執行 <code>python3 main.py</code></li>
+</ul>
+<ol start="2">
+<li>建立 Image</li>
+</ol>
+<p>透過 Docker 指令建立程式的 Image，執行位置要跟 dockerfile 同一個資料夾。這邊的 Image 名稱我叫做 <strong>telegram-bot:latest</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Bash" data-lang="Bash"><span class="line"><span class="cl">docker build -t telegram-bot:latest .
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="3-透過-docker-compose-運行">3. 透過 Docker Compose 運行</h2>
+<p>由於一個程式可能不只有一個 container 要運行，如果一個一個透過 <code>docker run ...</code> 運行的話會很麻煩。所以就有了 <strong>docker compose</strong>，他可以寫一個 <code>yaml</code> 檔案來定義好每一個 container 運行的參數，道時候只需要透過 <code>docker-compose up -d</code> 就可以一鍵起好所有的 container</p>
+<hr>
+<ol>
+<li>建立 <strong>docker-compose.yml</strong> 檔</li>
+</ol>
+<p>這邊我多建立了 <code>volumes</code> 跟 <code>networks</code> 是為了未來如果有其他的程式的時候，可以和 bot 共用一部分的 volumes 資源。當 container 意外關閉時，volumes 內的檔案也不會因此消失。而 networks 則是為了讓其他 container 可以彼此互相溝通</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="s1">&#39;2&#39;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">services</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">telegram-bot</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">container_name</span><span class="p">:</span><span class="w"> </span><span class="l">telegram-bot</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l">telegram-bot:latest</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">ports</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span>- <span class="s2">&#34;5000:5000&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">volumes</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span>- <span class="l">db-data:/TelegramBot/Alert_DB</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">networks</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span>- <span class="l">bot_network</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">volumes</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">db-data</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">networks</span><span class="p">:</span><span class="w"> </span><span class="c"># 定義網路</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">bot_network</span><span class="p">:</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><ol>
+<li>佈署 container</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Bash" data-lang="Bash"><span class="line"><span class="cl">docker-compose up -d
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="4-feature-work">4. Feature work</h2>
+<p>由於轉換成為以微服務的想法進行開發，所以我們會希望一個 container 只專精做一件事情就好。以我這個例子來說，我會希望我的這個 bot container 只需要兩個功能:</p>
+<ul>
+<li><strong>接收並處理訊息</strong>: 使用者傳遞訊息後，將使用者傳遞的資訊進行處理。</li>
+</ul>
+<p>例如將訊息存入到 Database 中，供其他的程式使用。這就是為什麼我會多建立一個 Volumes 的原因</p>
+<ul>
+<li><strong>發送</strong>: 發送給使用者訊息</li>
+</ul>
+<p>當其他程式運行的時候，可能會需要對使用者傳遞一些資訊，這邊我建立一個接收其他程式要傳訊的訊息的 API，當接收到要傳遞訊息的時候就傳送給使用者。</p>
+<p>例如我有另一個 container 叫做 <strong>Crawler</strong> 用來做幣價的提醒。當到達設定的價位的時候，Crawler 就可以將要傳遞給使用者的訊息傳送給 Bot，再由 Bot 傳送給使用者。這樣 Crawler 就只需要專注於幣價的爬蟲即可，而不用想如何將訊息傳遞給使用者</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新於 2023-07-24&nbsp;<a class="git-hash" href="https://github.com/z416352/z416352.github.io/commit/d2542d45cbc28294133504a0c33c7277f967f958" target="_blank" title="commit by z416352(43094601&#43;z416352@users.noreply.github.com) d2542d45cbc28294133504a0c33c7277f967f958: modify post context">
+                                    <i class="fas fa-hashtag fa-fw" aria-hidden="true"></i>d2542d4</a></span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://z416352.github.io/posts/dev/2023/04/telegrambot_on_docker/telegrambot_on_docker/" data-title="[Bot系列 2] 將 Telegram Bot 建立在 Docker 上" data-hashtags="程式,Bot,Docker"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://z416352.github.io/posts/dev/2023/04/telegrambot_on_docker/telegrambot_on_docker/" data-hashtag="程式"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://z416352.github.io/posts/dev/2023/04/telegrambot_on_docker/telegrambot_on_docker/" data-title="[Bot系列 2] 將 Telegram Bot 建立在 Docker 上"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://z416352.github.io/posts/dev/2023/04/telegrambot_on_docker/telegrambot_on_docker/" data-title="[Bot系列 2] 將 Telegram Bot 建立在 Docker 上" data-image="../featuredImage.png"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Blogger" data-sharer="blogger" data-url="https://z416352.github.io/posts/dev/2023/04/telegrambot_on_docker/telegrambot_on_docker/" data-title="[Bot系列 2] 將 Telegram Bot 建立在 Docker 上" data-description=""><i class="fab fa-blogger fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/%E7%A8%8B%E5%BC%8F/">程式</a>,&nbsp;<a href="/tags/bot/">Bot</a>,&nbsp;<a href="/tags/docker/">Docker</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主頁</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/dev/2023/02/kubernetes_tutorial_gcp/kubernetes_tutorial_gcp/" class="prev" rel="prev" title="如何在 GCP 上建立自己的 Kubernetes"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>如何在 GCP 上建立自己的 Kubernetes</a></div>
+</div>
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+
+(function() {
+    
+    
+    
+    
+
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    
+    var disqus_shortname = 'ch416352';
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com/" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.105.0">Hugo</a> 強力驅動 | 主題 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2022 - 2023</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">Joshua</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到頂部">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看評論">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/typeit@8.6.0/dist/index.umd.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"複製到剪貼板","maxShownLines":20},"data":{"id-1":"Joshua's Blog","id-2":"Joshua's Blog"},"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"id-1":["id-1"],"id-2":["id-2"]},"duration":-1,"speed":100}};</script><script type="text/javascript" src="/js/theme.min.js"></script>
+</body>
+</html>
