@@ -84,20 +84,7 @@
         data-sizes="auto"
         alt="/images/avatar.jpg"
         title="/images/avatar.jpg" /></a></div><div class="home-subtitle">記錄自己平時學到的新東西，讓自己與其他人少走一些彎路</div><div class="links"><a href="https://github.com/https://github.com/z416352" title="GitHub" target="_blank" rel="noopener noreffer me"><i class="fab fa-github fa-fw" aria-hidden="true"></i></a><a href="mailto:ch416352@gmail.com" title="Email" rel="me"><i class="far fa-envelope fa-fw" aria-hidden="true"></i></a></div></div>
-<article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
-        <a href="/posts/dev/2023/08/kubernetes_components_1/kubernetes_components_1/">Kubernetes 元件介紹(1)</a>
-    </h1><div class="post-meta"><span class="post-author"><a href="/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Joshua</a></span>&nbsp;<span class="post-publish">發佈於 <time datetime="2023-07-25">2023-07-25</time></span>
-        
-        
-        &nbsp;<span class="post-category">收錄於 <a href="/categories/%E7%A8%8B%E5%BC%8F/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>程式</a></span></div><div class="content">Pod Pod 是可以在 Kubernetes 中創建和管理的、最小的可部署的單元。 Pod 並不是一個容器，而是容器的運行環境。每個 Pod 本身會帶著一個或多個不等的 標籤(label) 在身上，這在 service 設定的時候會使用到。
-一個 Pod 內會有一個或多個 Container。但通常只會有一個主要執行的 container 而已，其餘的 container 主要是用於環境設定或輔助主 container 的作用。
-在同一個 Pod 中，它們共享了儲存、網路、運算資源和設定。每一個 Pod 都有著自己的 IP 地址，其餘的程式或 Pod 都可以根據這個 IP 互相通訊。
-Service Service 是運行在一個或一組 Pod 上將應用程式公開出去給其他人使用的方式。如果沒有 service，使用者使用服務的時候會需要直接對 pod 進行溝通。可是 pod 本身是隨時可以捨棄並快速創建的，每次重新創建都會有不一樣的 IP，這樣使用者會需要不斷的修改溝通的 IP。
-但有了 service 後，service 可以透過 pod 的 label 來選擇需要綁定那些 pod。將一個或多個 pod 打包在一起並提供一個持續存在的穩定 IP。service 會將 request 轉發到打包的 Pod 上。
-使用者只需要連線 service IP 就可以正常的使用服務。即使打包的 pod 重新創建 IP 有變化使用者也不需要擔心。</div><div class="post-footer">
-        <a href="/posts/dev/2023/08/kubernetes_components_1/kubernetes_components_1/">閱讀全文</a><div class="post-tags">
-                <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/%E7%A8%8B%E5%BC%8F/">程式</a>,&nbsp;<a href="/tags/kubernetes/">Kubernetes</a></div></div>
-</article><article class="single summary" itemscope itemtype="http://schema.org/Article"><div class="featured-image-preview">
+<article class="single summary" itemscope itemtype="http://schema.org/Article"><div class="featured-image-preview">
             <a href="/posts/dev/2023/04/telegrambot_on_docker/telegrambot_on_docker/"><img
         class="lazyload"
         src="/svg/loading.min.svg"
