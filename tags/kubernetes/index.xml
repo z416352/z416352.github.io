@@ -4,7 +4,20 @@
         <link>https://z416352.github.io/tags/kubernetes/</link>
         <description>Kubernetes - 標籤 - Joshua&#39;s Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-TW</language><managingEditor>ch416352@gmail.com (Joshua)</managingEditor>
-            <webMaster>ch416352@gmail.com (Joshua)</webMaster><lastBuildDate>Mon, 26 Jun 2023 14:56:07 &#43;0800</lastBuildDate><atom:link href="https://z416352.github.io/tags/kubernetes/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>ch416352@gmail.com (Joshua)</webMaster><lastBuildDate>Tue, 25 Jul 2023 17:22:57 &#43;0800</lastBuildDate><atom:link href="https://z416352.github.io/tags/kubernetes/" rel="self" type="application/rss+xml" /><item>
+    <title>Kubernetes 元件介紹(1)</title>
+    <link>https://z416352.github.io/posts/dev/2023/08/kubernetes_components_1/kubernetes_components_1/</link>
+    <pubDate>Tue, 25 Jul 2023 17:22:57 &#43;0800</pubDate>
+    <author>Joshua</author>
+    <guid>https://z416352.github.io/posts/dev/2023/08/kubernetes_components_1/kubernetes_components_1/</guid>
+    <description><![CDATA[Pod Pod 是可以在 Kubernetes 中創建和管理的、最小的可部署的單元。 Pod 並不是一個容器，而是容器的運行環境。每個 Pod 本身會帶著一個或多個不等的 標籤(label) 在身上，這在 service 設定的時候會使用到。
+一個 Pod 內會有一個或多個 Container。但通常只會有一個主要執行的 container 而已，其餘的 container 主要是用於環境設定或輔助主 container 的作用。
+在同一個 Pod 中，它們共享了儲存、網路、運算資源和設定。每一個 Pod 都有著自己的 IP 地址，其餘的程式或 Pod 都可以根據這個 IP 互相通訊。
+Service Service 是運行在一個或一組 Pod 上將應用程式公開出去給其他人使用的方式。如果沒有 service，使用者使用服務的時候會需要直接對 pod 進行溝通。可是 pod 本身是隨時可以捨棄並快速創建的，每次重新創建都會有不一樣的 IP，這樣使用者會需要不斷的修改溝通的 IP。
+但有了 service 後，service 可以透過 pod 的 label 來選擇需要綁定那些 pod。將一個或多個 pod 打包在一起並提供一個持續存在的穩定 IP。service 會將 request 轉發到打包的 Pod 上。
+使用者只需要連線 service IP 就可以正常的使用服務。即使打包的 pod 重新創建 IP 有變化使用者也不需要擔心。]]></description>
+</item>
+<item>
     <title>如何在 GCP 上建立自己的 Kubernetes</title>
     <link>https://z416352.github.io/posts/dev/2023/02/kubernetes_tutorial_gcp/kubernetes_tutorial_gcp/</link>
     <pubDate>Mon, 26 Jun 2023 14:56:07 &#43;0800</pubDate>
