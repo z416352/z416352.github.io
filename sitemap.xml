@@ -2,20 +2,20 @@
     xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
     xmlns:xhtml="http://www.w3.org/1999/xhtml"
     ><url>
-            <loc>https://z416352.github.io/categories/</loc><lastmod>2023-08-25T23:18:47&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://z416352.github.io/</loc><lastmod>2023-08-25T23:18:47&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://z416352.github.io/tags/kubernetes/</loc><lastmod>2023-08-25T23:18:47&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://z416352.github.io/posts/dev/2023/08/kubernetes_components_1/kubernetes_components_1/</loc><lastmod>2023-08-25T23:18:47&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://z416352.github.io/posts/</loc><lastmod>2023-08-25T23:18:47&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://z416352.github.io/tags/</loc><lastmod>2023-08-25T23:18:47&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://z416352.github.io/tags/%E7%A8%8B%E5%BC%8F/</loc><lastmod>2023-08-25T23:18:47&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://z416352.github.io/categories/%E7%A8%8B%E5%BC%8F/</loc><lastmod>2023-08-25T23:18:47&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://z416352.github.io/posts/dev/2023/04/telegrambot_on_docker/telegrambot_on_docker/</loc><lastmod>2023-07-25T01:53:51&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url><url>
-            <loc>https://z416352.github.io/tags/bot/</loc><lastmod>2023-07-25T01:53:51&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url><url>
-            <loc>https://z416352.github.io/tags/docker/</loc><lastmod>2023-07-25T01:53:51&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url><url>
-            <loc>https://z416352.github.io/tags/gcp/</loc><lastmod>2023-07-25T01:53:51&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url><url>
-            <loc>https://z416352.github.io/posts/dev/2023/02/kubernetes_tutorial_gcp/kubernetes_tutorial_gcp/</loc><lastmod>2023-07-25T01:53:51&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url><url>
-            <loc>https://z416352.github.io/posts/dev/2023/04/telegrambot_gcp/telegrambot_gcp/</loc><lastmod>2023-07-24T00:17:13&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url><url>
+            <loc>https://z416352.github.io/categories/</loc><lastmod>2023-08-25T23:18:47&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url><url>
+            <loc>https://z416352.github.io/</loc><lastmod>2023-08-25T23:18:47&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url><url>
+            <loc>https://z416352.github.io/tags/kubernetes/</loc><lastmod>2023-08-25T23:18:47&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url><url>
+            <loc>https://z416352.github.io/posts/dev/2023/08/kubernetes_components_1/kubernetes_components_1/</loc><lastmod>2023-08-25T23:18:47&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url><url>
+            <loc>https://z416352.github.io/posts/</loc><lastmod>2023-08-25T23:18:47&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url><url>
+            <loc>https://z416352.github.io/tags/</loc><lastmod>2023-08-25T23:18:47&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url><url>
+            <loc>https://z416352.github.io/tags/%E7%A8%8B%E5%BC%8F/</loc><lastmod>2023-08-25T23:18:47&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url><url>
+            <loc>https://z416352.github.io/categories/%E7%A8%8B%E5%BC%8F/</loc><lastmod>2023-08-25T23:18:47&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url><url>
+            <loc>https://z416352.github.io/posts/dev/2023/04/telegrambot_on_docker/telegrambot_on_docker/</loc><lastmod>2023-07-25T01:53:51&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>https://z416352.github.io/tags/bot/</loc><lastmod>2023-07-25T01:53:51&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>https://z416352.github.io/tags/docker/</loc><lastmod>2023-07-25T01:53:51&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>https://z416352.github.io/tags/gcp/</loc><lastmod>2023-07-25T01:53:51&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>https://z416352.github.io/posts/dev/2023/02/kubernetes_tutorial_gcp/kubernetes_tutorial_gcp/</loc><lastmod>2023-07-25T01:53:51&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>https://z416352.github.io/posts/dev/2023/04/telegrambot_gcp/telegrambot_gcp/</loc><lastmod>2023-07-24T00:17:13&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>https://z416352.github.io/posts/order_flow/2022/11/order_flow_ch1/</loc><lastmod>2023-06-26T13:01:47&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>https://z416352.github.io/tags/order-flow/</loc><lastmod>2023-06-26T13:01:47&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>https://z416352.github.io/categories/%E4%BA%A4%E6%98%93/</loc><lastmod>2023-06-26T13:01:47&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>

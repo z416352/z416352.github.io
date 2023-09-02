@@ -4,10 +4,10 @@
         <link>https://z416352.github.io/tags/%E7%A8%8B%E5%BC%8F/</link>
         <description>程式 - 標籤 - Joshua&#39;s Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-TW</language><managingEditor>ch416352@gmail.com (Joshua)</managingEditor>
-            <webMaster>ch416352@gmail.com (Joshua)</webMaster><lastBuildDate>Tue, 25 Jul 2023 17:22:57 &#43;0800</lastBuildDate><atom:link href="https://z416352.github.io/tags/%E7%A8%8B%E5%BC%8F/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>ch416352@gmail.com (Joshua)</webMaster><lastBuildDate>Thu, 31 Aug 2023 17:22:57 &#43;0800</lastBuildDate><atom:link href="https://z416352.github.io/tags/%E7%A8%8B%E5%BC%8F/" rel="self" type="application/rss+xml" /><item>
     <title>Kubernetes 元件介紹(1)</title>
     <link>https://z416352.github.io/posts/dev/2023/08/kubernetes_components_1/kubernetes_components_1/</link>
-    <pubDate>Tue, 25 Jul 2023 17:22:57 &#43;0800</pubDate>
+    <pubDate>Thu, 31 Aug 2023 17:22:57 &#43;0800</pubDate>
     <author>Joshua</author>
     <guid>https://z416352.github.io/posts/dev/2023/08/kubernetes_components_1/kubernetes_components_1/</guid>
     <description><![CDATA[Pod Pod 是可以在 Kubernetes 中創建和管理的、最小的可部署的單元。 Pod 並不是一個容器，而是容器的運行環境。每個 Pod 本身會帶著一個或多個不等的 標籤(label) 在身上，這在 service 設定的時候會使用到。
