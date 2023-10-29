@@ -4,7 +4,17 @@
         <link>https://z416352.github.io/tags/%E7%A8%8B%E5%BC%8F/</link>
         <description>程式 - 標籤 - Joshua&#39;s Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-TW</language><managingEditor>ch416352@gmail.com (Joshua)</managingEditor>
-            <webMaster>ch416352@gmail.com (Joshua)</webMaster><lastBuildDate>Thu, 31 Aug 2023 17:22:57 &#43;0800</lastBuildDate><atom:link href="https://z416352.github.io/tags/%E7%A8%8B%E5%BC%8F/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>ch416352@gmail.com (Joshua)</webMaster><lastBuildDate>Sun, 29 Oct 2023 23:04:10 &#43;0800</lastBuildDate><atom:link href="https://z416352.github.io/tags/%E7%A8%8B%E5%BC%8F/" rel="self" type="application/rss+xml" /><item>
+    <title>Gcloud and Artifact Registry</title>
+    <link>https://z416352.github.io/posts/dev/2023/11/gcloud_and_artifact_registry/gcloud-and-artifact-registry/</link>
+    <pubDate>Sun, 29 Oct 2023 23:04:10 &#43;0800</pubDate>
+    <author>Joshua</author>
+    <guid>https://z416352.github.io/posts/dev/2023/11/gcloud_and_artifact_registry/gcloud-and-artifact-registry/</guid>
+    <description><![CDATA[Gcloud 可以參考 官網 目前的最新版本
+下載檔案 &amp; 解壓縮 1 2 3 curl -O https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-cli-452.0.1-linux-x86_64.tar.gz tar -xf google-cloud-cli-452.0.1-linux-x86_64.tar.gz 執行安裝 1 ./google-cloud-sdk/install.sh 初始化設定 1 ./google-cloud-sdk/bin/gcloud init Artifact Registry 可以參考 這篇 的 Artifact Registry 部分
+首先需要進行身分驗證，可以在 ~/.docker/config.json 中看到目前有的 Region。其中 asia-east1-docker.pkg.dev 要根據自己當初建立 Artifact 所在的地區改寫 1 2 3 gcloud auth configure-docker asia-east1-docker.pkg.dev cat ~/.docker/config.json Image 結構 在 docker build 的時候需要命名為這種結構 asia-east1-docker.pkg.dev/&lt;Project ID&gt;/&lt;Repo Name&gt;/&lt;Image Name&gt;:&lt;Version&gt;，指令如下 1 docker build -t asia-east1-docker.pkg.dev/&lt;Project ID&gt;/&lt;Repo Name&gt;/&lt;Image Name&gt;:&lt;Version&gt; . &lt;Project ID&gt;: 可以透過 GCP 上看到目前專案的 ID &lt;Repo Name&gt;: 建立 Artifact Registry 時的名字 &lt;Image Name&gt;: Image 的名稱 &lt;Version&gt;: Image 的版本號 將 image 推上 Artifact 1 docker push asia-east1-docker.]]></description>
+</item>
+<item>
     <title>Kubernetes 元件介紹(1)</title>
     <link>https://z416352.github.io/posts/dev/2023/08/kubernetes_components_1/kubernetes_components_1/</link>
     <pubDate>Thu, 31 Aug 2023 17:22:57 &#43;0800</pubDate>
